@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion compile_sdk
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "io.woong.filmpedia"
+        minSdkVersion min_sdk
+        targetSdkVersion compile_sdk
+        versionCode app_version_code
+        versionName app_version
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines"
+
+    implementation "androidx.core:core-ktx:$jetpack_core"
+    implementation "androidx.appcompat:appcompat:$jetpack_appcompat"
+    implementation "androidx.activity:activity-ktx:$jetpack_activity"
+    implementation "androidx.constraintlayout:constraintlayout:$jetpack_constraintlayout"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$jetpack_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$jetpack_lifecycle"
+    implementation "androidx.room:room-runtime:$jetpack_room"
+    kapt "androidx.room:room-compiler:$jetpack_room"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$jetpack_swiperefreshlayout"
+
+    implementation "com.google.android.material:material:$material_components"
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    implementation "io.woong.shapedimageview:shapedimageview:$shapedimageview"
+
+    testImplementation "junit:junit:$test_junit"
+    androidTestImplementation "androidx.test.ext:junit:$jetpack_test_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$jetpack_test_espresso"
+}
