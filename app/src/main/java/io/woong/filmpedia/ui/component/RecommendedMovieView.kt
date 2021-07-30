@@ -2,9 +2,13 @@ package io.woong.filmpedia.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
-import java.util.*
+import io.woong.filmpedia.data.RecommendedMovie
 
 class RecommendedMovieView @JvmOverloads constructor(
     context: Context,
@@ -12,7 +16,12 @@ class RecommendedMovieView @JvmOverloads constructor(
     defStyle: Int = 1
 ) : ConstraintLayout(context, attrs, defStyle) {
 
-    var movieId: String = ""
+    private val posterImageView: AppCompatImageView
+    private val rateView: AppCompatButton
+    private val infoButton: AppCompatImageButton
+    private val favoriteButton: AppCompatImageButton
+
+    var movie: RecommendedMovie? = null
         set(value) {
             field = value
             loadMovieInfo()
@@ -20,37 +29,18 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.layout_recommended_movie_view, this)
-        applyAttributes(attrs, defStyle)
-    }
-
-    private fun applyAttributes(attributes: AttributeSet?, defStyle: Int) {
-        val attrs = context.obtainStyledAttributes(
-            attributes,
-            R.styleable.RecommendedMovieView,
-            defStyle,
-            0
-        )
-
-        try {
-            movieId = attrs.getString(R.styleable.RecommendedMovieView_movie_id) ?: ""
-        } finally {
-            attrs.recycle()
-        }
+        posterImageView = findViewById(R.id.poster)
+        rateView = findViewById(R.id.rate)
+        infoButton = findViewById(R.id.info_button)
+        favoriteButton = findViewById(R.id.favorite_button)
     }
 
     private fun loadMovieInfo() {
-        if (isValidMovieId(movieId)) {
-
-        }
-    }
-
-    private fun isValidMovieId(id: String?): Boolean {
-        return when {
-            id == null -> false
-            id.isEmpty() -> false
-            id.isBlank() -> false
-            id.lowercase(Locale.getDefault()) == "null" -> false
-            else -> true
+        movie?.let { m ->
+            m.posterPath?.let { path ->
+                Glide.with(posterImageView)
+                    .load(path)
+            }
         }
     }
 }
