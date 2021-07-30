@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.RecommendedMovie
+import io.woong.filmpedia.util.ImagePathUtil
 
 class RecommendedMovieView @JvmOverloads constructor(
     context: Context,
@@ -38,8 +39,9 @@ class RecommendedMovieView @JvmOverloads constructor(
     private fun loadMovieInfo() {
         movie?.let { m ->
             m.posterPath?.let { path ->
-                Glide.with(posterImageView)
-                    .load(path)
+                Glide.with(this)
+                    .load(ImagePathUtil.toFullUrl(path))
+                    .into(posterImageView)
             }
         }
     }
