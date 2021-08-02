@@ -24,6 +24,17 @@ interface MovieService {
     ): Call<Movie>
 
     /**
+     * Get a list of movies in theatres.
+     */
+    @GET("movie/now_playing")
+    fun getNowPlaying(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String? = null,
+        @Query("page") page: Int? = null,
+        @Query("region") region: String? = null
+    ): Call<Movies>
+
+    /**
      * Get a list of the current popular movies on TMDB.
      */
     @GET("movie/popular")

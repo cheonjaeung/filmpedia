@@ -2,6 +2,7 @@ package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.apiKey
 import io.woong.filmpedia.data.ErrorResponse
+import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
 import io.woong.filmpedia.network.MovieService
 import io.woong.filmpedia.network.TmdbClient
@@ -73,7 +74,7 @@ class HomeRepository {
     ) {
         TmdbClient.instance
             .create(MovieService::class.java)
-            .getDetail(movieId = movieId ,apiKey = apiKey)
+            .getDetail(movieId = movieId, apiKey = apiKey)
             .request(
                 onSuccess = { result ->
                     val rm = RecommendedMovie(
@@ -85,6 +86,39 @@ class HomeRepository {
                 },
                 onFailure = { result ->
                     onResponse(false, null, result.errorBody)
+                },
+                onException = { result ->
+                    throw result.exception
+                }
+            )
+    }
+
+    /**
+     * Get top 10 now playing movies on this time.
+     */
+    fun fetchNowPlaying10Movies(
+        onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
+    ) {
+        TmdbClient.instance
+            .create(MovieService::class.java)
+            .getNowPlaying(apiKey = apiKey, page = 1)
+            .request(
+                onSuccess = { result ->
+                    val movies = result.body.results
+                    if (movies.isNotEmpty()) {
+                        val nowPlayingMovies = mutableListOf<Movies.Result>()
+                        if (movies.size >= 10) {
+                            nowPlayingMovies.addAll(movies.subList(0, 10))
+                        } else {
+                            nowPlayingMovies.addAll(movies)
+                        }
+                        onResponse(true, nowPlayingMovies, null)
+                    } else {
+                        onResponse(false, emptyList(), null)
+                    }
+                },
+                onFailure = { result ->
+                    onResponse(false, emptyList(), result.errorBody)
                 },
                 onException = { result ->
                     throw result.exception

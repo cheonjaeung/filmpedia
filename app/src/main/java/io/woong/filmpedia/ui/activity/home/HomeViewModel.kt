@@ -1,8 +1,8 @@
 package io.woong.filmpedia.ui.activity.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
 import io.woong.filmpedia.repository.HomeRepository
 
@@ -14,11 +14,20 @@ class HomeViewModel : ViewModel() {
         MutableLiveData<RecommendedMovie>()
     }
 
+    val nowPlayingMovies: MutableLiveData<List<Movies.Result>> by lazy {
+        MutableLiveData<List<Movies.Result>>()
+    }
+
     fun update() {
         repository.fetchRecommendedMovie { isSuccess, movie, error ->
             if (isSuccess) {
                 recommendedMovie.value = movie
-                Log.i("Test", movie.toString())
+            }
+        }
+
+        repository.fetchNowPlaying10Movies { isSuccess, movies, error ->
+            if (isSuccess) {
+                nowPlayingMovies.value = movies
             }
         }
     }
