@@ -30,10 +30,10 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.layout_recommended_movie_view, this)
-        posterImageView = findViewById(R.id.poster)
-        rateView = findViewById(R.id.rate)
-        infoButton = findViewById(R.id.info_button)
-        favoriteButton = findViewById(R.id.favorite_button)
+        posterImageView = findViewById(R.id.rmv_poster)
+        rateView = findViewById(R.id.rmv_rate)
+        infoButton = findViewById(R.id.rmv_info_button)
+        favoriteButton = findViewById(R.id.rmv_favorite_button)
     }
 
     private fun loadMovieInfo() {
