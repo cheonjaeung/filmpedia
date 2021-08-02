@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class Movies(
     val page: Int,
     val results: List<Result>,
+    val dates: Dates?,
     @SerializedName("total_results") val totalResults: Int,
     @SerializedName("total_pages") val totalPages: Int
 ) {
@@ -27,5 +28,10 @@ data class Movies(
         @SerializedName("vote_count") val voteCount: Int,
         val video: Boolean,
         @SerializedName("vote_average") val voteAverage: Double
+    )
+
+    data class Dates(
+        val maximum: String,
+        val minimum: String
     )
 }
