@@ -31,33 +31,33 @@ class HomeViewModel : ViewModel() {
     }
 
     fun update() {
-        repository.fetchRecommendedMovie { isSuccess, movie, error ->
-            if (isSuccess) {
-                recommendedMovie.value = movie
+        repository.fetchRecommendedMovie { movie ->
+            if (movie != null) {
+                recommendedMovie.postValue(movie)
             }
         }
 
-        repository.fetchTop10NowPlayingMovies { isSuccess, movies, error ->
-            if (isSuccess) {
-                top10NowPlayingMovies.value = movies
+        repository.fetchTop10NowPlayingMovies { movies ->
+            if (movies != emptyList<Movies.Result>()) {
+                top10NowPlayingMovies.postValue(movies)
             }
         }
 
-        repository.fetchTop10PopularMovies { isSuccess, movies, error ->
-            if (isSuccess) {
-                top10PopularMovies.value = movies
+        repository.fetchTop10PopularMovies { movies ->
+            if (movies != emptyList<Movies.Result>()) {
+                top10PopularMovies.postValue(movies)
             }
         }
 
-        repository.fetchTop10RatedMovies { isSuccess, movies, error ->
-            if (isSuccess) {
-                top10RatedMovies.value = movies
+        repository.fetchTop10HighRateMovies { movies ->
+            if (movies != emptyList<Movies.Result>()) {
+                top10RatedMovies.postValue(movies)
             }
         }
 
-        repository.fetchTop10UpcomingMovies { isSuccess, movies, error ->
-            if (isSuccess) {
-                top10UpcomingMovies.value = movies
+        repository.fetchTop10UpcomingMovies { movies ->
+            if (movies != emptyList<Movies.Result>()) {
+                top10UpcomingMovies.postValue(movies)
             }
         }
     }

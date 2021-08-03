@@ -1,148 +1,137 @@
 package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.apiKey
-import io.woong.filmpedia.data.ErrorResponse
-import io.woong.filmpedia.data.Movies
-import io.woong.filmpedia.data.RecommendedMovie
+import io.woong.filmpedia.data.*
+import io.woong.filmpedia.network.GenreService
 import io.woong.filmpedia.network.MovieService
 import io.woong.filmpedia.network.TmdbClient
-import io.woong.filmpedia.util.request
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeRepository {
 
-    private val service: MovieService = TmdbClient.instance.create(MovieService::class.java)
+    private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
+    private val genreService: GenreService = TmdbClient.instance.create(GenreService::class.java)
 
     fun fetchRecommendedMovie(
-        onResponse: (isSuccess: Boolean, movie: RecommendedMovie?, error: ErrorResponse?) -> Unit
+        onResponse: (movie: RecommendedMovie?) -> Unit
     ) {
-        fetchTop10PopularMovies { isSuccess, movies, error ->
-            if (isSuccess) {
-                if (movies.isNotEmpty()) {
+        fetchTop10PopularMovies { movies ->
+            if (movies != emptyList<Movies.Result>()) {
+                fetchGenres { allGenres ->
                     val topMovie = movies[0]
-                    val rm = RecommendedMovie(
-                        movieId = topMovie.id,
-                        title = topMovie.title,
-                        posterPath = topMovie.posterPath
-                    )
-                    onResponse(true, rm, null)
-                } else {
-                    onResponse(false, null, null)
+                    if (allGenres != emptyList<Genre>()) {
+                        onResponse(
+                            RecommendedMovie(
+                                movieId = topMovie.id,
+                                title = topMovie.title,
+                                posterPath = topMovie.posterPath,
+                                genres = genreIdsToGenreList(topMovie.genreIds, allGenres)
+                            )
+                        )
+                    } else {
+                        onResponse(
+                            RecommendedMovie(
+                                movieId = topMovie.id,
+                                title = topMovie.title,
+                                posterPath = topMovie.posterPath,
+                                genres = listOf()
+                            )
+                        )
+                    }
                 }
             } else {
-                onResponse(false, null, error)
+                onResponse(null)
             }
         }
     }
 
+    private fun fetchGenres(
+        onResponse: (genres: List<Genre>) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = genreService.getGenres(apiKey = apiKey)
+
+        if (response.isSuccessful) {
+            val body = response.body()!!
+            onResponse(body.genres)
+        } else {
+            onResponse(emptyList())
+        }
+    }
+
+    private fun genreIdsToGenreList(genreIds: List<Int>, genres: List<Genre>): List<Genre> {
+        val result = mutableListOf<Genre>()
+        genres.forEach { genre ->
+            if (genreIds.contains(genre.id)) {
+                result.add(genre)
+            }
+        }
+        return result
+    }
+
     fun fetchTop10NowPlayingMovies(
-        onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            service.getNowPlaying(apiKey = apiKey, page = 1)
-                .request(
-                    onSuccess = { result ->
-                        val movies = result.body.results
-                        if (movies.isNotEmpty()) {
-                            onResponse(true, movies.top10SubList(), null)
-                        } else {
-                            onResponse(false, emptyList(), null)
-                        }
-                    },
-                    onFailure = { result ->
-                        onResponse(false, emptyList(), result.errorBody)
-                    },
-                    onException = { result ->
-                        throw result.exception
-                    }
-                )
+        onResponse: (movies: List<Movies.Result>) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getNowPlaying(apiKey = apiKey, page = 1)
+
+        if (response.isSuccessful) {
+            val movies: Movies = response.body()!!
+            val top10 = extractTop10Movies(movies.results)
+            onResponse(top10)
+        } else {
+            onResponse(emptyList())
         }
     }
 
     fun fetchTop10PopularMovies(
-        onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            service.getPopular(apiKey = apiKey, page = 1)
-                .request(
-                    onSuccess = { result ->
-                        val movies = result.body.results
-                        if (movies.isNotEmpty()) {
-                            onResponse(true, movies.top10SubList(), null)
-                        } else {
-                            onResponse(false, emptyList(), null)
-                        }
-                    },
-                    onFailure = { result ->
-                        onResponse(false, emptyList(), result.errorBody)
-                    },
-                    onException = { result ->
-                        throw result.exception
-                    }
-                )
+        onResponse: (movies: List<Movies.Result>) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getPopular(apiKey = apiKey, page = 1)
+
+        if (response.isSuccessful) {
+            val movies: Movies = response.body()!!
+            val top10 = extractTop10Movies(movies.results)
+            onResponse(top10)
+        } else {
+            onResponse(emptyList())
         }
     }
 
-    fun fetchTop10RatedMovies(
-        onResponse: (isSuccess: Boolean, movie: List<Movies.Result>, error: ErrorResponse?) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            service.getTopRated(apiKey = apiKey, page = 1)
-                .request(
-                    onSuccess = { result ->
-                        val movies = result.body.results
-                        if (movies.isNotEmpty()) {
-                            onResponse(true, movies.top10SubList(), null)
-                        } else {
-                            onResponse(false, emptyList(), null)
-                        }
-                    },
-                    onFailure = { result ->
-                        onResponse(false, emptyList(), result.errorBody)
-                    },
-                    onException = { result ->
-                        throw result.exception
-                    }
-                )
+    fun fetchTop10HighRateMovies(
+        onResponse: (movies: List<Movies.Result>) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getTopRated(apiKey = apiKey, page = 1)
+
+        if (response.isSuccessful) {
+            val movies: Movies = response.body()!!
+            val top10 = extractTop10Movies(movies.results)
+            onResponse(top10)
+        } else {
+            onResponse(emptyList())
         }
     }
 
     fun fetchTop10UpcomingMovies(
-        onResponse: (isSuccess: Boolean, movie: List<Movies.Result>, error: ErrorResponse?) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            service.getUpcoming(apiKey = apiKey, page = 1)
-                .request(
-                    onSuccess = { result ->
-                        val movies = result.body.results
-                        if (movies.isNotEmpty()) {
-                            onResponse(true, movies.top10SubList(), null)
-                        } else {
-                            onResponse(false, emptyList(), null)
-                        }
-                    },
-                    onFailure = { result ->
-                        onResponse(false, emptyList(), result.errorBody)
-                    },
-                    onException = { result ->
-                        throw result.exception
-                    }
-                )
+        onResponse: (movies: List<Movies.Result>) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getUpcoming(apiKey = apiKey, page = 1)
+
+        if (response.isSuccessful) {
+            val movies: Movies = response.body()!!
+            val top10 = extractTop10Movies(movies.results)
+            onResponse(top10)
+        } else {
+            onResponse(emptyList())
         }
     }
 
-    /**
-     * Return top 10 movie list.
-     * If movie item count is lower than 10, return itself.
-     */
-    private fun List<Movies.Result>.top10SubList(): List<Movies.Result> {
-        return if (this.size < 10) {
-            this
+    private fun extractTop10Movies(movies: List<Movies.Result>): List<Movies.Result> {
+        return if (movies.size < 10) {
+            movies
         } else {
             val top10 = mutableListOf<Movies.Result>()
-            for ((index, movie) in this.withIndex()) {
+            for ((index, movie) in movies.withIndex()) {
                 if (index < 10) {
                     top10.add(movie)
                 } else {
