@@ -13,26 +13,26 @@ import kotlinx.coroutines.launch
 
 class HomeRepository {
 
+    private val service: MovieService = TmdbClient.instance.create(MovieService::class.java)
+
     fun fetchRecommendedMovie(
         onResponse: (isSuccess: Boolean, movie: RecommendedMovie?, error: ErrorResponse?) -> Unit
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            fetchTop10PopularMovies { isSuccess, movies, error ->
-                if (isSuccess) {
-                    if (movies.isNotEmpty()) {
-                        val topMovie = movies[0]
-                        val rm = RecommendedMovie(
-                            movieId = topMovie.id,
-                            title = topMovie.title,
-                            posterPath = topMovie.posterPath
-                        )
-                        onResponse(true, rm, null)
-                    } else {
-                        onResponse(false, null, null)
-                    }
+        fetchTop10PopularMovies { isSuccess, movies, error ->
+            if (isSuccess) {
+                if (movies.isNotEmpty()) {
+                    val topMovie = movies[0]
+                    val rm = RecommendedMovie(
+                        movieId = topMovie.id,
+                        title = topMovie.title,
+                        posterPath = topMovie.posterPath
+                    )
+                    onResponse(true, rm, null)
                 } else {
-                    onResponse(false, null, error)
+                    onResponse(false, null, null)
                 }
+            } else {
+                onResponse(false, null, error)
             }
         }
     }
@@ -40,96 +40,97 @@ class HomeRepository {
     fun fetchTop10NowPlayingMovies(
         onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
     ) {
-        TmdbClient.instance
-            .create(MovieService::class.java)
-            .getNowPlaying(apiKey = apiKey, page = 1)
-            .request(
-                onSuccess = { result ->
-                    val movies = result.body.results
-                    if (movies.isNotEmpty()) {
-                        onResponse(true, movies.top10SubList(), null)
-                    } else {
-                        onResponse(false, emptyList(), null)
+        CoroutineScope(Dispatchers.IO).launch {
+            service.getNowPlaying(apiKey = apiKey, page = 1)
+                .request(
+                    onSuccess = { result ->
+                        val movies = result.body.results
+                        if (movies.isNotEmpty()) {
+                            onResponse(true, movies.top10SubList(), null)
+                        } else {
+                            onResponse(false, emptyList(), null)
+                        }
+                    },
+                    onFailure = { result ->
+                        onResponse(false, emptyList(), result.errorBody)
+                    },
+                    onException = { result ->
+                        throw result.exception
                     }
-                },
-                onFailure = { result ->
-                    onResponse(false, emptyList(), result.errorBody)
-                },
-                onException = { result ->
-                    throw result.exception
-                }
-            )
+                )
+        }
     }
 
     fun fetchTop10PopularMovies(
         onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
     ) {
-        TmdbClient.instance
-            .create(MovieService::class.java)
-            .getPopular(apiKey = apiKey, page = 1)
-            .request(
-                onSuccess = { result ->
-                    val movies = result.body.results
-                    if (movies.isNotEmpty()) {
-                        onResponse(true, movies.top10SubList(), null)
-                    } else {
-                        onResponse(false, emptyList(), null)
+        CoroutineScope(Dispatchers.IO).launch {
+            service.getPopular(apiKey = apiKey, page = 1)
+                .request(
+                    onSuccess = { result ->
+                        val movies = result.body.results
+                        if (movies.isNotEmpty()) {
+                            onResponse(true, movies.top10SubList(), null)
+                        } else {
+                            onResponse(false, emptyList(), null)
+                        }
+                    },
+                    onFailure = { result ->
+                        onResponse(false, emptyList(), result.errorBody)
+                    },
+                    onException = { result ->
+                        throw result.exception
                     }
-                },
-                onFailure = { result ->
-                    onResponse(false, emptyList(), result.errorBody)
-                },
-                onException = { result ->
-                    throw result.exception
-                }
-            )
+                )
+        }
     }
 
     fun fetchTop10RatedMovies(
         onResponse: (isSuccess: Boolean, movie: List<Movies.Result>, error: ErrorResponse?) -> Unit
     ) {
-        TmdbClient.instance
-            .create(MovieService::class.java)
-            .getTopRated(apiKey = apiKey, page = 1)
-            .request(
-                onSuccess = { result ->
-                    val movies = result.body.results
-                    if (movies.isNotEmpty()) {
-                        onResponse(true, movies.top10SubList(), null)
-                    } else {
-                        onResponse(false, emptyList(), null)
+        CoroutineScope(Dispatchers.IO).launch {
+            service.getTopRated(apiKey = apiKey, page = 1)
+                .request(
+                    onSuccess = { result ->
+                        val movies = result.body.results
+                        if (movies.isNotEmpty()) {
+                            onResponse(true, movies.top10SubList(), null)
+                        } else {
+                            onResponse(false, emptyList(), null)
+                        }
+                    },
+                    onFailure = { result ->
+                        onResponse(false, emptyList(), result.errorBody)
+                    },
+                    onException = { result ->
+                        throw result.exception
                     }
-                },
-                onFailure = { result ->
-                    onResponse(false, emptyList(), result.errorBody)
-                },
-                onException = { result ->
-                    throw result.exception
-                }
-            )
+                )
+        }
     }
 
     fun fetchTop10UpcomingMovies(
         onResponse: (isSuccess: Boolean, movie: List<Movies.Result>, error: ErrorResponse?) -> Unit
     ) {
-        TmdbClient.instance
-            .create(MovieService::class.java)
-            .getUpcoming(apiKey = apiKey, page = 1)
-            .request(
-                onSuccess = { result ->
-                    val movies = result.body.results
-                    if (movies.isNotEmpty()) {
-                        onResponse(true, movies.top10SubList(), null)
-                    } else {
-                        onResponse(false, emptyList(), null)
-                    }},
-                onFailure = { result ->
-                    onResponse(false, emptyList(), result.errorBody)
-                },
-                onException = { result ->
-                    throw result.exception
-                }
-            )
+        CoroutineScope(Dispatchers.IO).launch {
+            service.getUpcoming(apiKey = apiKey, page = 1)
+                .request(
+                    onSuccess = { result ->
+                        val movies = result.body.results
+                        if (movies.isNotEmpty()) {
+                            onResponse(true, movies.top10SubList(), null)
+                        } else {
+                            onResponse(false, emptyList(), null)
+                        }
+                    },
+                    onFailure = { result ->
+                        onResponse(false, emptyList(), result.errorBody)
+                    },
+                    onException = { result ->
+                        throw result.exception
+                    }
+                )
+        }
     }
 
     /**
