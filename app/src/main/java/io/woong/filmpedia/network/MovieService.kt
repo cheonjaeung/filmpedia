@@ -44,4 +44,26 @@ interface MovieService {
         @Query("page") page: Int? = null,
         @Query("region") region: String? = null
     ): Call<Movies>
+
+    /**
+     * Get the top rated movies on TMDB.
+     */
+    @GET("movie/top_rated")
+    fun getTopRated(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String? = null,
+        @Query("page") page: Int? = null,
+        @Query("region") region: String? = null
+    ): Call<Movies>
+
+    /**
+     * Get a list of upcoming movies.
+     */
+    @GET("movie/upcoming")
+    fun getUpcoming(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String? = null,
+        @Query("page") page: Int? = null,
+        @Query("region") region: String? = null
+    ): Call<Movies>
 }

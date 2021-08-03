@@ -93,10 +93,7 @@ class HomeRepository {
             )
     }
 
-    /**
-     * Get top 10 now playing movies on this time.
-     */
-    fun fetchNowPlaying10Movies(
+    fun fetchTop10NowPlayingMovies(
         onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
     ) {
         TmdbClient.instance
@@ -106,13 +103,7 @@ class HomeRepository {
                 onSuccess = { result ->
                     val movies = result.body.results
                     if (movies.isNotEmpty()) {
-                        val nowPlayingMovies = mutableListOf<Movies.Result>()
-                        if (movies.size >= 10) {
-                            nowPlayingMovies.addAll(movies.subList(0, 10))
-                        } else {
-                            nowPlayingMovies.addAll(movies)
-                        }
-                        onResponse(true, nowPlayingMovies, null)
+                        onResponse(true, movies.top10SubList(), null)
                     } else {
                         onResponse(false, emptyList(), null)
                     }
@@ -124,5 +115,96 @@ class HomeRepository {
                     throw result.exception
                 }
             )
+    }
+
+    fun fetchTop10PopularMovies(
+        onResponse: (isSuccess: Boolean, movies: List<Movies.Result>, error: ErrorResponse?) -> Unit
+    ) {
+        TmdbClient.instance
+            .create(MovieService::class.java)
+            .getPopular(apiKey = apiKey, page = 1)
+            .request(
+                onSuccess = { result ->
+                    val movies = result.body.results
+                    if (movies.isNotEmpty()) {
+                        onResponse(true, movies.top10SubList(), null)
+                    } else {
+                        onResponse(false, emptyList(), null)
+                    }
+                },
+                onFailure = { result ->
+                    onResponse(false, emptyList(), result.errorBody)
+                },
+                onException = { result ->
+                    throw result.exception
+                }
+            )
+    }
+
+    fun fetchTop10RatedMovies(
+        onResponse: (isSuccess: Boolean, movie: List<Movies.Result>, error: ErrorResponse?) -> Unit
+    ) {
+        TmdbClient.instance
+            .create(MovieService::class.java)
+            .getTopRated(apiKey = apiKey, page = 1)
+            .request(
+                onSuccess = { result ->
+                    val movies = result.body.results
+                    if (movies.isNotEmpty()) {
+                        onResponse(true, movies.top10SubList(), null)
+                    } else {
+                        onResponse(false, emptyList(), null)
+                    }
+                },
+                onFailure = { result ->
+                    onResponse(false, emptyList(), result.errorBody)
+                },
+                onException = { result ->
+                    throw result.exception
+                }
+            )
+    }
+
+    fun fetchTop10UpcomingMovies(
+        onResponse: (isSuccess: Boolean, movie: List<Movies.Result>, error: ErrorResponse?) -> Unit
+    ) {
+        TmdbClient.instance
+            .create(MovieService::class.java)
+            .getUpcoming(apiKey = apiKey, page = 1)
+            .request(
+                onSuccess = { result ->
+                    val movies = result.body.results
+                    if (movies.isNotEmpty()) {
+                        onResponse(true, movies.top10SubList(), null)
+                    } else {
+                        onResponse(false, emptyList(), null)
+                    }},
+                onFailure = { result ->
+                    onResponse(false, emptyList(), result.errorBody)
+                },
+                onException = { result ->
+                    throw result.exception
+                }
+            )
+    }
+
+    /**
+     * Return top 10 movie list.
+     * If movie item count is lower than 10, return itself.
+     */
+    private fun List<Movies.Result>.top10SubList(): List<Movies.Result> {
+        return if (this.size < 10) {
+            this
+        } else {
+            val top10 = mutableListOf<Movies.Result>()
+            for ((index, movie) in this.withIndex()) {
+                if (index < 10) {
+                    top10.add(movie)
+                } else {
+                    break
+                }
+            }
+            top10
+        }
     }
 }

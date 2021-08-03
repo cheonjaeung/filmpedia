@@ -14,7 +14,19 @@ class HomeViewModel : ViewModel() {
         MutableLiveData<RecommendedMovie>()
     }
 
-    val nowPlayingMovies: MutableLiveData<List<Movies.Result>> by lazy {
+    val top10NowPlayingMovies: MutableLiveData<List<Movies.Result>> by lazy {
+        MutableLiveData<List<Movies.Result>>()
+    }
+
+    val top10PopularMovies: MutableLiveData<List<Movies.Result>> by lazy {
+        MutableLiveData<List<Movies.Result>>()
+    }
+
+    val top10RatedMovies: MutableLiveData<List<Movies.Result>> by lazy {
+        MutableLiveData<List<Movies.Result>>()
+    }
+
+    val top10UpcomingMovies: MutableLiveData<List<Movies.Result>> by lazy {
         MutableLiveData<List<Movies.Result>>()
     }
 
@@ -25,9 +37,27 @@ class HomeViewModel : ViewModel() {
             }
         }
 
-        repository.fetchNowPlaying10Movies { isSuccess, movies, error ->
+        repository.fetchTop10NowPlayingMovies { isSuccess, movies, error ->
             if (isSuccess) {
-                nowPlayingMovies.value = movies
+                top10NowPlayingMovies.value = movies
+            }
+        }
+
+        repository.fetchTop10PopularMovies { isSuccess, movies, error ->
+            if (isSuccess) {
+                top10PopularMovies.value = movies
+            }
+        }
+
+        repository.fetchTop10RatedMovies { isSuccess, movies, error ->
+            if (isSuccess) {
+                top10RatedMovies.value = movies
+            }
+        }
+
+        repository.fetchTop10UpcomingMovies { isSuccess, movies, error ->
+            if (isSuccess) {
+                top10UpcomingMovies.value = movies
             }
         }
     }
