@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
 import io.woong.filmpedia.databinding.ActivityHomeBinding
 import io.woong.filmpedia.util.HorizontalItemDecoration
+import kotlinx.coroutines.*
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: ActivityHomeBinding
@@ -21,6 +23,8 @@ class HomeActivity : AppCompatActivity() {
         viewModel.recommendedMovie.observe(this) { movie ->
             binding.recommendedMovie.movie = movie
         }
+
+        binding.homeSwipeLayout.setOnRefreshListener(this)
 
         val listDeco = HorizontalItemDecoration(8, resources.displayMetrics)
 
@@ -65,5 +69,15 @@ class HomeActivity : AppCompatActivity() {
         }
 
         viewModel.update()
+    }
+
+    override fun onRefresh() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val delayJob = CoroutineScope(Dispatchers.Default).launch {
+                viewModel.update()
+            }
+            delayJob.join()
+            binding.homeSwipeLayout.isRefreshing = false
+        }
     }
 }
