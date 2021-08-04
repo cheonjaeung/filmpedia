@@ -27,6 +27,7 @@ class RecommendedMovieView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyle) {
 
     private val backdropImageView: AppCompatImageView
+    private val titleTextView: AppCompatTextView
     private val genresTextView: AppCompatTextView
     private val rateView: AppCompatButton
     private val infoButton: AppCompatImageButton
@@ -41,6 +42,7 @@ class RecommendedMovieView @JvmOverloads constructor(
     init {
         inflate(context, R.layout.layout_recommended_movie_view, this)
         backdropImageView = findViewById(R.id.rmv_backdrop)
+        titleTextView = findViewById(R.id.rmv_title)
         genresTextView = findViewById(R.id.rmv_genres)
         rateView = findViewById(R.id.rmv_rate)
         infoButton = findViewById(R.id.rmv_info_button)
@@ -49,6 +51,8 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     private fun loadMovieInfo() {
         movie?.let { m ->
+            titleTextView.text = m.title
+
             genresTextView.text = buildGenresText(m.genres)
 
             m.backdropPath?.let { path ->

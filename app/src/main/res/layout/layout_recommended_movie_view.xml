@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="300dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/rmv_backdrop"
@@ -23,6 +23,17 @@
         android:paddingTop="24dp"
         android:background="@drawable/bg_rmv_button_layout_background"
         app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rmv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="Movie Title"
+            tools:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rmv_genres"
