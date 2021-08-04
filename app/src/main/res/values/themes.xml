@@ -22,4 +22,9 @@
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="ImageButtonTheme" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:tint">@color/black</item>
+    </style>
 </resources>

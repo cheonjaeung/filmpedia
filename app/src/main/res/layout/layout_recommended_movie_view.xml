@@ -3,43 +3,48 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/rmv_poster"
-        android:layout_width="wrap_content"
+        android:id="@+id/rmv_backdrop"
+        android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/rmv_button_layout"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
         android:id="@+id/rmv_button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/bg_rmv_button_layout_background"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/rmv_rate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.33" />
+            android:layout_weight="0.33"
+            android:background="@android:color/transparent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/rmv_favorite_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
-            android:src="@drawable/ic_favorite" />
+            android:src="@drawable/ic_favorite"
+            style="@style/ImageButtonTheme" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/rmv_info_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
-            android:src="@drawable/ic_info" />
+            android:src="@drawable/ic_info"
+            style="@style/ImageButtonTheme" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
