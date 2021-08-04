@@ -78,13 +78,5 @@ class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
             }
         }
         viewModel.update()
-
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val delayJob = CoroutineScope(Dispatchers.Default).launch {
-//                viewModel.update()
-//            }
-//            delayJob.join()
-//            binding.homeSwipeLayout.isRefreshing = false
-//        }
     }
 }
