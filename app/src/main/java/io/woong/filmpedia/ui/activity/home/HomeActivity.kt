@@ -72,12 +72,19 @@ class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onRefresh() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val delayJob = CoroutineScope(Dispatchers.Default).launch {
-                viewModel.update()
+        viewModel.isLoading.observe(this) {
+            if (it == false) {
+                binding.homeSwipeLayout.isRefreshing = it
             }
-            delayJob.join()
-            binding.homeSwipeLayout.isRefreshing = false
         }
+        viewModel.update()
+
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val delayJob = CoroutineScope(Dispatchers.Default).launch {
+//                viewModel.update()
+//            }
+//            delayJob.join()
+//            binding.homeSwipeLayout.isRefreshing = false
+//        }
     }
 }

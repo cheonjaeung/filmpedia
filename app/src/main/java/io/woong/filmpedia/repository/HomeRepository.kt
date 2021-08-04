@@ -14,40 +14,7 @@ class HomeRepository {
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
     private val genreService: GenreService = TmdbClient.instance.create(GenreService::class.java)
 
-    fun fetchRecommendedMovie(
-        onResponse: (movie: RecommendedMovie?) -> Unit
-    ) {
-        fetchTop10PopularMovies { movies ->
-            if (movies != emptyList<Movies.Result>()) {
-                fetchGenres { allGenres ->
-                    val topMovie = movies[0]
-                    if (allGenres != emptyList<Genre>()) {
-                        onResponse(
-                            RecommendedMovie(
-                                movieId = topMovie.id,
-                                title = topMovie.title,
-                                backdropPath = topMovie.backdropPath,
-                                genres = genreIdsToGenreList(topMovie.genreIds, allGenres)
-                            )
-                        )
-                    } else {
-                        onResponse(
-                            RecommendedMovie(
-                                movieId = topMovie.id,
-                                title = topMovie.title,
-                                backdropPath = topMovie.backdropPath,
-                                genres = listOf()
-                            )
-                        )
-                    }
-                }
-            } else {
-                onResponse(null)
-            }
-        }
-    }
-
-    private fun fetchGenres(
+    fun fetchGenres(
         onResponse: (genres: List<Genre>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = genreService.getGenres(apiKey = apiKey)
@@ -58,16 +25,6 @@ class HomeRepository {
         } else {
             onResponse(emptyList())
         }
-    }
-
-    private fun genreIdsToGenreList(genreIds: List<Int>, genres: List<Genre>): List<Genre> {
-        val result = mutableListOf<Genre>()
-        genres.forEach { genre ->
-            if (genreIds.contains(genre.id)) {
-                result.add(genre)
-            }
-        }
-        return result
     }
 
     fun fetchTop10NowPlayingMovies(
