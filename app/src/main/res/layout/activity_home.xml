@@ -39,12 +39,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top10_now_playing" />
+                    android:text="@string/top10_now_playing"
+                    style="@style/HomeMovieListTitleTheme" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/top10_now_playing_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     tools:orientation="horizontal"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_top10_movie_list_item_view" />
@@ -52,12 +53,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top10_popular" />
+                    android:text="@string/top10_popular"
+                    style="@style/HomeMovieListTitleTheme" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/top10_popular_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     tools:orientation="horizontal"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_top10_movie_list_item_view" />
@@ -65,12 +67,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top10_high_rated" />
+                    android:text="@string/top10_high_rated"
+                    style="@style/HomeMovieListTitleTheme" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/top10_rated_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     tools:orientation="horizontal"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_top10_movie_list_item_view" />
@@ -78,12 +81,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/top10_upcoming" />
+                    android:text="@string/top10_upcoming"
+                    style="@style/HomeMovieListTitleTheme" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/top10_upcoming_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     tools:orientation="horizontal"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_top10_movie_list_item_view" />
