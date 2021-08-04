@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
 import io.woong.filmpedia.databinding.ActivityHomeBinding
+import io.woong.filmpedia.util.HorizontalItemDecoration
 
 class HomeActivity : AppCompatActivity() {
 
@@ -21,9 +22,12 @@ class HomeActivity : AppCompatActivity() {
             binding.recommendedMovie.movie = movie
         }
 
+        val listDeco = HorizontalItemDecoration(8, resources.displayMetrics)
+
         binding.top10NowPlayingList.apply {
             adapter = Top10MovieListAdapter(this@HomeActivity)
             layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(listDeco)
         }
         viewModel.top10NowPlayingMovies.observe(this) { movies ->
             val adapter = binding.top10NowPlayingList.adapter as Top10MovieListAdapter
@@ -33,6 +37,7 @@ class HomeActivity : AppCompatActivity() {
         binding.top10PopularList.apply {
             adapter = Top10MovieListAdapter(this@HomeActivity)
             layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(listDeco)
         }
         viewModel.top10PopularMovies.observe(this) { movies ->
             val adapter = binding.top10PopularList.adapter as Top10MovieListAdapter
@@ -42,6 +47,7 @@ class HomeActivity : AppCompatActivity() {
         binding.top10RatedList.apply {
             adapter = Top10MovieListAdapter(this@HomeActivity)
             layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(listDeco)
         }
         viewModel.top10RatedMovies.observe(this) { movies ->
             val adapter = binding.top10RatedList.adapter as Top10MovieListAdapter
@@ -51,6 +57,7 @@ class HomeActivity : AppCompatActivity() {
         binding.top10UpcomingList.apply {
             adapter = Top10MovieListAdapter(this@HomeActivity)
             layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(listDeco)
         }
         viewModel.top10UpcomingMovies.observe(this) { movies ->
             val adapter = binding.top10UpcomingList.adapter as Top10MovieListAdapter
