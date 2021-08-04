@@ -6,6 +6,6 @@ package io.woong.filmpedia.data
 data class RecommendedMovie(
     var movieId: Int,
     val title: String,
-    val posterPath: String?,
+    val backdropPath: String?,
     val genres: List<Genre>
 )

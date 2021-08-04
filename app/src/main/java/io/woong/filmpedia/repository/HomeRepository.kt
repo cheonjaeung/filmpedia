@@ -26,7 +26,7 @@ class HomeRepository {
                             RecommendedMovie(
                                 movieId = topMovie.id,
                                 title = topMovie.title,
-                                posterPath = topMovie.posterPath,
+                                backdropPath = topMovie.backdropPath,
                                 genres = genreIdsToGenreList(topMovie.genreIds, allGenres)
                             )
                         )
@@ -35,7 +35,7 @@ class HomeRepository {
                             RecommendedMovie(
                                 movieId = topMovie.id,
                                 title = topMovie.title,
-                                posterPath = topMovie.posterPath,
+                                backdropPath = topMovie.backdropPath,
                                 genres = listOf()
                             )
                         )

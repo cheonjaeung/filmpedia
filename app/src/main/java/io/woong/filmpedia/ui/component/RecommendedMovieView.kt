@@ -17,7 +17,7 @@ class RecommendedMovieView @JvmOverloads constructor(
     defStyle: Int = 1
 ) : ConstraintLayout(context, attrs, defStyle) {
 
-    private val posterImageView: AppCompatImageView
+    private val backdropImageView: AppCompatImageView
     private val rateView: AppCompatButton
     private val infoButton: AppCompatImageButton
     private val favoriteButton: AppCompatImageButton
@@ -30,7 +30,7 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.layout_recommended_movie_view, this)
-        posterImageView = findViewById(R.id.rmv_poster)
+        backdropImageView = findViewById(R.id.rmv_backdrop)
         rateView = findViewById(R.id.rmv_rate)
         infoButton = findViewById(R.id.rmv_info_button)
         favoriteButton = findViewById(R.id.rmv_favorite_button)
@@ -38,10 +38,10 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     private fun loadMovieInfo() {
         movie?.let { m ->
-            m.posterPath?.let { path ->
+            m.backdropPath?.let { path ->
                 Glide.with(this)
                     .load(ImagePathUtil.toFullUrl(path))
-                    .into(posterImageView)
+                    .into(backdropImageView)
             }
         }
     }
