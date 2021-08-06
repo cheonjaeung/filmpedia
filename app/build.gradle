@@ -57,6 +57,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$jetpack_appcompat"
     implementation "androidx.activity:activity-ktx:$jetpack_activity"
     implementation "androidx.constraintlayout:constraintlayout:$jetpack_constraintlayout"
+    implementation "androidx.fragment:fragment-ktx:$jetpack_fragment"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$jetpack_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$jetpack_lifecycle"
     implementation "androidx.room:room-runtime:$jetpack_room"
