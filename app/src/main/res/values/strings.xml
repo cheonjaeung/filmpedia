@@ -5,4 +5,6 @@
     <string name="top10_popular">Top 10 Popular Movies</string>
     <string name="top10_high_rated">Top 10 High Rated Movies</string>
     <string name="top10_upcoming">Top 10 Upcoming Movies</string>
+
+    <string name="detail_information">Detail Information</string>
 </resources>
