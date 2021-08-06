@@ -6,27 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Movies
-import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.util.ImagePathUtil
 
-class Top10MovieListAdapter(
-    private val context: Context,
-    private val fragmentManager: FragmentManager
-    ) : RecyclerView.Adapter<Top10MovieListAdapter.ViewHolder>() {
+class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter<Top10MovieListAdapter.ViewHolder>() {
 
     private val top10: MutableList<Movies.Result> = mutableListOf()
+
+    private var itemClickListener: OnItemClickListener? = null
 
     fun setTop10(top10: List<Movies.Result>) {
         this.top10.clear()
         this.top10.addAll(top10)
         notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
     }
 
     override fun getItemCount(): Int = top10.size
@@ -64,12 +65,12 @@ class Top10MovieListAdapter(
 
         override fun onClick(v: View?) {
             if (v?.id == posterView.id) {
-                val pos = adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    val sheet = MovieDetailBottomSheet(top10[pos])
-                    sheet.show(fragmentManager, "MovieDetailBottomSheet")
-                }
+                itemClickListener?.onItemClick(adapterPosition, top10)
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, movies: List<Movies.Result>)
     }
 }

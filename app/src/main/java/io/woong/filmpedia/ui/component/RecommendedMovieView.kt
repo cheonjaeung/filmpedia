@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -24,7 +25,7 @@ class RecommendedMovieView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 1
-) : ConstraintLayout(context, attrs, defStyle) {
+) : ConstraintLayout(context, attrs, defStyle), View.OnClickListener {
 
     private val backdropImageView: AppCompatImageView
     private val titleTextView: AppCompatTextView
@@ -32,6 +33,8 @@ class RecommendedMovieView @JvmOverloads constructor(
     private val rateView: AppCompatButton
     private val infoButton: AppCompatImageButton
     private val favoriteButton: AppCompatImageButton
+
+    private var infoButtonClickListener: OnInfoButtonClickListener? = null
 
     var movie: RecommendedMovie? = null
         set(value) {
@@ -41,12 +44,26 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.layout_recommended_movie_view, this)
+
         backdropImageView = findViewById(R.id.rmv_backdrop)
         titleTextView = findViewById(R.id.rmv_title)
         genresTextView = findViewById(R.id.rmv_genres)
         rateView = findViewById(R.id.rmv_rate)
+
         infoButton = findViewById(R.id.rmv_info_button)
+        infoButton.setOnClickListener(this)
+
         favoriteButton = findViewById(R.id.rmv_favorite_button)
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == infoButton.id) {
+            infoButtonClickListener?.onInfoButtonClick(this@RecommendedMovieView, movie)
+        }
+    }
+
+    fun setOnInfoButtonClickListener(listener: OnInfoButtonClickListener) {
+        infoButtonClickListener = listener
     }
 
     private fun loadMovieInfo() {
@@ -63,7 +80,7 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     private fun buildGenresText(genres: List<Genre>): Spannable {
         val builder = SpannableStringBuilder()
-        genres.forEachIndexed { index, genre ->
+        genres.forEach { genre ->
             val startPos = builder.length
             builder.append(genre.name)
             val endPos = builder.length
@@ -93,5 +110,9 @@ class RecommendedMovieView @JvmOverloads constructor(
         builder.append(movie?.recommendationReason)
 
         return builder.toSpannable()
+    }
+
+    interface OnInfoButtonClickListener {
+        fun onInfoButtonClick(view: RecommendedMovieView, movie: RecommendedMovie?)
     }
 }
