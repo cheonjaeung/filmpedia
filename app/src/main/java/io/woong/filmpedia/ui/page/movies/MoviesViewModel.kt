@@ -1,4 +1,4 @@
-package io.woong.filmpedia.ui.page.home
+package io.woong.filmpedia.ui.page.movies
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class MoviesViewModel : ViewModel() {
 
     companion object {
         private const val NOW_PLAYING_MOVIES: Int = 1
@@ -78,7 +78,7 @@ class HomeViewModel : ViewModel() {
 
             val genresFetchingJob = repository.fetchGenres { genres ->
                 if (genres != emptyList<Genre>()) {
-                    this@HomeViewModel.genres.apply {
+                    this@MoviesViewModel.genres.apply {
                         clear()
                         addAll(genres)
                     }
