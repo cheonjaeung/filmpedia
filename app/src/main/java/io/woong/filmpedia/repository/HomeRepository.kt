@@ -14,19 +14,6 @@ class HomeRepository {
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
     private val genreService: GenreService = TmdbClient.instance.create(GenreService::class.java)
 
-    fun fetchGenres(
-        onResponse: (genres: List<Genre>) -> Unit
-    ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = genreService.getGenres(apiKey = apiKey)
-
-        if (response.isSuccessful) {
-            val body = response.body()!!
-            onResponse(body.genres)
-        } else {
-            onResponse(emptyList())
-        }
-    }
-
     fun fetchTop10NowPlayingMovies(
         onResponse: (movies: List<Movies.Result>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
@@ -96,6 +83,32 @@ class HomeRepository {
                 }
             }
             top10
+        }
+    }
+
+    fun fetchMovieDetail(
+        movieId: Int,
+        onResponse: (movie: Movie?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getDetail(apiKey = apiKey, movieId = movieId)
+
+        if (response.isSuccessful) {
+            onResponse(response.body())
+        } else {
+            onResponse(null)
+        }
+    }
+
+    fun fetchGenres(
+        onResponse: (genres: List<Genre>) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = genreService.getGenres(apiKey = apiKey)
+
+        if (response.isSuccessful) {
+            val body = response.body()!!
+            onResponse(body.genres)
+        } else {
+            onResponse(emptyList())
         }
     }
 }
