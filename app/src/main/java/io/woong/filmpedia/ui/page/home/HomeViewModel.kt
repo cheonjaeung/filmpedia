@@ -1,4 +1,4 @@
-package io.woong.filmpedia.ui.activity.home
+package io.woong.filmpedia.ui.page.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

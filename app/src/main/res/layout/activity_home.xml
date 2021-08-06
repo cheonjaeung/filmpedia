@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="io.woong.filmpedia.ui.activity.home.HomeViewModel" />
+            type="io.woong.filmpedia.ui.page.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
