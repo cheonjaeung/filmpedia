@@ -3,6 +3,6 @@
 
     <solid android:color="@color/background_elevated" />
 
-    <corners android:topLeftRadius="12dp"
-        android:topRightRadius="12dp" />
+    <corners android:topLeftRadius="16dp"
+        android:topRightRadius="16dp" />
 </shape>
