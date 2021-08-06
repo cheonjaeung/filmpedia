@@ -35,7 +35,7 @@ class MoviesFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val listDeco = HorizontalItemDecoration(8, resources.displayMetrics)
 
         binding.top10NowPlayingList.apply {
-            adapter = Top10MovieListAdapter(context)
+            adapter = Top10MovieListAdapter(context, parentFragmentManager)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
         }
@@ -45,7 +45,7 @@ class MoviesFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         binding.top10PopularList.apply {
-            adapter = Top10MovieListAdapter(context)
+            adapter = Top10MovieListAdapter(context, parentFragmentManager)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
         }
@@ -55,7 +55,7 @@ class MoviesFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         binding.top10RatedList.apply {
-            adapter = Top10MovieListAdapter(context)
+            adapter = Top10MovieListAdapter(context, parentFragmentManager)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
         }
@@ -65,7 +65,7 @@ class MoviesFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         binding.top10UpcomingList.apply {
-            adapter = Top10MovieListAdapter(context)
+            adapter = Top10MovieListAdapter(context, parentFragmentManager)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
         }
