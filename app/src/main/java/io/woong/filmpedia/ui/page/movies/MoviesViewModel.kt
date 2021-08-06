@@ -99,27 +99,27 @@ class MoviesViewModel : ViewModel() {
             val randomMovie = when (randomCategory) {
                 NOW_PLAYING_MOVIES -> {
                     top10NowPlayingMovies.value?.let { movies ->
-                        getRandomMovie(randomRank, movies)
+                        getRandomMovie(randomCategory, randomRank, movies)
                     }
                 }
                 POPULAR_MOVIES -> {
                     top10PopularMovies.value?.let { movies ->
-                        getRandomMovie(randomRank, movies)
+                        getRandomMovie(randomCategory, randomRank, movies)
                     }
                 }
                 TOP_RATED_MOVIES -> {
                     top10RatedMovies.value?.let { movies ->
-                        getRandomMovie(randomRank, movies)
+                        getRandomMovie(randomCategory, randomRank, movies)
                     }
                 }
                 UPCOMING_MOVIES -> {
                     top10UpcomingMovies.value?.let { movies ->
-                        getRandomMovie(randomRank, movies)
+                        getRandomMovie(randomCategory, randomRank, movies)
                     }
                 }
                 else -> {
                     top10NowPlayingMovies.value?.let { movies ->
-                        getRandomMovie(randomRank, movies)
+                        getRandomMovie(randomCategory, randomRank, movies)
                     }
                 }
             }
@@ -130,7 +130,7 @@ class MoviesViewModel : ViewModel() {
         }
     }
 
-    private fun getRandomMovie(randomRank: Int, movies: List<Movies.Result>): RecommendedMovie {
+    private fun getRandomMovie(randomCatetory: Int, randomRank: Int, movies: List<Movies.Result>): RecommendedMovie {
         val index = if (randomRank < movies.size) {
             randomRank - 1
         } else {
@@ -138,12 +138,18 @@ class MoviesViewModel : ViewModel() {
         }
 
         val movie = movies[index]
+        val reason = when (randomCatetory) {
+            NOW_PLAYING_MOVIES -> "Now Playing"
+            POPULAR_MOVIES -> "Popular"
+            TOP_RATED_MOVIES -> "High Rated"
+            UPCOMING_MOVIES -> "Upcoming"
+            else -> ""
+        }
 
         return RecommendedMovie(
-            movieId = movie.id,
-            title = movie.title,
-            backdropPath = movie.backdropPath,
-            genres = genreIdsToGenreList(movie.genreIds, genres)
+            movie = movie,
+            genres = genreIdsToGenreList(movie.genreIds, genres),
+            recommendationReason = reason
         )
     }
 

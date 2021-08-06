@@ -28,6 +28,7 @@
             android:id="@+id/rmv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
             android:textSize="20sp"
@@ -39,7 +40,9 @@
             android:id="@+id/rmv_genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:layout_gravity="center_horizontal"
+            android:gravity="center"
             tools:text="Action · Adventure · Fantasy"
             tools:textColor="@color/white" />
 

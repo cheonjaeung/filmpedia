@@ -51,15 +51,13 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     private fun loadMovieInfo() {
         movie?.let { m ->
-            titleTextView.text = m.title
+            titleTextView.text = m.movie.title
 
             genresTextView.text = buildGenresText(m.genres)
 
-            m.backdropPath?.let { path ->
-                Glide.with(this)
-                    .load(ImagePathUtil.toFullUrl(path))
-                    .into(backdropImageView)
-            }
+            Glide.with(this)
+                .load(ImagePathUtil.toFullUrl(m.movie.backdropPath))
+                .into(backdropImageView)
         }
     }
 
@@ -77,22 +75,22 @@ class RecommendedMovieView @JvmOverloads constructor(
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
 
-            if (index < genres.size - 1) {
-                builder.append(" · ")
-                builder.setSpan(
-                    ForegroundColorSpan(Color.YELLOW),
-                    builder.length - 2,
-                    builder.length - 1,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                builder.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    builder.length - 2,
-                    builder.length - 1,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
+            builder.append(" · ")
+            builder.setSpan(
+                ForegroundColorSpan(Color.YELLOW),
+                builder.length - 2,
+                builder.length - 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            builder.setSpan(
+                StyleSpan(Typeface.BOLD),
+                builder.length - 2,
+                builder.length - 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
+
+        builder.append(movie?.recommendationReason)
 
         return builder.toSpannable()
     }
