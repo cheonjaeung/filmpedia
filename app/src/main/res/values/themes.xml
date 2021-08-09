@@ -38,4 +38,13 @@
     <style name="FilmpediaBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_bottom_sheet</item>
     </style>
+
+    <style name="FilmpediaRatingViewTheme">
+        <item name="android:padding">4dp</item>
+        <item name="background_circle_color">@color/light_gray</item>
+        <item name="center_circle_color">@color/dark_gray</item>
+        <item name="rating_arc_size">2dp</item>
+        <item name="rating_text_size">10sp</item>
+        <item name="rating_text_color">?android:attr/textColor</item>
+    </style>
 </resources>

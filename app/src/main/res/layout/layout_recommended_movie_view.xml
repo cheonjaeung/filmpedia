@@ -58,12 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:layout_weight="0.33"
-                android:padding="4dp"
-                app:background_circle_color="@color/light_gray"
-                app:center_circle_color="@color/dark_gray"
-                app:rating_arc_size="2dp"
-                app:rating_text_size="10sp"
-                app:rating_text_color="@color/white"
+                style="@style/FilmpediaRatingViewTheme"
                 tools:rating="7.8" />
 
             <androidx.appcompat.widget.AppCompatImageButton
