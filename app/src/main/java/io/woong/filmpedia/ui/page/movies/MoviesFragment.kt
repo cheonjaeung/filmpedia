@@ -46,6 +46,7 @@ class MoviesFragment : Fragment(),
         binding.top10NowPlayingList.apply {
             adapter = Top10MovieListAdapter(context).apply {
                 setOnItemClickListener(this@MoviesFragment)
+                setRatingEnabled(false)
             }
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
@@ -58,6 +59,7 @@ class MoviesFragment : Fragment(),
         binding.top10PopularList.apply {
             adapter = Top10MovieListAdapter(context).apply {
                 setOnItemClickListener(this@MoviesFragment)
+                setRatingEnabled(false)
             }
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
@@ -70,6 +72,7 @@ class MoviesFragment : Fragment(),
         binding.top10RatedList.apply {
             adapter = Top10MovieListAdapter(context).apply {
                 setOnItemClickListener(this@MoviesFragment)
+                setRatingEnabled(true)
             }
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)
@@ -82,6 +85,7 @@ class MoviesFragment : Fragment(),
         binding.top10UpcomingList.apply {
             adapter = Top10MovieListAdapter(context).apply {
                 setOnItemClickListener(this@MoviesFragment)
+                setRatingEnabled(false)
             }
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(listDeco)

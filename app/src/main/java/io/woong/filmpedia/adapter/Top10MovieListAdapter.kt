@@ -12,13 +12,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.ui.component.CircularRatingView
 import io.woong.filmpedia.util.ImagePathUtil
 
 class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter<Top10MovieListAdapter.ViewHolder>() {
 
     private val top10: MutableList<Movies.Result> = mutableListOf()
-
     private var itemClickListener: OnItemClickListener? = null
+    private var ratingEnabled: Boolean = true
 
     fun setTop10(top10: List<Movies.Result>) {
         this.top10.clear()
@@ -28,6 +29,10 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
         itemClickListener = listener
+    }
+
+    fun setRatingEnabled(flag: Boolean) {
+        ratingEnabled = flag
     }
 
     override fun getItemCount(): Int = top10.size
@@ -40,7 +45,9 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val posterPath = top10[position].posterPath
+        val movie = top10[position]
+
+        val posterPath = movie.posterPath
         posterPath?.let { path ->
             val radiusDp = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
@@ -53,14 +60,21 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
                 .into(holder.posterView)
         }
+
+        holder.ratingView.rating = movie.voteAverage
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val posterView: AppCompatImageView = itemView.findViewById(R.id.t10mliv_poster)
+        val ratingView: CircularRatingView = itemView.findViewById(R.id.t10mliv_rating)
 
         init {
             posterView.setOnClickListener(this)
+
+            if (!ratingEnabled) {
+                ratingView.visibility = View.GONE
+            }
         }
 
         override fun onClick(v: View?) {
