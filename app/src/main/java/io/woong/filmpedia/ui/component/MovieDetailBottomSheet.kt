@@ -12,12 +12,12 @@ import io.woong.filmpedia.util.ImagePathUtil
 
 class MovieDetailBottomSheet(private val movie: Movies.Result) : BottomSheetDialogFragment(), View.OnClickListener {
 
-    private var mBinding: LayoutMovieDetailBottomSheetBinding? = null
+    private var _binding: LayoutMovieDetailBottomSheetBinding? = null
     private val binding: LayoutMovieDetailBottomSheetBinding
-        get() = mBinding!!
+        get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mBinding = LayoutMovieDetailBottomSheetBinding.inflate(inflater, container, false)
+        _binding = LayoutMovieDetailBottomSheetBinding.inflate(inflater, container, false)
 
         binding.apply {
             movie.posterPath?.let { path ->

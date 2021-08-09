@@ -20,7 +20,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         private const val FAVORITE_FRAGMENT_INDEX: Int = 2
     }
 
-    private lateinit var binding: ActivityHomeBinding
+    private var _binding: ActivityHomeBinding? = null
+    private val binding: ActivityHomeBinding
+        get() = _binding!!
+
     private val fragments: Array<Fragment> = arrayOf(
         MoviesFragment(),
         PeopleFragment(),
@@ -30,7 +33,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.navigation.setOnItemSelectedListener(this)
@@ -59,5 +62,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         } else {
             false
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

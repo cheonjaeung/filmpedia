@@ -9,17 +9,17 @@ import io.woong.filmpedia.databinding.FragmentPeopleBinding
 
 class PeopleFragment : Fragment() {
 
-    private var mBinding: FragmentPeopleBinding? = null
+    private var _binding: FragmentPeopleBinding? = null
     private val binding: FragmentPeopleBinding
-        get() = mBinding!!
+        get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = FragmentPeopleBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentPeopleBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
+        _binding = null
     }
 }

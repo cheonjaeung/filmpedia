@@ -28,12 +28,12 @@ class MoviesFragment : Fragment(),
     Top10MovieListAdapter.OnItemClickListener {
 
     private val viewModel: MoviesViewModel by viewModels()
-    private var mBinding: FragmentMoviesBinding? = null
+    private var _binding: FragmentMoviesBinding? = null
     private val binding: FragmentMoviesBinding
-        get() = mBinding!!
+        get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
         
         val context: Context = container?.context ?: throw NullPointerException("Context cannot be null.")
 
@@ -98,11 +98,6 @@ class MoviesFragment : Fragment(),
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mBinding = null
-    }
-
     override fun onInfoButtonClick(view: RecommendedMovieView, movie: RecommendedMovie?) {
         if (view.id == binding.recommendedMovie.id) {
             movie?.let { m ->
@@ -117,6 +112,11 @@ class MoviesFragment : Fragment(),
             val sheet = MovieDetailBottomSheet(movies[position])
             sheet.show(parentFragmentManager, "MovieDetailBottomSheet")
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 

@@ -9,17 +9,17 @@ import io.woong.filmpedia.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : Fragment() {
 
-    private var mBinding: FragmentFavoriteBinding? = null
+    private var _binding: FragmentFavoriteBinding? = null
     private val binding: FragmentFavoriteBinding
-        get() = mBinding!!
+        get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = FragmentFavoriteBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
+        _binding = null
     }
 }
