@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircularRatingView">
+        <attr name="rating" format="integer" />
+        <attr name="rating_max" format="integer" />
+        <attr name="rating_arc_size" format="dimension" />
+        <attr name="rating_arc_color" format="color" />
+        <attr name="rating_text_size" format="dimension" />
+        <attr name="rating_text_color" format="color" />
+        <attr name="background_circle_color" format="color" />
+        <attr name="center_circle_color" format="color" />
+    </declare-styleable>
+</resources>
