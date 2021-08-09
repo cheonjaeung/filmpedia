@@ -1,5 +1,6 @@
 package io.woong.filmpedia.ui.page.movies
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.Genre
@@ -22,45 +23,57 @@ class MoviesViewModel : ViewModel() {
 
     private val repository: HomeRepository = HomeRepository()
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
-    val recommendedMovie: MutableLiveData<RecommendedMovie> = MutableLiveData()
+    private val _recommendedMovie: MutableLiveData<RecommendedMovie> = MutableLiveData()
+    val recommendedMovie: LiveData<RecommendedMovie>
+        get() = _recommendedMovie
 
-    val top10NowPlayingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    private val _top10NowPlayingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    val top10NowPlayingMovies: LiveData<List<Movies.Result>>
+        get() = _top10NowPlayingMovies
 
-    val top10PopularMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    private val _top10PopularMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    val top10PopularMovies: LiveData<List<Movies.Result>>
+        get() = _top10PopularMovies
 
-    val top10RatedMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    private val _top10RatedMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    val top10RatedMovies: LiveData<List<Movies.Result>>
+        get() = _top10RatedMovies
 
-    val top10UpcomingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    private val _top10UpcomingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    val top10UpcomingMovies: LiveData<List<Movies.Result>>
+        get() = _top10UpcomingMovies
 
     private val genres: MutableList<Genre> = mutableListOf()
 
     fun update() {
         CoroutineScope(Dispatchers.Default).launch {
-            isLoading.postValue(true)
+            _isLoading.postValue(true)
 
             val nowPlayingFetchingJob = repository.fetchTop10NowPlayingMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
-                    top10NowPlayingMovies.postValue(movies)
+                    _top10NowPlayingMovies.postValue(movies)
                 }
             }
 
             val popularFetchingJob = repository.fetchTop10PopularMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
-                    top10PopularMovies.postValue(movies)
+                    _top10PopularMovies.postValue(movies)
                 }
             }
 
             val topRatedFetchingJob = repository.fetchTop10HighRateMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
-                    top10RatedMovies.postValue(movies)
+                    _top10RatedMovies.postValue(movies)
                 }
             }
 
             val upcomingFetchingJob = repository.fetchTop10UpcomingMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
-                    top10UpcomingMovies.postValue(movies)
+                    _top10UpcomingMovies.postValue(movies)
                 }
             }
 
@@ -112,9 +125,9 @@ class MoviesViewModel : ViewModel() {
                 }
             }
 
-            recommendedMovie.postValue(randomMovie)
+            _recommendedMovie.postValue(randomMovie)
 
-            isLoading.postValue(false)
+            _isLoading.postValue(false)
         }
     }
 
