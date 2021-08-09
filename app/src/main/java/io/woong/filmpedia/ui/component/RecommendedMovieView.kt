@@ -75,7 +75,7 @@ class RecommendedMovieView @JvmOverloads constructor(
 
             genresTextView.text = buildGenresText(m.genres)
 
-            ratingView.rating = (m.movie.voteAverage * 10).toInt()
+            ratingView.rating = m.movie.voteAverage
         }
     }
 

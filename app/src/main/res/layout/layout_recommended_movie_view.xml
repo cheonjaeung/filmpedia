@@ -64,7 +64,7 @@
                 app:rating_arc_size="2dp"
                 app:rating_text_size="10sp"
                 app:rating_text_color="@color/white"
-                tools:rating="78" />
+                tools:rating="7.8" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/rmv_favorite_button"

@@ -7,6 +7,8 @@ import android.util.TypedValue
 import android.view.View
 import androidx.annotation.ColorInt
 import io.woong.filmpedia.R
+import java.lang.IllegalArgumentException
+import java.lang.NumberFormatException
 
 class CircularRatingView @JvmOverloads constructor(
     context: Context,
@@ -18,12 +20,12 @@ class CircularRatingView @JvmOverloads constructor(
         private const val RATING_ARC_START_ANGLE: Float = -90f
     }
 
-    var rating: Int = 0
+    var rating: Double = 0.0
         set(value) {
             field = value
             invalidate()
         }
-    private var ratingMax: Int = 0
+    private var ratingMax: Double = 0.0
     @ColorInt
     private var ratingTextColor: Int = 0
     private var ratingTextSize: Float = 0f
@@ -62,15 +64,19 @@ class CircularRatingView @JvmOverloads constructor(
         )
 
         try {
-            rating = attrs.getInt(
-                R.styleable.CircularRatingView_rating,
-                0
-            )
+            val ratingString = attrs.getString(R.styleable.CircularRatingView_rating) ?: "0.0"
+            rating = try {
+                ratingString.toDouble()
+            } catch (e: NumberFormatException) {
+                throw IllegalArgumentException("Attribute 'rating' of CircularRatingView should be a number.")
+            }
 
-            ratingMax = attrs.getInt(
-                R.styleable.CircularRatingView_rating_max,
-                100
-            )
+            val ratingMaxString = attrs.getString(R.styleable.CircularRatingView_rating_max) ?: "10.0"
+            ratingMax = try {
+                ratingMaxString.toDouble()
+            } catch (e: NumberFormatException) {
+                throw IllegalArgumentException("Attribute 'rating_max' of CircularRatingView should be a number.")
+            }
 
             ratingArcSize = attrs.getDimension(
                 R.styleable.CircularRatingView_rating_arc_size,
@@ -154,7 +160,7 @@ class CircularRatingView @JvmOverloads constructor(
             textSize = ratingTextSize
         }
 
-        measureTextRect("$rating%")
+        measureTextRect(rating.toString())
 
         canvas.apply {
             drawCircle(
@@ -180,7 +186,7 @@ class CircularRatingView @JvmOverloads constructor(
             )
 
             drawText(
-                "$rating%",
+                rating.toString(),
                 ratingTextRect.left.toFloat(),
                 ratingTextRect.bottom.toFloat(),
                 ratingTextPaint
