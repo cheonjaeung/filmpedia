@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
@@ -30,69 +33,55 @@ class MoviesFragment : Fragment(),
         get() = mBinding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mBinding = FragmentMoviesBinding.inflate(inflater, container, false)
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
         
         val context: Context = container?.context ?: throw NullPointerException("Context cannot be null.")
 
-        binding.recommendedMovie.setOnInfoButtonClickListener(this)
-        viewModel.recommendedMovie.observe(viewLifecycleOwner) { movie ->
-            binding.recommendedMovie.movie = movie
-        }
+        binding.apply {
+            lifecycleOwner = this@MoviesFragment
+            vm = viewModel
 
-        binding.swipeLayout.setOnRefreshListener(this)
+            recommendedMovie.setOnInfoButtonClickListener(this@MoviesFragment)
 
-        val listDeco = HorizontalItemDecoration(8, resources.displayMetrics)
+            swipeLayout.setOnRefreshListener(this@MoviesFragment)
 
-        binding.top10NowPlayingList.apply {
-            adapter = Top10MovieListAdapter(context).apply {
-                setOnItemClickListener(this@MoviesFragment)
-                setRatingEnabled(false)
+            val listDeco = HorizontalItemDecoration(8, resources.displayMetrics)
+
+            top10NowPlayingList.apply {
+                adapter = Top10MovieListAdapter(context).apply {
+                    setOnItemClickListener(this@MoviesFragment)
+                    setRatingEnabled(false)
+                }
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(listDeco)
             }
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(listDeco)
-        }
-        viewModel.top10NowPlayingMovies.observe(viewLifecycleOwner) { movies ->
-            val adapter = binding.top10NowPlayingList.adapter as Top10MovieListAdapter
-            adapter.setTop10(movies)
-        }
 
-        binding.top10PopularList.apply {
-            adapter = Top10MovieListAdapter(context).apply {
-                setOnItemClickListener(this@MoviesFragment)
-                setRatingEnabled(false)
+            top10PopularList.apply {
+                adapter = Top10MovieListAdapter(context).apply {
+                    setOnItemClickListener(this@MoviesFragment)
+                    setRatingEnabled(false)
+                }
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(listDeco)
             }
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(listDeco)
-        }
-        viewModel.top10PopularMovies.observe(viewLifecycleOwner) { movies ->
-            val adapter = binding.top10PopularList.adapter as Top10MovieListAdapter
-            adapter.setTop10(movies)
-        }
 
-        binding.top10RatedList.apply {
-            adapter = Top10MovieListAdapter(context).apply {
-                setOnItemClickListener(this@MoviesFragment)
-                setRatingEnabled(true)
+            top10RatedList.apply {
+                adapter = Top10MovieListAdapter(context).apply {
+                    setOnItemClickListener(this@MoviesFragment)
+                    setRatingEnabled(true)
+                }
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(listDeco)
             }
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(listDeco)
-        }
-        viewModel.top10RatedMovies.observe(viewLifecycleOwner) { movies ->
-            val adapter = binding.top10RatedList.adapter as Top10MovieListAdapter
-            adapter.setTop10(movies)
-        }
 
-        binding.top10UpcomingList.apply {
-            adapter = Top10MovieListAdapter(context).apply {
-                setOnItemClickListener(this@MoviesFragment)
-                setRatingEnabled(false)
+            top10UpcomingList.apply {
+                adapter = Top10MovieListAdapter(context).apply {
+                    setOnItemClickListener(this@MoviesFragment)
+                    setRatingEnabled(false)
+                }
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(listDeco)
             }
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            addItemDecoration(listDeco)
-        }
-        viewModel.top10UpcomingMovies.observe(viewLifecycleOwner) { movies ->
-            val adapter = binding.top10UpcomingList.adapter as Top10MovieListAdapter
-            adapter.setTop10(movies)
         }
 
         viewModel.update()
@@ -128,5 +117,18 @@ class MoviesFragment : Fragment(),
             val sheet = MovieDetailBottomSheet(movies[position])
             sheet.show(parentFragmentManager, "MovieDetailBottomSheet")
         }
+    }
+}
+
+@BindingAdapter("recommended_movie")
+fun RecommendedMovieView.bindRecommendedMovie(movie: RecommendedMovie?) {
+    this.movie = movie
+}
+
+@BindingAdapter("top10_movies")
+fun RecyclerView.bindTop10Movies(movies: List<Movies.Result>?) {
+    movies?.let { m ->
+        val adapter = this.adapter as Top10MovieListAdapter
+        adapter.setTop10(m)
     }
 }

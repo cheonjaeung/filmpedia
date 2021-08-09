@@ -22,29 +22,17 @@ class MoviesViewModel : ViewModel() {
 
     private val repository: HomeRepository = HomeRepository()
 
-    val isLoading: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
+    val isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    val recommendedMovie: MutableLiveData<RecommendedMovie> by lazy {
-        MutableLiveData<RecommendedMovie>()
-    }
+    val recommendedMovie: MutableLiveData<RecommendedMovie> = MutableLiveData()
 
-    val top10NowPlayingMovies: MutableLiveData<List<Movies.Result>> by lazy {
-        MutableLiveData<List<Movies.Result>>()
-    }
+    val top10NowPlayingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
 
-    val top10PopularMovies: MutableLiveData<List<Movies.Result>> by lazy {
-        MutableLiveData<List<Movies.Result>>()
-    }
+    val top10PopularMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
 
-    val top10RatedMovies: MutableLiveData<List<Movies.Result>> by lazy {
-        MutableLiveData<List<Movies.Result>>()
-    }
+    val top10RatedMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
 
-    val top10UpcomingMovies: MutableLiveData<List<Movies.Result>> by lazy {
-        MutableLiveData<List<Movies.Result>>()
-    }
+    val top10UpcomingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
 
     private val genres: MutableList<Genre> = mutableListOf()
 
