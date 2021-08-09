@@ -50,19 +50,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="8dp"
             android:gravity="center">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/rmv_rate"
+            <io.woong.filmpedia.ui.component.CircularRatingView
+                android:id="@+id/rmv_rating"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_weight="0.33"
-                android:background="@android:color/transparent" />
+                android:padding="4dp"
+                app:background_circle_color="@color/light_gray"
+                app:center_circle_color="@color/dark_gray"
+                app:rating_arc_size="2dp"
+                app:rating_text_size="10sp"
+                app:rating_text_color="@color/white"
+                tools:rating="78" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/rmv_favorite_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_weight="0.33"
                 android:src="@drawable/ic_favorite"
                 style="@style/ImageButtonTheme" />
@@ -70,7 +77,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/rmv_info_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_weight="0.33"
                 android:src="@drawable/ic_info"
                 style="@style/ImageButtonTheme" />

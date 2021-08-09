@@ -9,7 +9,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -30,7 +29,7 @@ class RecommendedMovieView @JvmOverloads constructor(
     private val backdropImageView: AppCompatImageView
     private val titleTextView: AppCompatTextView
     private val genresTextView: AppCompatTextView
-    private val rateView: AppCompatButton
+    private val ratingView: CircularRatingView
     private val infoButton: AppCompatImageButton
     private val favoriteButton: AppCompatImageButton
 
@@ -48,7 +47,7 @@ class RecommendedMovieView @JvmOverloads constructor(
         backdropImageView = findViewById(R.id.rmv_backdrop)
         titleTextView = findViewById(R.id.rmv_title)
         genresTextView = findViewById(R.id.rmv_genres)
-        rateView = findViewById(R.id.rmv_rate)
+        ratingView = findViewById(R.id.rmv_rating)
 
         infoButton = findViewById(R.id.rmv_info_button)
         infoButton.setOnClickListener(this)
@@ -68,13 +67,15 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     private fun loadMovieInfo() {
         movie?.let { m ->
+            Glide.with(this)
+                .load(ImagePathUtil.toFullUrl(m.movie.backdropPath))
+                .into(backdropImageView)
+
             titleTextView.text = m.movie.title
 
             genresTextView.text = buildGenresText(m.genres)
 
-            Glide.with(this)
-                .load(ImagePathUtil.toFullUrl(m.movie.backdropPath))
-                .into(backdropImageView)
+            ratingView.rating = (m.movie.voteAverage * 10).toInt()
         }
     }
 
