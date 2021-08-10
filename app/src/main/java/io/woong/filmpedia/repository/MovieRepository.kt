@@ -12,13 +12,25 @@ import kotlinx.coroutines.launch
 class MovieRepository {
 
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
-    private val genreService: GenreService = TmdbClient.instance.create(GenreService::class.java)
 
     fun fetchMovieDetail(
         movieId: Int,
         onResponse: (movie: Movie?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = movieService.getDetail(apiKey = apiKey, movieId = movieId)
+
+        if (response.isSuccessful) {
+            onResponse(response.body())
+        } else {
+            onResponse(null)
+        }
+    }
+
+    fun fetchCredits(
+        movieId: Int,
+        onResponse: (credits: Credits?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getCredits(movieId = movieId, apiKey = apiKey)
 
         if (response.isSuccessful) {
             onResponse(response.body())

@@ -1,5 +1,6 @@
 package io.woong.filmpedia.network
 
+import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.data.Movies
 import retrofit2.Response
@@ -16,6 +17,13 @@ interface MovieService {
         @Query("language") language: String? = null,
         @Query("append_to_response") appendToResponse: String? = null
     ): Response<Movie>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCredits(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String? = null
+    ): Response<Credits>
 
     @GET("movie/now_playing")
     suspend fun getNowPlaying(
