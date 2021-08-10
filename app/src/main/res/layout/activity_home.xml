@@ -28,5 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/menu_navigation"
+        app:itemBackground="@color/background"
+        app:itemIconTint="@drawable/background_navigation_selector"
+        app:itemTextColor="@drawable/background_navigation_selector"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
