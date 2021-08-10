@@ -36,6 +36,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
         binding.navigation.setOnItemSelectedListener(this)
         switchFragment(MOVIES_FRAGMENT_INDEX)
     }
