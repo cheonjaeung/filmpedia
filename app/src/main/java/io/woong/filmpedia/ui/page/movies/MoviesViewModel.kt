@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.Genre
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
+import io.woong.filmpedia.repository.GenreRepository
 import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,8 @@ class MoviesViewModel : ViewModel() {
         private const val UPCOMING_MOVIES: Int = 4
     }
 
-    private val repository: MovieRepository = MovieRepository()
+    private val movieRepository: MovieRepository = MovieRepository()
+    private val genreRepository: GenreRepository = GenreRepository()
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
@@ -53,31 +55,31 @@ class MoviesViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Default).launch {
             _isLoading.postValue(true)
 
-            val nowPlayingFetchingJob = repository.fetchTop10NowPlayingMovies { movies ->
+            val nowPlayingFetchingJob = movieRepository.fetchTop10NowPlayingMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
                     _top10NowPlayingMovies.postValue(movies)
                 }
             }
 
-            val popularFetchingJob = repository.fetchTop10PopularMovies { movies ->
+            val popularFetchingJob = movieRepository.fetchTop10PopularMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
                     _top10PopularMovies.postValue(movies)
                 }
             }
 
-            val topRatedFetchingJob = repository.fetchTop10HighRateMovies { movies ->
+            val topRatedFetchingJob = movieRepository.fetchTop10HighRateMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
                     _top10RatedMovies.postValue(movies)
                 }
             }
 
-            val upcomingFetchingJob = repository.fetchTop10UpcomingMovies { movies ->
+            val upcomingFetchingJob = movieRepository.fetchTop10UpcomingMovies { movies ->
                 if (movies != emptyList<Movies.Result>()) {
                     _top10UpcomingMovies.postValue(movies)
                 }
             }
 
-            val genresFetchingJob = repository.fetchGenres { genres ->
+            val genresFetchingJob = genreRepository.fetchGenres { genres ->
                 if (genres != emptyList<Genre>()) {
                     this@MoviesViewModel.genres.apply {
                         clear()
