@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityHomeBinding
-import io.woong.filmpedia.ui.page.favorite.FavoriteFragment
+import io.woong.filmpedia.ui.page.bookmarks.BookmarksFragment
 import io.woong.filmpedia.ui.page.movies.MoviesFragment
 import io.woong.filmpedia.ui.page.people.PeopleFragment
 
@@ -17,7 +17,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         private const val FRAGMENT_NOT_SELECTED: Int = -1
         private const val MOVIES_FRAGMENT_INDEX: Int = 0
         private const val PEOPLE_FRAGMENT_INDEX: Int = 1
-        private const val FAVORITE_FRAGMENT_INDEX: Int = 2
+        private const val BOOKMARKS_FRAGMENT_INDEX: Int = 2
     }
 
     private var _binding: ActivityHomeBinding? = null
@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private val fragments: Array<Fragment> = arrayOf(
         MoviesFragment(),
         PeopleFragment(),
-        FavoriteFragment()
+        BookmarksFragment()
     )
     private var currentFragmentIndex: Int = FRAGMENT_NOT_SELECTED
 
@@ -46,7 +46,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return when (item.itemId) {
             R.id.navigation_movies -> switchFragment(MOVIES_FRAGMENT_INDEX)
             R.id.navigation_people -> switchFragment(PEOPLE_FRAGMENT_INDEX)
-            R.id.navigation_favorite -> switchFragment(FAVORITE_FRAGMENT_INDEX)
+            R.id.navigation_bookmarks -> switchFragment(BOOKMARKS_FRAGMENT_INDEX)
             else -> false
         }
     }

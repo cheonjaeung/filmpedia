@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="HardcodedText,AlwaysShowAction">
 
     <item android:id="@+id/navigation_movies"
         android:title="Movies"
@@ -13,8 +15,8 @@
         android:icon="@drawable/ic_people"
         app:showAsAction="always" />
 
-    <item android:id="@+id/navigation_favorite"
-        android:title="Favorite"
-        android:icon="@drawable/ic_favorite"
+    <item android:id="@+id/navigation_bookmarks"
+        android:title="Bookmarks"
+        android:icon="@drawable/ic_bookmarks"
         app:showAsAction="always" />
 </menu>

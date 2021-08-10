@@ -24,7 +24,7 @@ class RecommendedMovieView @JvmOverloads constructor(
     private val genresTextView: GenresTextView
     private val ratingView: CircularRatingView
     private val infoButton: AppCompatImageButton
-    private val favoriteButton: AppCompatImageButton
+    private val bookmarkButton: AppCompatImageButton
 
     private var infoButtonClickListener: OnInfoButtonClickListener? = null
 
@@ -45,7 +45,7 @@ class RecommendedMovieView @JvmOverloads constructor(
         infoButton = findViewById(R.id.rmv_info_button)
         infoButton.setOnClickListener(this)
 
-        favoriteButton = findViewById(R.id.rmv_favorite_button)
+        bookmarkButton = findViewById(R.id.rmv_bookmark_button)
     }
 
     override fun onClick(v: View?) {
