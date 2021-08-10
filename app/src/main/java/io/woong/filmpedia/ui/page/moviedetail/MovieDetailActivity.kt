@@ -39,7 +39,7 @@ class MovieDetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_back)
+            setHomeAsUpIndicator(R.drawable.icon_back)
         }
 
         val extra = intent.getIntExtra(MOVIE_ID_EXTRA_ID, -1)

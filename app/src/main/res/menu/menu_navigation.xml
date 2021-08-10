@@ -6,17 +6,17 @@
 
     <item android:id="@+id/navigation_movies"
         android:title="Movies"
-        android:icon="@drawable/ic_movie"
+        android:icon="@drawable/icon_movie"
         android:enabled="true"
         app:showAsAction="always" />
 
     <item android:id="@+id/navigation_people"
         android:title="People"
-        android:icon="@drawable/ic_people"
+        android:icon="@drawable/icon_people"
         app:showAsAction="always" />
 
     <item android:id="@+id/navigation_bookmarks"
         android:title="Bookmarks"
-        android:icon="@drawable/ic_bookmarks"
+        android:icon="@drawable/icon_bookmarks"
         app:showAsAction="always" />
 </menu>
