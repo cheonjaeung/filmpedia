@@ -10,6 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#FF999999</color>
     <color name="dark_gray">#FF484848</color>
+    <color name="yellow">#FFFFFF00</color>
 
     <color name="background">#FF121212</color>
     <color name="background_alpha80">#CC121212</color>

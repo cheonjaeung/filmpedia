@@ -31,20 +31,18 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="Movie Title"
-            tools:textColor="@color/white" />
+            style="@style/FilmpediaTitleTextTheme"
+            tools:text="Movie Title" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <io.woong.filmpedia.ui.component.GenresTextView
             android:id="@+id/rmv_genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            tools:text="Action · Adventure · Fantasy"
-            tools:textColor="@color/white" />
+            app:separator_color="@color/yellow"
+            tools:genres="Action,Adventure,Fantasy" />
 
         <LinearLayout
             android:layout_width="match_parent"

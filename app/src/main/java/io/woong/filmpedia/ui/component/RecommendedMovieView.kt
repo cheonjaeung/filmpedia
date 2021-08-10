@@ -1,19 +1,12 @@
 package io.woong.filmpedia.ui.component
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.text.toSpannable
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Genre
@@ -28,7 +21,7 @@ class RecommendedMovieView @JvmOverloads constructor(
 
     private val backdropImageView: AppCompatImageView
     private val titleTextView: AppCompatTextView
-    private val genresTextView: AppCompatTextView
+    private val genresTextView: GenresTextView
     private val ratingView: CircularRatingView
     private val infoButton: AppCompatImageButton
     private val favoriteButton: AppCompatImageButton
@@ -73,44 +66,13 @@ class RecommendedMovieView @JvmOverloads constructor(
 
             titleTextView.text = m.movie.title
 
-            genresTextView.text = buildGenresText(m.genres)
+            val g = mutableListOf<Genre>()
+            g.addAll(m.genres)
+            g.add(Genre(-1, m.recommendationReason))
+            genresTextView.genres = g
 
             ratingView.rating = m.movie.voteAverage
         }
-    }
-
-    private fun buildGenresText(genres: List<Genre>): Spannable {
-        val builder = SpannableStringBuilder()
-        genres.forEach { genre ->
-            val startPos = builder.length
-            builder.append(genre.name)
-            val endPos = builder.length
-
-            builder.setSpan(
-                ForegroundColorSpan(Color.WHITE),
-                startPos,
-                endPos,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-
-            builder.append(" · ")
-            builder.setSpan(
-                ForegroundColorSpan(Color.YELLOW),
-                builder.length - 2,
-                builder.length - 1,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            builder.setSpan(
-                StyleSpan(Typeface.BOLD),
-                builder.length - 2,
-                builder.length - 1,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        builder.append(movie?.recommendationReason)
-
-        return builder.toSpannable()
     }
 
     interface OnInfoButtonClickListener {
