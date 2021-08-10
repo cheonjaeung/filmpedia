@@ -46,8 +46,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/bg_backdrop_mask"
-                        android:scaleType="centerCrop" />
+                        android:src="@drawable/bg_backdrop_mask" />
                 </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
