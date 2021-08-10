@@ -7,4 +7,6 @@
     <string name="top10_upcoming">Top 10 Upcoming Movies</string>
 
     <string name="detail_information">Detail Information</string>
+
+    <string name="overview">Overview</string>
 </resources>

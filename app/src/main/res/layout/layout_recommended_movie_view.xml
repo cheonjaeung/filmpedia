@@ -31,7 +31,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
-            style="@style/FilmpediaTitleTextTheme"
+            style="@style/FilmpediaMovieTitleTheme"
             tools:text="Movie Title" />
 
         <io.woong.filmpedia.ui.component.GenresTextView

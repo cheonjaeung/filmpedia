@@ -14,5 +14,6 @@
 
     <color name="background">#FF121212</color>
     <color name="background_alpha80">#CC121212</color>
+    <color name="background_alpha60">#99121212</color>
     <color name="background_elevated">#FF343434</color>
 </resources>
