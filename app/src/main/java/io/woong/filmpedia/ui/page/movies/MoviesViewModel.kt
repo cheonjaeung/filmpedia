@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.Genre
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
-import io.woong.filmpedia.repository.HomeRepository
+import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
@@ -21,7 +21,7 @@ class MoviesViewModel : ViewModel() {
         private const val UPCOMING_MOVIES: Int = 4
     }
 
-    private val repository: HomeRepository = HomeRepository()
+    private val repository: MovieRepository = MovieRepository()
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>

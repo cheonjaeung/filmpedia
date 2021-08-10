@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeRepository {
+class MovieRepository {
 
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
     private val genreService: GenreService = TmdbClient.instance.create(GenreService::class.java)
