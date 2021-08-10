@@ -30,7 +30,7 @@
                         android:id="@+id/recommended_movie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        recommended_movie="@{vm.recommendedMovie}" />
+                        movies_recommended_movie_binding="@{vm.recommendedMovie}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                         android:id="@+id/top10_now_playing_list"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        top10_movies="@{vm.top10NowPlayingMovies}"
+                        movies_top10_movies_binding="@{vm.top10NowPlayingMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_top10_movie_list_item_view" />
@@ -57,7 +57,7 @@
                         android:id="@+id/top10_popular_list"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        top10_movies="@{vm.top10PopularMovies}"
+                        movies_top10_movies_binding="@{vm.top10PopularMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_top10_movie_list_item_view" />
@@ -72,7 +72,7 @@
                         android:id="@+id/top10_rated_list"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        top10_movies="@{vm.top10RatedMovies}"
+                        movies_top10_movies_binding="@{vm.top10RatedMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_top10_movie_list_item_view" />
@@ -88,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_marginBottom="8dp"
-                        top10_movies="@{vm.top10UpcomingMovies}"
+                        movies_top10_movies_binding="@{vm.top10UpcomingMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_top10_movie_list_item_view" />
