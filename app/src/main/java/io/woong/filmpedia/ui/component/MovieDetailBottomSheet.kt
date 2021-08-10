@@ -16,6 +16,12 @@ class MovieDetailBottomSheet(private val movie: Movies.Result) : BottomSheetDial
     private val binding: LayoutMovieDetailBottomSheetBinding
         get() = _binding!!
 
+    private var listener: OnDetailButtonClickListener? = null
+
+    fun setOnDetailButtonClickListener(listener: OnDetailButtonClickListener) {
+        this.listener = listener
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = LayoutMovieDetailBottomSheetBinding.inflate(inflater, container, false)
 
@@ -32,14 +38,20 @@ class MovieDetailBottomSheet(private val movie: Movies.Result) : BottomSheetDial
             overview.text = movie.overview
 
             closeButton.setOnClickListener(this@MovieDetailBottomSheet)
+            detailButton.setOnClickListener(this@MovieDetailBottomSheet)
         }
 
         return binding.root
     }
 
     override fun onClick(v: View?) {
-        if (v?.id == binding.closeButton.id) {
-            this.dismiss()
+        when (v?.id) {
+            binding.closeButton.id -> this.dismiss()
+            binding.detailButton.id -> listener?.onDetailButtonClick(movie)
         }
+    }
+
+    interface OnDetailButtonClickListener {
+        fun onDetailButtonClick(movie: Movies.Result)
     }
 }

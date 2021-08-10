@@ -1,6 +1,7 @@
 package io.woong.filmpedia.ui.page.movies
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,13 +20,15 @@ import io.woong.filmpedia.data.RecommendedMovie
 import io.woong.filmpedia.databinding.FragmentMoviesBinding
 import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.ui.component.RecommendedMovieView
+import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.HorizontalItemDecoration
 import java.lang.NullPointerException
 
 class MoviesFragment : Fragment(),
     SwipeRefreshLayout.OnRefreshListener,
     RecommendedMovieView.OnInfoButtonClickListener,
-    Top10MovieListAdapter.OnItemClickListener {
+    Top10MovieListAdapter.OnItemClickListener,
+    MovieDetailBottomSheet.OnDetailButtonClickListener{
 
     private val viewModel: MoviesViewModel by viewModels()
     private var _binding: FragmentMoviesBinding? = null
@@ -102,7 +105,10 @@ class MoviesFragment : Fragment(),
         if (view.id == binding.recommendedMovie.id) {
             movie?.let { m ->
                 val sheet = MovieDetailBottomSheet(m.movie)
-                sheet.show(parentFragmentManager, "MovieDetailBottomSheet")
+                sheet.apply {
+                    setOnDetailButtonClickListener(this@MoviesFragment)
+                    show(this@MoviesFragment.parentFragmentManager, "MovieDetailBottomSheet")
+                }
             }
         }
     }
@@ -110,8 +116,17 @@ class MoviesFragment : Fragment(),
     override fun onItemClick(position: Int, movies: List<Movies.Result>) {
         if (position != RecyclerView.NO_POSITION) {
             val sheet = MovieDetailBottomSheet(movies[position])
-            sheet.show(parentFragmentManager, "MovieDetailBottomSheet")
+            sheet.apply {
+                setOnDetailButtonClickListener(this@MoviesFragment)
+                show(this@MoviesFragment.parentFragmentManager, "MovieDetailBottomSheet")
+            }
         }
+    }
+
+    override fun onDetailButtonClick(movie: Movies.Result) {
+        val intent = Intent(context, MovieDetailActivity::class.java)
+        intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movie.id)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
