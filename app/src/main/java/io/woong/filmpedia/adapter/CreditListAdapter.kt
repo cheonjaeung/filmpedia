@@ -55,7 +55,7 @@ class CreditListAdapter(private val context: Context, private val mod: Mod) : Re
                     val crew = _credits[position] as Credits.Crew
                     profilePath = crew.profilePath
                     name = crew.name
-                    subtitle = crew.department
+                    subtitle = crew.job
                 }
             }
 
