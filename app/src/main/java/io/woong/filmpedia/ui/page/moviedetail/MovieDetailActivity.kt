@@ -113,6 +113,7 @@ fun AppCompatImageView.bindPosterPath(path: String?) {
         Glide.with(this)
             .load(ImagePathUtil.toFullUrl(p))
             .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
+            .placeholder(R.drawable.placeholder_poster)
             .into(this)
     }
 }

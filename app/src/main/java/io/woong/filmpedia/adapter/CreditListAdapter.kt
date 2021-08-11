@@ -59,18 +59,17 @@ class CreditListAdapter(private val context: Context, private val mod: Mod) : Re
                 }
             }
 
-            profilePath?.let { path ->
-                val radiusDp = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    4f,
-                    context.resources.displayMetrics
-                ).toInt()
+            val radiusDp = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                4f,
+                context.resources.displayMetrics
+            ).toInt()
 
-                Glide.with(context)
-                    .load(ImagePathUtil.toFullUrl(path))
-                    .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
-                    .into(holder.profileView)
-            }
+            Glide.with(context)
+                .load(ImagePathUtil.toFullUrl(profilePath))
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
+                .placeholder(R.drawable.placeholder_profile)
+                .into(holder.profileView)
 
             holder.nameView.text = name
             holder.subtitleView.text = subtitle

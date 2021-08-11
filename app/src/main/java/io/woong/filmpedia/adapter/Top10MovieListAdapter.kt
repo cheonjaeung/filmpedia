@@ -47,19 +47,17 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = top10[position]
 
-        val posterPath = movie.posterPath
-        posterPath?.let { path ->
-            val radiusDp = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                4f,
-                context.resources.displayMetrics
-            ).toInt()
+        val radiusDp = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            4f,
+            context.resources.displayMetrics
+        ).toInt()
 
-            Glide.with(context)
-                .load(ImagePathUtil.toFullUrl(path))
-                .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
-                .into(holder.posterView)
-        }
+        Glide.with(context)
+            .load(ImagePathUtil.toFullUrl(movie.posterPath))
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
+            .placeholder(R.drawable.placeholder_poster)
+            .into(holder.posterView)
 
         holder.ratingView.rating = movie.voteAverage
     }
