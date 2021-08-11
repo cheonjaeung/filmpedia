@@ -178,6 +178,23 @@
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_credits_list_item_view" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/production_companies"
+                        style="@style/FilmpediaTitleTheme" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/production_company_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        movie_detail_production_companies="@{vm.movie.productionCompanies}"
+                        tools:orientation="horizontal"
+                        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_production_company_list_item_view" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

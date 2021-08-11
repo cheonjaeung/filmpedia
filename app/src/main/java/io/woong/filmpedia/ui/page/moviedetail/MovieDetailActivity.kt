@@ -16,8 +16,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.CreditListAdapter
+import io.woong.filmpedia.adapter.ProductionCompanyListAdapter
 import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.Genre
+import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.util.HorizontalItemDecoration
@@ -68,6 +70,12 @@ class MovieDetailActivity : AppCompatActivity() {
 
             crewList.apply {
                 adapter = CreditListAdapter(context, CreditListAdapter.Mod.CREW)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
+            }
+
+            productionCompanyList.apply {
+                adapter = ProductionCompanyListAdapter(context)
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
@@ -154,5 +162,13 @@ fun RecyclerView.bindCrews(crews: List<Credits.Crew>?) {
     crews?.let { c ->
         val adapter = this.adapter as CreditListAdapter
         adapter.credits = c
+    }
+}
+
+@BindingAdapter("movie_detail_production_companies")
+fun RecyclerView.bindProductionCompanies(companies: List<Movie.Company>?) {
+    companies?.let { c ->
+        val adapter = this.adapter as ProductionCompanyListAdapter
+        adapter.companies = c
     }
 }
