@@ -9,13 +9,18 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
+import io.woong.filmpedia.adapter.CreditListAdapter
+import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.Genre
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
+import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import java.lang.StringBuilder
 
@@ -52,6 +57,20 @@ class MovieDetailActivity : AppCompatActivity() {
         binding.apply {
             lifecycleOwner = this@MovieDetailActivity
             vm = viewModel
+
+            val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
+
+            castList.apply {
+                adapter = CreditListAdapter(context, CreditListAdapter.Mod.CAST)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
+            }
+
+            crewList.apply {
+                adapter = CreditListAdapter(context, CreditListAdapter.Mod.CREW)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
+            }
         }
 
         viewModel.update(movieId)
@@ -117,5 +136,22 @@ fun AppCompatTextView.bindRuntime(runtime: Int?) {
         builder.append("(${hours}h ${time}m)")
 
         text = builder.toString()
+    }
+}
+
+@BindingAdapter("movie_detail_casts")
+fun RecyclerView.bindCasts(casts: List<Credits.Cast>?) {
+    casts?.let { c ->
+        val adapter = this.adapter as CreditListAdapter
+        adapter.credits = c
+    }
+}
+
+
+@BindingAdapter("movie_detail_crews")
+fun RecyclerView.bindCrews(crews: List<Credits.Crew>?) {
+    crews?.let { c ->
+        val adapter = this.adapter as CreditListAdapter
+        adapter.credits = c
     }
 }
