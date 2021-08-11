@@ -41,7 +41,8 @@
                         android:id="@+id/backdrop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        movie_detail_backdrop_path="@{vm.movie.backdropPath}" />
+                        movie_detail_backdrop_path="@{vm.movie.backdropPath}"
+                        tools:src="@tools:sample/backgrounds/scenic" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
@@ -54,12 +55,14 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="16dp"
+                    android:scaleType="centerCrop"
                     movie_detail_poster_path="@{vm.movie.posterPath}"
                     app:layout_constraintDimensionRatio="1:1.5"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/backdrop_layout"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/backdrop_layout" />
+                    app:layout_constraintBottom_toBottomOf="@+id/backdrop_layout"
+                    tools:src="@tools:sample/avatars" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title"

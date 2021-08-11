@@ -24,7 +24,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
 
                     <io.woong.filmpedia.ui.component.RecommendedMovieView
                         android:id="@+id/recommended_movie"
@@ -35,13 +36,17 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/top10_now_playing"
-                        style="@style/HomeMovieListTitleTheme" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        style="@style/FilmpediaTitleTheme"
+                        android:text="@string/top10_now_playing" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/top10_now_playing_list"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
                         movies_top10_movies_binding="@{vm.top10NowPlayingMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -50,13 +55,17 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/top10_popular"
-                        style="@style/HomeMovieListTitleTheme" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        style="@style/FilmpediaTitleTheme"
+                        android:text="@string/top10_popular" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/top10_popular_list"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
                         movies_top10_movies_binding="@{vm.top10PopularMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -65,13 +74,17 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/top10_high_rated"
-                        style="@style/HomeMovieListTitleTheme" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        style="@style/FilmpediaTitleTheme"
+                        android:text="@string/top10_high_rated" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/top10_rated_list"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
+                        android:paddingHorizontal="8dp"
                         movies_top10_movies_binding="@{vm.top10RatedMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -80,14 +93,17 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/top10_upcoming"
-                        style="@style/HomeMovieListTitleTheme" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        style="@style/FilmpediaTitleTheme"
+                        android:text="@string/top10_upcoming" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/top10_upcoming_list"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:layout_marginBottom="8dp"
+                        android:paddingHorizontal="8dp"
                         movies_top10_movies_binding="@{vm.top10UpcomingMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
