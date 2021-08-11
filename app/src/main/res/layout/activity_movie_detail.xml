@@ -157,7 +157,7 @@
                         android:id="@+id/cast_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        movie_detail_casts="@{vm.credits.cast}"
+                        movie_detail_casts="@{vm.casts}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_credits_list_item_view" />
@@ -174,7 +174,7 @@
                         android:id="@+id/crew_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        movie_detail_crews="@{vm.credits.crew}"
+                        movie_detail_crews="@{vm.crews}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_credits_list_item_view" />
