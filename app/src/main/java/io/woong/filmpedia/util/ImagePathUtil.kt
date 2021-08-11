@@ -8,5 +8,9 @@ object ImagePathUtil {
 
     private const val BASE_URL: String = "https://image.tmdb.org/t/p/original"
 
-    fun toFullUrl(path: String): String = BASE_URL + path
+    fun toFullUrl(path: String?): String? {
+        path?.let {
+            return BASE_URL + path
+        } ?: return null
+    }
 }
