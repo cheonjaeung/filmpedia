@@ -38,7 +38,7 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="ImageButtonTheme" parent="Widget.AppCompat.ImageButton">
+    <style name="FilmpediaImageButtonTheme" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:tint">@color/white</item>
     </style>

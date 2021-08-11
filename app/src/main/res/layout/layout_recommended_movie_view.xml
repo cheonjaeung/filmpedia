@@ -66,7 +66,7 @@
                 android:layout_height="36dp"
                 android:layout_weight="0.33"
                 android:src="@drawable/icon_info"
-                style="@style/ImageButtonTheme" />
+                style="@style/FilmpediaImageButtonTheme" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/rmv_bookmark_button"
@@ -74,7 +74,7 @@
                 android:layout_height="36dp"
                 android:layout_weight="0.33"
                 android:src="@drawable/icon_unbookmarked"
-                style="@style/ImageButtonTheme" />
+                style="@style/FilmpediaImageButtonTheme" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
