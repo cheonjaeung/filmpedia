@@ -1,10 +1,14 @@
 package io.woong.filmpedia.ui.page.moviedetail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
@@ -26,7 +30,7 @@ import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import java.lang.StringBuilder
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
@@ -60,6 +64,13 @@ class MovieDetailActivity : AppCompatActivity() {
             lifecycleOwner = this@MovieDetailActivity
             vm = viewModel
 
+            homepageButton.setOnClickListener(this@MovieDetailActivity)
+            facebookButton.setOnClickListener(this@MovieDetailActivity)
+            instagramButton.setOnClickListener(this@MovieDetailActivity)
+            twitterButton.setOnClickListener(this@MovieDetailActivity)
+            tmdbButton.setOnClickListener(this@MovieDetailActivity)
+            imdbButton.setOnClickListener(this@MovieDetailActivity)
+
             val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
 
             castList.apply {
@@ -91,6 +102,54 @@ class MovieDetailActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        var uri: Uri? = null
+
+        when (v?.id) {
+            binding.homepageButton.id -> {
+                val homepageUrl = viewModel.movie.value?.homepage
+                homepageUrl?.let { url ->
+                    uri = Uri.parse(url)
+                }
+            }
+            binding.facebookButton.id -> {
+                val facebookId = viewModel.socialIds.value?.facebookId
+                facebookId?.let { id ->
+                    uri = Uri.parse("https://www.facebook.com/$id")
+                }
+            }
+            binding.instagramButton.id -> {
+                val instagramId = viewModel.socialIds.value?.instagramId
+                instagramId?.let { id ->
+                    uri = Uri.parse("https://www.instagram.com/$id")
+                }
+            }
+            binding.twitterButton.id -> {
+                val twitterId = viewModel.socialIds.value?.twitterId
+                twitterId?.let { id ->
+                    uri = Uri.parse("https://twitter.com/$id")
+                }
+            }
+            binding.tmdbButton.id -> {
+                val tmdbId = viewModel.movie.value?.id
+                tmdbId?.let { id ->
+                    uri = Uri.parse("https://www.themoviedb.org/movie/$id")
+                }
+            }
+            binding.imdbButton.id -> {
+                val imdbId = viewModel.socialIds.value?.imdbId
+                imdbId?.let { id ->
+                    uri = Uri.parse("https://www.imdb.com/title/$id")
+                }
+            }
+        }
+
+        uri?.let { u ->
+            val intent = Intent(Intent.ACTION_VIEW, u)
+            startActivity(intent)
         }
     }
 
@@ -148,6 +207,17 @@ fun AppCompatTextView.bindRuntime(runtime: Int?) {
     }
 }
 
+@BindingAdapter("movie_detail_enabled")
+fun AppCompatImageButton.bindEnabled(enable: Boolean) {
+    enable.let {
+        if (it) {
+            this.visibility = View.VISIBLE
+        } else {
+            this.visibility = View.GONE
+        }
+    }
+}
+
 @BindingAdapter("movie_detail_casts")
 fun RecyclerView.bindCasts(casts: List<Credits.Cast>?) {
     casts?.let { c ->
@@ -155,7 +225,6 @@ fun RecyclerView.bindCasts(casts: List<Credits.Cast>?) {
         adapter.credits = c
     }
 }
-
 
 @BindingAdapter("movie_detail_crews")
 fun RecyclerView.bindCrews(crews: List<Credits.Crew>?) {

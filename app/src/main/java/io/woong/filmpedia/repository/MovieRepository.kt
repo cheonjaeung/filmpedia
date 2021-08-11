@@ -2,7 +2,6 @@ package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.apiKey
 import io.woong.filmpedia.data.*
-import io.woong.filmpedia.network.GenreService
 import io.woong.filmpedia.network.MovieService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +30,19 @@ class MovieRepository {
         onResponse: (credits: Credits?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = movieService.getCredits(movieId = movieId, apiKey = apiKey)
+
+        if (response.isSuccessful) {
+            onResponse(response.body())
+        } else {
+            onResponse(null)
+        }
+    }
+
+    fun fetchExternalIds(
+        movieId: Int,
+        onResponse: (ids: ExternalIds?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getExternalIds(movieId = movieId, apiKey = apiKey)
 
         if (response.isSuccessful) {
             onResponse(response.body())

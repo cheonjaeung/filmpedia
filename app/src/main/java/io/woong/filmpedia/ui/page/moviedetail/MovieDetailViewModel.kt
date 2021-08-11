@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.Credits
+import io.woong.filmpedia.data.ExternalIds
 import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
@@ -45,6 +46,30 @@ class MovieDetailViewModel : ViewModel() {
         "Crew" to 11
     )
 
+    private val _socialIds: MutableLiveData<ExternalIds> = MutableLiveData()
+    val socialIds: LiveData<ExternalIds>
+        get() = _socialIds
+
+    private val _homepageEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    val homepageEnabled: LiveData<Boolean>
+        get() = _homepageEnabled
+
+    private val _facebookEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    val facebookEnabled: LiveData<Boolean>
+        get() = _facebookEnabled
+
+    private val _instagramEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    val instagramEnabled: LiveData<Boolean>
+        get() = _instagramEnabled
+
+    private val _twitterEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    val twitterEnabled: LiveData<Boolean>
+        get() = _twitterEnabled
+
+    private val _imdbEnabled: MutableLiveData<Boolean> = MutableLiveData(false)
+    val imdbEnabled: LiveData<Boolean>
+        get() = _imdbEnabled
+
     fun update(movieId: Int) {
         CoroutineScope(Dispatchers.Default).launch {
             _isLoading.postValue(true)
@@ -52,6 +77,17 @@ class MovieDetailViewModel : ViewModel() {
             val detailFetchingJob = repository.fetchMovieDetail(movieId = movieId) { movie ->
                 movie?.let { m ->
                     _movie.postValue(m)
+                    m.homepage?.let { _homepageEnabled.postValue(true) }
+                }
+            }
+
+            val socialFetchingJob = repository.fetchExternalIds(movieId = movieId) { ids ->
+                ids?.let { i ->
+                    _socialIds.postValue(i)
+                    i.facebookId?.let { _facebookEnabled.postValue(true) }
+                    i.instagramId?.let { _instagramEnabled.postValue(true) }
+                    i.twitterId?.let { _twitterEnabled.postValue(true) }
+                    i.imdbId?.let { _imdbEnabled.postValue(true) }
                 }
             }
 
@@ -64,7 +100,7 @@ class MovieDetailViewModel : ViewModel() {
                 }
             }
 
-            joinAll(detailFetchingJob, creditsFetchingJob)
+            joinAll(detailFetchingJob, socialFetchingJob, creditsFetchingJob)
 
             _isLoading.postValue(false)
         }

@@ -1,6 +1,7 @@
 package io.woong.filmpedia.network
 
 import io.woong.filmpedia.data.Credits
+import io.woong.filmpedia.data.ExternalIds
 import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.data.Movies
 import retrofit2.Response
@@ -24,6 +25,12 @@ interface MovieService {
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null
     ): Response<Credits>
+
+    @GET("movie/{movie_id}/external_ids")
+    suspend fun getExternalIds(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<ExternalIds>
 
     @GET("movie/now_playing")
     suspend fun getNowPlaying(

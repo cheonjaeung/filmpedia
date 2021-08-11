@@ -116,11 +116,94 @@
                     tools:genres="Action,Adventure,Fantasy" />
 
                 <LinearLayout
+                    android:id="@+id/social_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/genres"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <io.woong.filmpedia.ui.component.CircularRatingView
+                        android:id="@+id/rating"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:rating="@{vm.movie.voteAverage}"
+                        style="@style/FilmpediaRatingViewTheme"
+                        tools:rating="9.0" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/homepage_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_home"
+                        movie_detail_enabled="@{vm.homepageEnabled}"
+                        style="@style/FilmpediaImageButtonTheme"
+                        tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/facebook_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_facebook"
+                        movie_detail_enabled="@{vm.facebookEnabled}"
+                        style="@style/FilmpediaImageButtonTheme"
+                        tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/instagram_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_instagram"
+                        movie_detail_enabled="@{vm.instagramEnabled}"
+                        style="@style/FilmpediaImageButtonTheme"
+                        tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/twitter_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_twitter"
+                        movie_detail_enabled="@{vm.twitterEnabled}"
+                        style="@style/FilmpediaImageButtonTheme"
+                        tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/tmdb_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_tmdb"
+                        style="@style/FilmpediaImageButtonTheme" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/imdb_button"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_imdb"
+                        movie_detail_enabled="@{vm.imdbEnabled}"
+                        style="@style/FilmpediaImageButtonTheme"
+                        tools:visibility="visible" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/genres">
+                    app:layout_constraintTop_toBottomOf="@+id/social_layout">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tagline"
