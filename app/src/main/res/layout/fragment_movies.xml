@@ -39,6 +39,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         style="@style/FilmpediaTitleTheme"
                         android:text="@string/top10_now_playing" />
 
@@ -58,6 +59,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         style="@style/FilmpediaTitleTheme"
                         android:text="@string/top10_popular" />
 
@@ -77,6 +79,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         style="@style/FilmpediaTitleTheme"
                         android:text="@string/top10_high_rated" />
 
@@ -96,6 +99,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         style="@style/FilmpediaTitleTheme"
                         android:text="@string/top10_upcoming" />
 
