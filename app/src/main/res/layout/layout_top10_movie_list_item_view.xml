@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="100dp"
-    android:layout_height="150dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_height="150dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/t10mliv_poster"

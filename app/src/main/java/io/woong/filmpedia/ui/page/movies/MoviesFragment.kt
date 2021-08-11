@@ -21,6 +21,7 @@ import io.woong.filmpedia.databinding.FragmentMoviesBinding
 import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.ui.component.RecommendedMovieView
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.util.HorizontalItemDecoration
 import java.lang.NullPointerException
 
 class MoviesFragment : Fragment(),
@@ -47,12 +48,14 @@ class MoviesFragment : Fragment(),
 
             swipeLayout.setOnRefreshListener(this@MoviesFragment)
 
+            val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
             top10NowPlayingList.apply {
                 adapter = Top10MovieListAdapter(context).apply {
                     setOnItemClickListener(this@MoviesFragment)
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
             }
 
             top10PopularList.apply {
@@ -61,6 +64,7 @@ class MoviesFragment : Fragment(),
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
             }
 
             top10RatedList.apply {
@@ -69,6 +73,7 @@ class MoviesFragment : Fragment(),
                     setRatingEnabled(true)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
             }
 
             top10UpcomingList.apply {
@@ -77,6 +82,7 @@ class MoviesFragment : Fragment(),
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
             }
         }
 
