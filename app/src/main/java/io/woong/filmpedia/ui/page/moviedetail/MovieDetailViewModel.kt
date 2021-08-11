@@ -23,9 +23,27 @@ class MovieDetailViewModel : ViewModel() {
     val movie: LiveData<Movie>
         get() = _movie
 
-    private val _credits: MutableLiveData<Credits> = MutableLiveData()
-    val credits: LiveData<Credits>
-        get() = _credits
+    private val _casts: MutableLiveData<List<Credits.Cast>> = MutableLiveData()
+    val casts: LiveData<List<Credits.Cast>>
+        get() = _casts
+
+    private val _crews: MutableLiveData<List<Credits.Crew>> = MutableLiveData()
+    val crews: LiveData<List<Credits.Crew>>
+        get() = _crews
+
+    private val crewsPriority: Map<String, Int> = mapOf(
+        "Directing" to 1,
+        "Production" to 2,
+        "Writing" to 3,
+        "Editing" to 4,
+        "Camera" to 5,
+        "Sound" to 6,
+        "Lighting" to 7,
+        "Visual Effects" to 8,
+        "Art" to 9,
+        "Costume & Make-Up" to 10,
+        "Crew" to 11
+    )
 
     fun update(movieId: Int) {
         CoroutineScope(Dispatchers.Default).launch {
@@ -39,7 +57,10 @@ class MovieDetailViewModel : ViewModel() {
 
             val creditsFetchingJob = repository.fetchCredits(movieId = movieId) { credits ->
                 credits?.let { c ->
-                    _credits.postValue(c)
+                    _casts.postValue(c.cast)
+
+                    val sorted = c.crew.sortedBy { crewsPriority[it.department] }
+                    _crews.postValue(sorted)
                 }
             }
 
