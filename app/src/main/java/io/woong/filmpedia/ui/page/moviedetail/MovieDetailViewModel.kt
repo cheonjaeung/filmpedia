@@ -7,6 +7,7 @@ import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.ExternalIds
 import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.repository.MovieRepository
+import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
@@ -77,17 +78,32 @@ class MovieDetailViewModel : ViewModel() {
             val detailFetchingJob = repository.fetchMovieDetail(movieId = movieId) { movie ->
                 movie?.let { m ->
                     _movie.postValue(m)
-                    m.homepage?.let { _homepageEnabled.postValue(true) }
+
+                    if (m.homepage.isNotNullOrBlank()) {
+                        _homepageEnabled.postValue(true)
+                    }
                 }
             }
 
             val socialFetchingJob = repository.fetchExternalIds(movieId = movieId) { ids ->
                 ids?.let { i ->
                     _socialIds.postValue(i)
-                    i.facebookId?.let { _facebookEnabled.postValue(true) }
-                    i.instagramId?.let { _instagramEnabled.postValue(true) }
-                    i.twitterId?.let { _twitterEnabled.postValue(true) }
-                    i.imdbId?.let { _imdbEnabled.postValue(true) }
+
+                    if (i.facebookId.isNotNullOrBlank()) {
+                        _facebookEnabled.postValue(true)
+                    }
+
+                    if (i.instagramId.isNotNullOrBlank()) {
+                        _instagramEnabled.postValue(true)
+                    }
+
+                    if (i.twitterId.isNotNullOrBlank()) {
+                        _twitterEnabled.postValue(true)
+                    }
+
+                    if (i.imdbId.isNotNullOrBlank()) {
+                        _imdbEnabled.postValue(true)
+                    }
                 }
             }
 
