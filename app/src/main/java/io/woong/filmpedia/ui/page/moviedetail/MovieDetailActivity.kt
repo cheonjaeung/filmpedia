@@ -234,7 +234,7 @@ fun AppCompatTextView.bindLanguages(languages: List<Movie.Country>?) {
         for ((index, lang) in l.withIndex()) {
             builder.append(lang.englishName)
             if (index < l.lastIndex) {
-                builder.append(", ")
+                builder.append("\n")
             }
         }
         this.text = builder.toString()
@@ -248,7 +248,7 @@ fun AppCompatTextView.bindProductionCountries(countries: List<Movie.Country>?) {
         for ((index, country) in c.withIndex()) {
             builder.append(country.name)
             if (index < c.lastIndex) {
-                builder.append(", ")
+                builder.append("\n")
             }
         }
         this.text = builder.toString()
