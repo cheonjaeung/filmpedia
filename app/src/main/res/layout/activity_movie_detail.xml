@@ -302,7 +302,7 @@
                         android:id="@+id/recommendations_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        movie_detail_production_companies="@{vm.movie.productionCompanies}"
+                        movie_detail_recommendation_movies="@{vm.recommendationMovies}"
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_recommendations_list_item_view" />

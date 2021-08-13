@@ -21,9 +21,11 @@ import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.CreditListAdapter
 import io.woong.filmpedia.adapter.ProductionCompanyListAdapter
+import io.woong.filmpedia.adapter.RecommendationListAdapter
 import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.Genre
 import io.woong.filmpedia.data.Movie
+import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.util.HorizontalItemDecoration
@@ -87,6 +89,12 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
             productionCompanyList.apply {
                 adapter = ProductionCompanyListAdapter(context)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(itemDeco)
+            }
+
+            recommendationsList.apply {
+                adapter = RecommendationListAdapter(context)
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
@@ -239,5 +247,13 @@ fun RecyclerView.bindProductionCompanies(companies: List<Movie.Company>?) {
     companies?.let { c ->
         val adapter = this.adapter as ProductionCompanyListAdapter
         adapter.companies = c
+    }
+}
+
+@BindingAdapter("movie_detail_recommendation_movies")
+fun RecyclerView.bindRecommendationMovies(movies: List<Movies.Result>?) {
+    movies?.let { m ->
+        val adapter = this.adapter as RecommendationListAdapter
+        adapter.movies = m
     }
 }

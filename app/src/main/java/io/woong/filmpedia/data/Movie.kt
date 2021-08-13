@@ -2,13 +2,10 @@ package io.woong.filmpedia.data
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * A data class for containing movie detail information.
- */
 data class Movie(
     val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String?,
-    //@SerializedName("belongs_to_collection") val belongsToCollection: String?,
+    @SerializedName("belongs_to_collection") val belongsToCollection: Collection?,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String?,
@@ -32,6 +29,13 @@ data class Movie(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
 ) {
+
+    data class Collection(
+        val id: Int,
+        val name: String,
+        @SerializedName("poster_path") val posterPath: String?,
+        @SerializedName("backdrop_path") val backdropPath: String?
+    )
 
     data class Company(
         val name: String,

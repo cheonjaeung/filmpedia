@@ -51,6 +51,19 @@ class MovieRepository {
         }
     }
 
+    fun fetchRecommendations(
+        movieId: Int,
+        onResponse: (movies: Movies?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getRecommendations(movieId = movieId, apiKey = apiKey)
+
+        if (response.isSuccessful) {
+            onResponse(response.body())
+        } else {
+            onResponse(null)
+        }
+    }
+
     fun fetchTop10NowPlayingMovies(
         onResponse: (movies: List<Movies.Result>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {

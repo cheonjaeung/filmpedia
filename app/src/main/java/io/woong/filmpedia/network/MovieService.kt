@@ -32,6 +32,14 @@ interface MovieService {
         @Query("api_key") apiKey: String
     ): Response<ExternalIds>
 
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getRecommendations(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String? = null,
+        @Query("page") page: Int? = null
+    ): Response<Movies>
+
     @GET("movie/now_playing")
     suspend fun getNowPlaying(
         @Query("api_key") apiKey: String,

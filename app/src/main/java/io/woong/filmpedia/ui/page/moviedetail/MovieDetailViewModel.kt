@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.ExternalIds
 import io.woong.filmpedia.data.Movie
+import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.repository.MovieRepository
 import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
@@ -71,6 +72,10 @@ class MovieDetailViewModel : ViewModel() {
     val imdbEnabled: LiveData<Boolean>
         get() = _imdbEnabled
 
+    private val _recommendationMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
+    val recommendationMovies: LiveData<List<Movies.Result>>
+        get() = _recommendationMovies
+
     fun update(movieId: Int) {
         CoroutineScope(Dispatchers.Default).launch {
             _isLoading.postValue(true)
@@ -116,7 +121,23 @@ class MovieDetailViewModel : ViewModel() {
                 }
             }
 
-            joinAll(detailFetchingJob, socialFetchingJob, creditsFetchingJob)
+            val recommendationFetchingJob = repository.fetchRecommendations(movieId = movieId) { movies ->
+                movies?.let { m ->
+                    val list = m.results
+                    if (list.size < 5) {
+                        _recommendationMovies.postValue(list)
+                    } else {
+                        _recommendationMovies.postValue(list.subList(0, 5))
+                    }
+                }
+            }
+
+            joinAll(
+                detailFetchingJob,
+                socialFetchingJob,
+                creditsFetchingJob,
+                recommendationFetchingJob
+            )
 
             _isLoading.postValue(false)
         }
