@@ -150,15 +150,15 @@ class MoviesFragment : Fragment(),
     }
 }
 
-@BindingAdapter("movies_recommended_movie_binding")
-fun RecommendedMovieView.bindRecommendedMovieInMoviesFragment(movie: RecommendedMovie?) {
+@BindingAdapter("movies_recommended_movie")
+fun RecommendedMovieView.bindRecommendedMovie(movie: RecommendedMovie?) {
     movie?.let { m ->
         this.movie = m
     }
 }
 
-@BindingAdapter("movies_top10_movies_binding")
-fun RecyclerView.bindTop10MoviesInMoviesFragment(movies: List<Movies.Result>?) {
+@BindingAdapter("movies_top10_movies")
+fun RecyclerView.bindTop10Movies(movies: List<Movies.Result>?) {
     movies?.let { m ->
         val adapter = this.adapter as Top10MovieListAdapter
         adapter.setTop10(m)
