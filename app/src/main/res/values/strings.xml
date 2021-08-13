@@ -9,6 +9,11 @@
     <string name="detail_information">Detail Information</string>
 
     <string name="overview">Overview</string>
+    <string name="status">Status</string>
+    <string name="languages">Languages</string>
+    <string name="production_countries">Production Countries</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
     <string name="casts">Casts</string>
     <string name="crews">Crews</string>
     <string name="production_companies">Production Companies</string>

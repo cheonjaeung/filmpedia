@@ -31,6 +31,7 @@ import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import java.lang.StringBuilder
+import java.text.DecimalFormat
 
 class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -222,6 +223,46 @@ fun AppCompatImageButton.bindEnabled(enable: Boolean) {
             this.visibility = View.VISIBLE
         } else {
             this.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("movie_detail_languages")
+fun AppCompatTextView.bindLanguages(languages: List<Movie.Country>?) {
+    languages?.let { l ->
+        val builder = StringBuilder()
+        for ((index, lang) in l.withIndex()) {
+            builder.append(lang.englishName)
+            if (index < l.lastIndex) {
+                builder.append(", ")
+            }
+        }
+        this.text = builder.toString()
+    }
+}
+
+@BindingAdapter("movie_detail_production_countries")
+fun AppCompatTextView.bindProductionCountries(countries: List<Movie.Country>?) {
+    countries?.let { c ->
+        val builder = StringBuilder()
+        for ((index, country) in c.withIndex()) {
+            builder.append(country.name)
+            if (index < c.lastIndex) {
+                builder.append(", ")
+            }
+        }
+        this.text = builder.toString()
+    }
+}
+
+@BindingAdapter("movie_detail_money")
+fun AppCompatTextView.bindMoney(money: Int?) {
+    money?.let { m ->
+        if (m <= 0) {
+            this.text = "-"
+        } else {
+            val pattern = DecimalFormat("$ #,###")
+            this.text = pattern.format(m)
         }
     }
 }

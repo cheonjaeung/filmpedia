@@ -46,6 +46,7 @@ data class Movie(
 
     data class Country(
         @SerializedName("iso_3166_1") val iso3166_1: String,
-        val name: String
+        val name: String,
+        @SerializedName("english_name") val englishName: String
     )
 }
