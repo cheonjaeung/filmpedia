@@ -27,6 +27,7 @@ import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
+import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import java.lang.StringBuilder
@@ -34,6 +35,7 @@ import java.text.DecimalFormat
 
 class MovieDetailActivity : AppCompatActivity(),
     View.OnClickListener,
+    SeriesButton.OnSeriesButtonClickListener,
     RecommendationListAdapter.OnRecommendationItemClickListener {
 
     companion object {
@@ -88,6 +90,8 @@ class MovieDetailActivity : AppCompatActivity(),
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
+
+            series.setOnSeriesButtonClickListener(this@MovieDetailActivity)
 
             recommendationsList.apply {
                 adapter = RecommendationListAdapter(context).apply {
@@ -156,6 +160,14 @@ class MovieDetailActivity : AppCompatActivity(),
         uri?.let { u ->
             val intent = Intent(Intent.ACTION_VIEW, u)
             startActivity(intent)
+        }
+    }
+
+    override fun onSeriesButtonClick(view: View?, series: Movie.Collection?) {
+        if (view?.id == binding.series.id) {
+            series?.let { s ->
+
+            }
         }
     }
 
@@ -299,6 +311,18 @@ fun RecyclerView.bindCrews(crews: List<Credits.Crew>?) {
     crews?.let { c ->
         val adapter = this.adapter as CreditListAdapter
         adapter.credits = c
+    }
+}
+
+@BindingAdapter("movie_detail_series")
+fun SeriesButton.bindSeries(series: Movie.Collection?) {
+    if (series != null) {
+        if (this.visibility == View.GONE) {
+            this.visibility = View.VISIBLE
+        }
+        this.series = series
+    } else {
+        this.visibility = View.GONE
     }
 }
 

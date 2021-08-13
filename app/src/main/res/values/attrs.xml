@@ -16,4 +16,8 @@
         <attr name="separator" format="string" />
         <attr name="separator_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="SeriesButton">
+        <attr name="ratio" format="string" />
+    </declare-styleable>
 </resources>

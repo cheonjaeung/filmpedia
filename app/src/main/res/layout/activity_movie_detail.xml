@@ -353,16 +353,14 @@
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_credits_list_item_view" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/series_title"
-                        android:layout_width="wrap_content"
+                    <io.woong.filmpedia.ui.component.SeriesButton
+                        android:id="@+id/series"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:visibility="gone"
-                        style="@style/FilmpediaTitleTheme"
-                        tools:text="Movie Series"
-                        tools:visibility="visible" />
+                        app:ratio="16:9"
+                        movie_detail_series="@{vm.movie.belongsToCollection}"
+                        tools:title="Movie Title" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
