@@ -42,7 +42,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         movie_detail_backdrop_path="@{vm.movie.backdropPath}"
-                        tools:src="@tools:sample/backgrounds/scenic" />
+                        tools:src="@drawable/placeholder_backdrop" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
@@ -278,6 +278,34 @@
                         tools:orientation="horizontal"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_production_company_list_item_view" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/series_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="gone"
+                        style="@style/FilmpediaTitleTheme"
+                        tools:text="Movie Series"
+                        tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/recommendations"
+                        style="@style/FilmpediaTitleTheme" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recommendations_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        movie_detail_production_companies="@{vm.movie.productionCompanies}"
+                        tools:orientation="horizontal"
+                        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_recommendations_list_item_view" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
