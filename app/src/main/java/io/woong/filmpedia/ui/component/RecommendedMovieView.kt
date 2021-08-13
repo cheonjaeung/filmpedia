@@ -26,7 +26,17 @@ class RecommendedMovieView @JvmOverloads constructor(
     private val infoButton: AppCompatImageButton
     private val bookmarkButton: AppCompatImageButton
 
+    private var imageClickListener: OnImageClickListener? = null
+
+    fun setOnImageClickListener(listener: OnImageClickListener) {
+        imageClickListener = listener
+    }
+
     private var infoButtonClickListener: OnInfoButtonClickListener? = null
+
+    fun setOnInfoButtonClickListener(listener: OnInfoButtonClickListener) {
+        infoButtonClickListener = listener
+    }
 
     var movie: RecommendedMovie? = null
         set(value) {
@@ -38,6 +48,8 @@ class RecommendedMovieView @JvmOverloads constructor(
         inflate(context, R.layout.layout_recommended_movie_view, this)
 
         backdropImageView = findViewById(R.id.rmv_backdrop)
+        backdropImageView.setOnClickListener(this)
+
         titleTextView = findViewById(R.id.rmv_title)
         genresTextView = findViewById(R.id.rmv_genres)
         ratingView = findViewById(R.id.rmv_rating)
@@ -46,16 +58,6 @@ class RecommendedMovieView @JvmOverloads constructor(
         infoButton.setOnClickListener(this)
 
         bookmarkButton = findViewById(R.id.rmv_bookmark_button)
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == infoButton.id) {
-            infoButtonClickListener?.onInfoButtonClick(this@RecommendedMovieView, movie)
-        }
-    }
-
-    fun setOnInfoButtonClickListener(listener: OnInfoButtonClickListener) {
-        infoButtonClickListener = listener
     }
 
     private fun loadMovieInfo() {
@@ -73,6 +75,17 @@ class RecommendedMovieView @JvmOverloads constructor(
 
             ratingView.rating = m.movie.voteAverage
         }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            backdropImageView.id -> imageClickListener?.onImageClickListener(this@RecommendedMovieView, movie)
+            infoButton.id -> infoButtonClickListener?.onInfoButtonClick(this@RecommendedMovieView, movie)
+        }
+    }
+
+    interface OnImageClickListener {
+        fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?)
     }
 
     interface OnInfoButtonClickListener {

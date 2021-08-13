@@ -26,6 +26,7 @@ import java.lang.NullPointerException
 
 class MoviesFragment : Fragment(),
     SwipeRefreshLayout.OnRefreshListener,
+    RecommendedMovieView.OnImageClickListener,
     RecommendedMovieView.OnInfoButtonClickListener,
     Top10MovieListAdapter.OnItemClickListener,
     MovieDetailBottomSheet.OnDetailButtonClickListener{
@@ -44,9 +45,12 @@ class MoviesFragment : Fragment(),
             lifecycleOwner = this@MoviesFragment
             vm = viewModel
 
-            recommendedMovie.setOnInfoButtonClickListener(this@MoviesFragment)
-
             swipeLayout.setOnRefreshListener(this@MoviesFragment)
+
+            recommendedMovie.apply {
+                setOnImageClickListener(this@MoviesFragment)
+                setOnInfoButtonClickListener(this@MoviesFragment)
+            }
 
             val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
             top10NowPlayingList.apply {
@@ -96,6 +100,16 @@ class MoviesFragment : Fragment(),
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it == false) {
                 binding.swipeLayout.isRefreshing = false
+            }
+        }
+    }
+
+    override fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?) {
+        if (view.id == binding.recommendedMovie.id) {
+            movie?.let { m ->
+                val intent = Intent(context, MovieDetailActivity::class.java)
+                intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, m.movie.id)
+                startActivity(intent)
             }
         }
     }
