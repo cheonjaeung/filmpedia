@@ -20,7 +20,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.CreditListAdapter
-import io.woong.filmpedia.adapter.ProductionCompanyListAdapter
 import io.woong.filmpedia.adapter.RecommendationListAdapter
 import io.woong.filmpedia.data.Credits
 import io.woong.filmpedia.data.Genre
@@ -86,12 +85,6 @@ class MovieDetailActivity : AppCompatActivity(),
 
             crewList.apply {
                 adapter = CreditListAdapter(context, CreditListAdapter.Mod.CREW)
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
-            }
-
-            productionCompanyList.apply {
-                adapter = ProductionCompanyListAdapter(context)
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
@@ -267,6 +260,20 @@ fun AppCompatTextView.bindProductionCountries(countries: List<Movie.Country>?) {
     }
 }
 
+@BindingAdapter("movie_detail_production_companies")
+fun AppCompatTextView.bindProductionCompanies(companies: List<Movie.Company>?) {
+    companies?.let { c ->
+        val builder = StringBuilder()
+        for ((index, company) in c.withIndex()) {
+            builder.append(company.name)
+            if (index < c.lastIndex) {
+                builder.append("\n")
+            }
+        }
+        this.text = builder.toString()
+    }
+}
+
 @BindingAdapter("movie_detail_money")
 fun AppCompatTextView.bindMoney(money: Int?) {
     money?.let { m ->
@@ -292,14 +299,6 @@ fun RecyclerView.bindCrews(crews: List<Credits.Crew>?) {
     crews?.let { c ->
         val adapter = this.adapter as CreditListAdapter
         adapter.credits = c
-    }
-}
-
-@BindingAdapter("movie_detail_production_companies")
-fun RecyclerView.bindProductionCompanies(companies: List<Movie.Company>?) {
-    companies?.let { c ->
-        val adapter = this.adapter as ProductionCompanyListAdapter
-        adapter.companies = c
     }
 }
 
