@@ -107,9 +107,7 @@ class MoviesFragment : Fragment(),
     override fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?) {
         if (view.id == binding.recommendedMovie.id) {
             movie?.let { m ->
-                val intent = Intent(context, MovieDetailActivity::class.java)
-                intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, m.movie.id)
-                startActivity(intent)
+                startMovieDetailActivity(m.movie.id)
             }
         }
     }
@@ -117,28 +115,32 @@ class MoviesFragment : Fragment(),
     override fun onInfoButtonClick(view: RecommendedMovieView, movie: RecommendedMovie?) {
         if (view.id == binding.recommendedMovie.id) {
             movie?.let { m ->
-                val sheet = MovieDetailBottomSheet(m.movie)
-                sheet.apply {
-                    setOnDetailButtonClickListener(this@MoviesFragment)
-                    show(this@MoviesFragment.parentFragmentManager, "MovieDetailBottomSheet")
-                }
+                openMovieDetailBottomSheet(m.movie)
             }
         }
     }
 
     override fun onItemClick(position: Int, movies: List<Movies.Result>) {
         if (position != RecyclerView.NO_POSITION) {
-            val sheet = MovieDetailBottomSheet(movies[position])
-            sheet.apply {
-                setOnDetailButtonClickListener(this@MoviesFragment)
-                show(this@MoviesFragment.parentFragmentManager, "MovieDetailBottomSheet")
-            }
+            openMovieDetailBottomSheet(movies[position])
+        }
+    }
+
+    private fun openMovieDetailBottomSheet(movie: Movies.Result) {
+        val sheet = MovieDetailBottomSheet(movie)
+        sheet.apply {
+            setOnDetailButtonClickListener(this@MoviesFragment)
+            show(this@MoviesFragment.parentFragmentManager, sheet::class.java.simpleName)
         }
     }
 
     override fun onDetailButtonClick(movie: Movies.Result) {
+        startMovieDetailActivity(movie.id)
+    }
+
+    private fun startMovieDetailActivity(movieId: Int) {
         val intent = Intent(context, MovieDetailActivity::class.java)
-        intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movie.id)
+        intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movieId)
         startActivity(intent)
     }
 
