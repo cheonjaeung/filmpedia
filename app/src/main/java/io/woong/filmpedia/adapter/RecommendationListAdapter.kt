@@ -15,7 +15,9 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.util.ImagePathUtil
 
-class RecommendationListAdapter(private val context: Context) : RecyclerView.Adapter<RecommendationListAdapter.ViewHolder>() {
+class RecommendationListAdapter(
+    private val context: Context
+) : RecyclerView.Adapter<RecommendationListAdapter.ViewHolder>(){
 
     private val _movies: MutableList<Movies.Result> = mutableListOf()
     var movies: List<Movies.Result>
@@ -27,6 +29,11 @@ class RecommendationListAdapter(private val context: Context) : RecyclerView.Ada
             }
             notifyDataSetChanged()
         }
+    private var listener: OnRecommendationItemClickListener? = null
+
+    fun setOnRecommendationItemClickListener(listener: OnRecommendationItemClickListener) {
+        this.listener = listener
+    }
 
     override fun getItemCount(): Int = _movies.size
 
@@ -57,9 +64,24 @@ class RecommendationListAdapter(private val context: Context) : RecyclerView.Ada
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        private val rootView: ViewGroup = itemView.findViewById(R.id.recommendations_list_item_root)
         val backdropView: AppCompatImageView = itemView.findViewById(R.id.backdrop)
         val titleView: AppCompatTextView = itemView.findViewById(R.id.title)
+
+        init {
+            rootView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == rootView.id) {
+                listener?.onRecommendationItemClick(adapterPosition, movies)
+            }
+        }
+    }
+
+    interface OnRecommendationItemClickListener {
+        fun onRecommendationItemClick(position: Int, movies: List<Movies.Result>)
     }
 }

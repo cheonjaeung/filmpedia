@@ -33,7 +33,9 @@ import io.woong.filmpedia.util.ImagePathUtil
 import java.lang.StringBuilder
 import java.text.DecimalFormat
 
-class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
+class MovieDetailActivity : AppCompatActivity(),
+    View.OnClickListener,
+    RecommendationListAdapter.OnRecommendationItemClickListener {
 
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
@@ -95,7 +97,9 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             recommendationsList.apply {
-                adapter = RecommendationListAdapter(context)
+                adapter = RecommendationListAdapter(context).apply {
+                    setOnRecommendationItemClickListener(this@MovieDetailActivity)
+                }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
@@ -158,6 +162,14 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         uri?.let { u ->
             val intent = Intent(Intent.ACTION_VIEW, u)
+            startActivity(intent)
+        }
+    }
+
+    override fun onRecommendationItemClick(position: Int, movies: List<Movies.Result>) {
+        if (position != RecyclerView.NO_POSITION) {
+            val intent = Intent(this@MovieDetailActivity, MovieDetailActivity::class.java)
+            intent.putExtra(MOVIE_ID_EXTRA_ID, movies[position].id)
             startActivity(intent)
         }
     }
