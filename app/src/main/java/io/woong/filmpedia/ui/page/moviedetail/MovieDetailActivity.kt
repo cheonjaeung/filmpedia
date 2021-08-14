@@ -30,6 +30,7 @@ import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder
 import java.text.DecimalFormat
 
@@ -326,10 +327,22 @@ fun SeriesButton.bindSeries(series: Movie.Collection?) {
     }
 }
 
+@BindingAdapter("movie_detail_recommendation_title_enabled")
+fun AppCompatTextView.bindRecommendationsTitleEnabled(movies: List<Movies.Result>?) {
+    if (movies.isNotNullOrEmpty()) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
+    }
+}
+
 @BindingAdapter("movie_detail_recommendation_movies")
 fun RecyclerView.bindRecommendationMovies(movies: List<Movies.Result>?) {
-    movies?.let { m ->
+    if (movies.isNotNullOrEmpty()) {
+        this.visibility = View.VISIBLE
         val adapter = this.adapter as RecommendationListAdapter
-        adapter.movies = m
+        adapter.movies = movies!!
+    } else {
+        this.visibility = View.GONE
     }
 }

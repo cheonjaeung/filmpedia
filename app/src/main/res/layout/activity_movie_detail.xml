@@ -363,11 +363,13 @@
                         tools:title="Movie Title" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/recommendations_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
                         android:text="@string/recommendations"
+                        movie_detail_recommendation_title_enabled="@{vm.recommendationMovies}"
                         style="@style/FilmpediaTitleTheme" />
 
                     <androidx.recyclerview.widget.RecyclerView
