@@ -72,8 +72,8 @@ class MovieDetailViewModel : ViewModel() {
     val imdbEnabled: LiveData<Boolean>
         get() = _imdbEnabled
 
-    private val _recommendationMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
-    val recommendationMovies: LiveData<List<Movies.Result>>
+    private val _recommendationMovies: MutableLiveData<List<Movies.Movie>> = MutableLiveData()
+    val recommendationMovies: LiveData<List<Movies.Movie>>
         get() = _recommendationMovies
 
     fun update(movieId: Int) {

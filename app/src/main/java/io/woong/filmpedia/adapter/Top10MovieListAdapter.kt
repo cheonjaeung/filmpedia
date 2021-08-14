@@ -17,11 +17,11 @@ import io.woong.filmpedia.util.ImagePathUtil
 
 class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter<Top10MovieListAdapter.ViewHolder>() {
 
-    private val top10: MutableList<Movies.Result> = mutableListOf()
+    private val top10: MutableList<Movies.Movie> = mutableListOf()
     private var itemClickListener: OnItemClickListener? = null
     private var ratingEnabled: Boolean = true
 
-    fun setTop10(top10: List<Movies.Result>) {
+    fun setTop10(top10: List<Movies.Movie>) {
         this.top10.clear()
         this.top10.addAll(top10)
         notifyDataSetChanged()
@@ -83,6 +83,6 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int, movies: List<Movies.Result>)
+        fun onItemClick(position: Int, movies: List<Movies.Movie>)
     }
 }

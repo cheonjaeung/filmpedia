@@ -65,7 +65,7 @@ class MovieRepository {
     }
 
     fun fetchTop10NowPlayingMovies(
-        onResponse: (movies: List<Movies.Result>) -> Unit
+        onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = movieService.getNowPlaying(apiKey = apiKey, page = 1)
 
@@ -79,7 +79,7 @@ class MovieRepository {
     }
 
     fun fetchTop10PopularMovies(
-        onResponse: (movies: List<Movies.Result>) -> Unit
+        onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = movieService.getPopular(apiKey = apiKey, page = 1)
 
@@ -93,7 +93,7 @@ class MovieRepository {
     }
 
     fun fetchTop10HighRateMovies(
-        onResponse: (movies: List<Movies.Result>) -> Unit
+        onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = movieService.getTopRated(apiKey = apiKey, page = 1)
 
@@ -107,7 +107,7 @@ class MovieRepository {
     }
 
     fun fetchTop10UpcomingMovies(
-        onResponse: (movies: List<Movies.Result>) -> Unit
+        onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = movieService.getUpcoming(apiKey = apiKey, page = 1)
 
@@ -120,11 +120,11 @@ class MovieRepository {
         }
     }
 
-    private fun extractTop10Movies(movies: List<Movies.Result>): List<Movies.Result> {
+    private fun extractTop10Movies(movies: List<Movies.Movie>): List<Movies.Movie> {
         return if (movies.size < 10) {
             movies
         } else {
-            val top10 = mutableListOf<Movies.Result>()
+            val top10 = mutableListOf<Movies.Movie>()
             for ((index, movie) in movies.withIndex()) {
                 if (index < 10) {
                     top10.add(movie)

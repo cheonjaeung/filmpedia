@@ -33,20 +33,20 @@ class MoviesViewModel : ViewModel() {
     val recommendedMovie: LiveData<RecommendedMovie>
         get() = _recommendedMovie
 
-    private val _top10NowPlayingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
-    val top10NowPlayingMovies: LiveData<List<Movies.Result>>
+    private val _top10NowPlayingMovies: MutableLiveData<List<Movies.Movie>> = MutableLiveData()
+    val top10NowPlayingMovies: LiveData<List<Movies.Movie>>
         get() = _top10NowPlayingMovies
 
-    private val _top10PopularMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
-    val top10PopularMovies: LiveData<List<Movies.Result>>
+    private val _top10PopularMovies: MutableLiveData<List<Movies.Movie>> = MutableLiveData()
+    val top10PopularMovies: LiveData<List<Movies.Movie>>
         get() = _top10PopularMovies
 
-    private val _top10RatedMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
-    val top10RatedMovies: LiveData<List<Movies.Result>>
+    private val _top10RatedMovies: MutableLiveData<List<Movies.Movie>> = MutableLiveData()
+    val top10RatedMovies: LiveData<List<Movies.Movie>>
         get() = _top10RatedMovies
 
-    private val _top10UpcomingMovies: MutableLiveData<List<Movies.Result>> = MutableLiveData()
-    val top10UpcomingMovies: LiveData<List<Movies.Result>>
+    private val _top10UpcomingMovies: MutableLiveData<List<Movies.Movie>> = MutableLiveData()
+    val top10UpcomingMovies: LiveData<List<Movies.Movie>>
         get() = _top10UpcomingMovies
 
     private val genres: MutableList<Genre> = mutableListOf()
@@ -56,25 +56,25 @@ class MoviesViewModel : ViewModel() {
             _isLoading.postValue(true)
 
             val nowPlayingFetchingJob = movieRepository.fetchTop10NowPlayingMovies { movies ->
-                if (movies != emptyList<Movies.Result>()) {
+                if (movies != emptyList<Movies.Movie>()) {
                     _top10NowPlayingMovies.postValue(movies)
                 }
             }
 
             val popularFetchingJob = movieRepository.fetchTop10PopularMovies { movies ->
-                if (movies != emptyList<Movies.Result>()) {
+                if (movies != emptyList<Movies.Movie>()) {
                     _top10PopularMovies.postValue(movies)
                 }
             }
 
             val topRatedFetchingJob = movieRepository.fetchTop10HighRateMovies { movies ->
-                if (movies != emptyList<Movies.Result>()) {
+                if (movies != emptyList<Movies.Movie>()) {
                     _top10RatedMovies.postValue(movies)
                 }
             }
 
             val upcomingFetchingJob = movieRepository.fetchTop10UpcomingMovies { movies ->
-                if (movies != emptyList<Movies.Result>()) {
+                if (movies != emptyList<Movies.Movie>()) {
                     _top10UpcomingMovies.postValue(movies)
                 }
             }
@@ -133,7 +133,7 @@ class MoviesViewModel : ViewModel() {
         }
     }
 
-    private fun getRandomMovie(randomCatetory: Int, randomRank: Int, movies: List<Movies.Result>): RecommendedMovie {
+    private fun getRandomMovie(randomCatetory: Int, randomRank: Int, movies: List<Movies.Movie>): RecommendedMovie {
         val index = if (randomRank < movies.size) {
             randomRank - 1
         } else {

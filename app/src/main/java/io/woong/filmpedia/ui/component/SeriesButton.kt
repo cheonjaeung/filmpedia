@@ -1,7 +1,6 @@
 package io.woong.filmpedia.ui.component
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater

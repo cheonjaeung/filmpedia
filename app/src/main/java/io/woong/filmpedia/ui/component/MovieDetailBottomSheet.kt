@@ -10,7 +10,7 @@ import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.databinding.LayoutMovieDetailBottomSheetBinding
 import io.woong.filmpedia.util.ImagePathUtil
 
-class MovieDetailBottomSheet(private val movie: Movies.Result) : BottomSheetDialogFragment(), View.OnClickListener {
+class MovieDetailBottomSheet(private val movie: Movies.Movie) : BottomSheetDialogFragment(), View.OnClickListener {
 
     private var _binding: LayoutMovieDetailBottomSheetBinding? = null
     private val binding: LayoutMovieDetailBottomSheetBinding
@@ -52,6 +52,6 @@ class MovieDetailBottomSheet(private val movie: Movies.Result) : BottomSheetDial
     }
 
     interface OnDetailButtonClickListener {
-        fun onDetailButtonClick(movie: Movies.Result)
+        fun onDetailButtonClick(movie: Movies.Movie)
     }
 }

@@ -172,7 +172,7 @@ class MovieDetailActivity : AppCompatActivity(),
         }
     }
 
-    override fun onRecommendationItemClick(position: Int, movies: List<Movies.Result>) {
+    override fun onRecommendationItemClick(position: Int, movies: List<Movies.Movie>) {
         if (position != RecyclerView.NO_POSITION) {
             val intent = Intent(this@MovieDetailActivity, MovieDetailActivity::class.java)
             intent.putExtra(MOVIE_ID_EXTRA_ID, movies[position].id)
@@ -328,7 +328,7 @@ fun SeriesButton.bindSeries(series: Movie.Collection?) {
 }
 
 @BindingAdapter("movie_detail_recommendation_title_enabled")
-fun AppCompatTextView.bindRecommendationsTitleEnabled(movies: List<Movies.Result>?) {
+fun AppCompatTextView.bindRecommendationsTitleEnabled(movies: List<Movies.Movie>?) {
     if (movies.isNotNullOrEmpty()) {
         this.visibility = View.VISIBLE
     } else {
@@ -337,7 +337,7 @@ fun AppCompatTextView.bindRecommendationsTitleEnabled(movies: List<Movies.Result
 }
 
 @BindingAdapter("movie_detail_recommendation_movies")
-fun RecyclerView.bindRecommendationMovies(movies: List<Movies.Result>?) {
+fun RecyclerView.bindRecommendationMovies(movies: List<Movies.Movie>?) {
     if (movies.isNotNullOrEmpty()) {
         this.visibility = View.VISIBLE
         val adapter = this.adapter as RecommendationListAdapter

@@ -19,8 +19,8 @@ class RecommendationListAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecommendationListAdapter.ViewHolder>(){
 
-    private val _movies: MutableList<Movies.Result> = mutableListOf()
-    var movies: List<Movies.Result>
+    private val _movies: MutableList<Movies.Movie> = mutableListOf()
+    var movies: List<Movies.Movie>
         get() = _movies
         set(value) {
             _movies.apply {
@@ -82,6 +82,6 @@ class RecommendationListAdapter(
     }
 
     interface OnRecommendationItemClickListener {
-        fun onRecommendationItemClick(position: Int, movies: List<Movies.Result>)
+        fun onRecommendationItemClick(position: Int, movies: List<Movies.Movie>)
     }
 }

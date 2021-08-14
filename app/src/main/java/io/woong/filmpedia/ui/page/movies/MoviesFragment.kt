@@ -120,13 +120,13 @@ class MoviesFragment : Fragment(),
         }
     }
 
-    override fun onItemClick(position: Int, movies: List<Movies.Result>) {
+    override fun onItemClick(position: Int, movies: List<Movies.Movie>) {
         if (position != RecyclerView.NO_POSITION) {
             openMovieDetailBottomSheet(movies[position])
         }
     }
 
-    private fun openMovieDetailBottomSheet(movie: Movies.Result) {
+    private fun openMovieDetailBottomSheet(movie: Movies.Movie) {
         val sheet = MovieDetailBottomSheet(movie)
         sheet.apply {
             setOnDetailButtonClickListener(this@MoviesFragment)
@@ -134,7 +134,7 @@ class MoviesFragment : Fragment(),
         }
     }
 
-    override fun onDetailButtonClick(movie: Movies.Result) {
+    override fun onDetailButtonClick(movie: Movies.Movie) {
         startMovieDetailActivity(movie.id)
     }
 
@@ -158,7 +158,7 @@ fun RecommendedMovieView.bindRecommendedMovie(movie: RecommendedMovie?) {
 }
 
 @BindingAdapter("movies_top10_movies")
-fun RecyclerView.bindTop10Movies(movies: List<Movies.Result>?) {
+fun RecyclerView.bindTop10Movies(movies: List<Movies.Movie>?) {
     movies?.let { m ->
         val adapter = this.adapter as Top10MovieListAdapter
         adapter.setTop10(m)
