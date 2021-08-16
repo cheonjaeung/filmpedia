@@ -64,16 +64,6 @@
                     app:layout_constraintBottom_toBottomOf="@+id/backdrop_layout"
                     tools:src="@drawable/placeholder_poster" />
 
-                <io.woong.filmpedia.ui.component.CircularRatingView
-                    android:id="@+id/rating"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="16dp"
-                    style="@style/FilmpediaRatingViewTheme"
-                    app:layout_constraintRight_toRightOf="@+id/backdrop_layout"
-                    app:layout_constraintBottom_toBottomOf="@+id/backdrop_layout"
-                    tools:rating="8.0" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
