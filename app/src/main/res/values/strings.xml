@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Filmpedia</string>
 
+    <string name="now_playing" translatable="false">Now Playing</string>
+    <string name="popular" translatable="false">Popular</string>
+    <string name="high_rated" translatable="false">High Rated</string>
+    <string name="upcoming" translatable="false">Upcoming</string>
     <string name="top10_now_playing" translatable="false">Top 10 Now Playing Movies</string>
     <string name="top10_popular" translatable="false">Top 10 Popular Movies</string>
     <string name="top10_high_rated" translatable="false">Top 10 High Rated Movies</string>

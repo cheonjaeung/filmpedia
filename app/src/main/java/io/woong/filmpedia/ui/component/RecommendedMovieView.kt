@@ -1,6 +1,7 @@
 package io.woong.filmpedia.ui.component
 
 import android.content.Context
+import android.content.res.Resources
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageButton
@@ -70,7 +71,11 @@ class RecommendedMovieView @JvmOverloads constructor(
 
             val g = mutableListOf<Genre>()
             g.addAll(m.genres)
-            g.add(Genre(-1, m.recommendationReason))
+            try {
+                val reason = resources.getString(m.recommendationReason)
+                g.add(Genre(-1, reason))
+            } catch (e: Resources.NotFoundException) {}
+
             genresTextView.genres = g
 
             ratingView.rating = m.movie.voteAverage

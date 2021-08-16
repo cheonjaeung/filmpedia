@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.page.movies
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Genre
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
@@ -162,11 +163,11 @@ class MoviesViewModel : ViewModel() {
 
         val movie = movies[index]
         val reason = when (randomCategory) {
-            NOW_PLAYING_MOVIES -> "Now Playing"
-            POPULAR_MOVIES -> "Popular"
-            TOP_RATED_MOVIES -> "High Rated"
-            UPCOMING_MOVIES -> "Upcoming"
-            else -> ""
+            NOW_PLAYING_MOVIES -> R.string.now_playing
+            POPULAR_MOVIES -> R.string.popular
+            TOP_RATED_MOVIES -> R.string.high_rated
+            UPCOMING_MOVIES -> R.string.upcoming
+            else -> 0
         }
 
         return RecommendedMovie(
