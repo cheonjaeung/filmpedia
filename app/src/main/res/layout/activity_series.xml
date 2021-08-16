@@ -40,7 +40,7 @@
                         android:id="@+id/backdrop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        series_backdrop="@{vm.collection.backdropPath}"
+                        series_backdrop="@{vm.backdrop}"
                         android:scaleType="centerCrop"
                         tools:src="@drawable/placeholder_backdrop" />
 
@@ -55,7 +55,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="16dp"
-                    series_poster="@{vm.collection.posterPath}"
+                    series_poster="@{vm.poster}"
                     android:scaleType="centerCrop"
                     app:layout_constraintDimensionRatio="2:3"
                     app:layout_constraintLeft_toLeftOf="@+id/backdrop_layout"
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         style="@style/FilmpediaMovieTitleTheme"
-                        android:text="@{vm.collection.name}"
+                        android:text="@{vm.title}"
                         tools:text="Series Title" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -91,7 +91,7 @@
                         android:id="@+id/overview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{vm.collection.overview}"
+                        android:text="@{vm.overview}"
                         tools:text="This is a sample of the movie overview." />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -106,7 +106,7 @@
                         android:id="@+id/movies_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        series_movies="@{vm.collection.parts}"
+                        series_movies="@{vm.movies}"
                         tools:orientation="vertical"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_series_movie_list" />
