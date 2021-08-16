@@ -28,6 +28,7 @@ import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
+import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
@@ -164,11 +165,11 @@ class MovieDetailActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSeriesButtonClick(view: View?, series: Movie.Collection?) {
-        if (view?.id == binding.series.id) {
-            series?.let { s ->
-
-            }
+    override fun onSeriesButtonClick(series: Movie.Collection?) {
+        series?.let { s ->
+            val intent = Intent(this@MovieDetailActivity, SeriesActivity::class.java)
+            intent.putExtra(SeriesActivity.COLLECTION_ID_EXTRA_ID, s.id)
+            startActivity(intent)
         }
     }
 

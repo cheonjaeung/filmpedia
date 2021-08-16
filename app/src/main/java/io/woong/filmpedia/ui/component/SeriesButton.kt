@@ -47,6 +47,8 @@ class SeriesButton @JvmOverloads constructor(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         _binding = LayoutSeriesButtonBinding.inflate(inflater, this, true)
 
+        binding.button.setOnClickListener(this)
+
         applyAttributes(attrs, defStyle)
     }
 
@@ -106,10 +108,12 @@ class SeriesButton @JvmOverloads constructor(
     }
 
     override fun onClick(v: View?) {
-        listener?.onSeriesButtonClick(v, series)
+        if (v?.id == binding.button.id) {
+            listener?.onSeriesButtonClick(series)
+        }
     }
 
     interface OnSeriesButtonClickListener {
-        fun onSeriesButtonClick(view: View?, series: Movie.Collection?)
+        fun onSeriesButtonClick(series: Movie.Collection?)
     }
 }
