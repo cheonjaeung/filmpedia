@@ -153,7 +153,7 @@ class MoviesViewModel : ViewModel() {
         }
     }
 
-    private fun getRandomMovie(randomCatetory: Int, randomRank: Int, movies: List<Movies.Movie>): RecommendedMovie {
+    private fun getRandomMovie(randomCategory: Int, randomRank: Int, movies: List<Movies.Movie>): RecommendedMovie {
         val index = if (randomRank < movies.size) {
             randomRank - 1
         } else {
@@ -161,7 +161,7 @@ class MoviesViewModel : ViewModel() {
         }
 
         val movie = movies[index]
-        val reason = when (randomCatetory) {
+        val reason = when (randomCategory) {
             NOW_PLAYING_MOVIES -> "Now Playing"
             POPULAR_MOVIES -> "Popular"
             TOP_RATED_MOVIES -> "High Rated"
