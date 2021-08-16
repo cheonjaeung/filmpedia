@@ -1,23 +1,23 @@
 <resources>
-    <string name="app_name">Filmpedia</string>
+    <string name="app_name" translatable="false">Filmpedia</string>
 
-    <string name="top10_now_playing">Top 10 Now Playing Movies</string>
-    <string name="top10_popular">Top 10 Popular Movies</string>
-    <string name="top10_high_rated">Top 10 High Rated Movies</string>
-    <string name="top10_upcoming">Top 10 Upcoming Movies</string>
+    <string name="top10_now_playing" translatable="false">Top 10 Now Playing Movies</string>
+    <string name="top10_popular" translatable="false">Top 10 Popular Movies</string>
+    <string name="top10_high_rated" translatable="false">Top 10 High Rated Movies</string>
+    <string name="top10_upcoming" translatable="false">Top 10 Upcoming Movies</string>
 
-    <string name="detail_information">Detail Information</string>
-    <string name="view_the_series">View the Series</string>
+    <string name="detail_information" translatable="false">Detail Information</string>
+    <string name="view_the_series" translatable="false">View the Series</string>
 
-    <string name="overview">Overview</string>
-    <string name="status">Status</string>
-    <string name="languages">Languages</string>
-    <string name="production_countries">Production Countries</string>
-    <string name="budget">Budget</string>
-    <string name="revenue">Revenue</string>
-    <string name="casts">Casts</string>
-    <string name="crews">Crews</string>
-    <string name="production_companies">Production Companies</string>
-    <string name="recommendations">Recommendations</string>
-    <string name="movies">Movies</string>
+    <string name="overview" translatable="false">Overview</string>
+    <string name="status" translatable="false">Status</string>
+    <string name="languages" translatable="false">Languages</string>
+    <string name="production_countries" translatable="false">Production Countries</string>
+    <string name="budget" translatable="false">Budget</string>
+    <string name="revenue" translatable="false">Revenue</string>
+    <string name="casts" translatable="false">Casts</string>
+    <string name="crews" translatable="false">Crews</string>
+    <string name="production_companies" translatable="false">Production Companies</string>
+    <string name="recommendations" translatable="false">Recommendations</string>
+    <string name="movies" translatable="false">Movies</string>
 </resources>

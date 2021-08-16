@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">필름피디아</string>
+
+    <string name="top10_now_playing" translatable="false">상영중인 영화 Top 10</string>
+    <string name="top10_popular" translatable="false">인기 영화 Top 10</string>
+    <string name="top10_high_rated" translatable="false">평점 높은 영화 Top 10</string>
+    <string name="top10_upcoming" translatable="false">개봉 예정인 영화 Top 10</string>
+
+    <string name="detail_information" translatable="false">자세히 알아보기</string>
+    <string name="view_the_series" translatable="false">시리즈 보기</string>
+
+    <string name="overview" translatable="false">개요</string>
+    <string name="status" translatable="false">상태</string>
+    <string name="languages" translatable="false">언어</string>
+    <string name="budget" translatable="false">제작비</string>
+    <string name="revenue" translatable="false">수익</string>
+    <string name="production_countries" translatable="false">제작국</string>
+    <string name="crews" translatable="false">제작진</string>
+    <string name="production_companies" translatable="false">제작사</string>
+    <string name="recommendations" translatable="false">추천</string>
+    <string name="movies" translatable="false">영화</string>
+    <string name="casts" translatable="false">출연</string>
+</resources>
