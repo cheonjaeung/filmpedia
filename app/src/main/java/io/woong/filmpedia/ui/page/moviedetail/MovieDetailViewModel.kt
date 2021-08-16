@@ -76,11 +76,11 @@ class MovieDetailViewModel : ViewModel() {
     val recommendationMovies: LiveData<List<Movies.Movie>>
         get() = _recommendationMovies
 
-    fun update(movieId: Int) {
+    fun update(apiKey: String, movieId: Int, language: String) {
         CoroutineScope(Dispatchers.Default).launch {
             _isLoading.postValue(true)
 
-            val detailFetchingJob = repository.fetchMovieDetail(movieId = movieId) { movie ->
+            val detailFetchingJob = repository.fetchMovieDetail(key = apiKey, id = movieId, lang = language) { movie ->
                 movie?.let { m ->
                     _movie.postValue(m)
 
@@ -90,7 +90,7 @@ class MovieDetailViewModel : ViewModel() {
                 }
             }
 
-            val socialFetchingJob = repository.fetchExternalIds(movieId = movieId) { ids ->
+            val socialFetchingJob = repository.fetchExternalIds(key = apiKey, id = movieId) { ids ->
                 ids?.let { i ->
                     _socialIds.postValue(i)
 
@@ -112,7 +112,7 @@ class MovieDetailViewModel : ViewModel() {
                 }
             }
 
-            val creditsFetchingJob = repository.fetchCredits(movieId = movieId) { credits ->
+            val creditsFetchingJob = repository.fetchCredits(key = apiKey, id = movieId, lang = language) { credits ->
                 credits?.let { c ->
                     _casts.postValue(c.cast)
 
@@ -121,7 +121,7 @@ class MovieDetailViewModel : ViewModel() {
                 }
             }
 
-            val recommendationFetchingJob = repository.fetchRecommendations(movieId = movieId) { movies ->
+            val recommendationFetchingJob = repository.fetchRecommendations(key = apiKey, id = movieId, lang = language) { movies ->
                 movies?.let { m ->
                     val list = m.results
                     if (list.size < 5) {

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.SeriesMovieListAdapter
 import io.woong.filmpedia.data.Collection
@@ -65,7 +66,8 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
             }
         }
 
-        viewModel.update(collectionId)
+        val app = application as FilmpediaApp
+        viewModel.update(app.tmdbApiKey, collectionId, app.language)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

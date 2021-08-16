@@ -1,6 +1,5 @@
 package io.woong.filmpedia.repository
 
-import io.woong.filmpedia.apiKey
 import io.woong.filmpedia.data.*
 import io.woong.filmpedia.network.MovieService
 import io.woong.filmpedia.network.TmdbClient
@@ -13,10 +12,12 @@ class MovieRepository {
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
 
     fun fetchMovieDetail(
-        movieId: Int,
+        key: String,
+        id: Int,
+        lang: String,
         onResponse: (movie: Movie?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getDetail(apiKey = apiKey, movieId = movieId)
+        val response = movieService.getDetail(apiKey = key, movieId = id, language = lang)
 
         if (response.isSuccessful) {
             onResponse(response.body())
@@ -26,10 +27,12 @@ class MovieRepository {
     }
 
     fun fetchCredits(
-        movieId: Int,
+        key: String,
+        id: Int,
+        lang: String,
         onResponse: (credits: Credits?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getCredits(movieId = movieId, apiKey = apiKey)
+        val response = movieService.getCredits(movieId = id, apiKey = key, language = lang)
 
         if (response.isSuccessful) {
             onResponse(response.body())
@@ -39,10 +42,11 @@ class MovieRepository {
     }
 
     fun fetchExternalIds(
-        movieId: Int,
+        key: String,
+        id: Int,
         onResponse: (ids: ExternalIds?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getExternalIds(movieId = movieId, apiKey = apiKey)
+        val response = movieService.getExternalIds(movieId = id, apiKey = key)
 
         if (response.isSuccessful) {
             onResponse(response.body())
@@ -52,10 +56,12 @@ class MovieRepository {
     }
 
     fun fetchRecommendations(
-        movieId: Int,
+        key: String,
+        id: Int,
+        lang: String,
         onResponse: (movies: Movies?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getRecommendations(movieId = movieId, apiKey = apiKey)
+        val response = movieService.getRecommendations(movieId = id, apiKey = key, language = lang)
 
         if (response.isSuccessful) {
             onResponse(response.body())
@@ -65,9 +71,13 @@ class MovieRepository {
     }
 
     fun fetchTop10NowPlayingMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
         onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getNowPlaying(apiKey = apiKey, page = 1)
+        val response = movieService.getNowPlaying(apiKey = key, page = page, language = lang, region = region)
 
         if (response.isSuccessful) {
             val movies: Movies = response.body()!!
@@ -79,9 +89,13 @@ class MovieRepository {
     }
 
     fun fetchTop10PopularMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
         onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getPopular(apiKey = apiKey, page = 1)
+        val response = movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
 
         if (response.isSuccessful) {
             val movies: Movies = response.body()!!
@@ -93,9 +107,13 @@ class MovieRepository {
     }
 
     fun fetchTop10HighRateMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
         onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getTopRated(apiKey = apiKey, page = 1)
+        val response = movieService.getTopRated(apiKey = key, page = page, language = lang, region = region)
 
         if (response.isSuccessful) {
             val movies: Movies = response.body()!!
@@ -107,9 +125,13 @@ class MovieRepository {
     }
 
     fun fetchTop10UpcomingMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
         onResponse: (movies: List<Movies.Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getUpcoming(apiKey = apiKey, page = 1)
+        val response = movieService.getUpcoming(apiKey = key, page = page, language = lang, region = region)
 
         if (response.isSuccessful) {
             val movies: Movies = response.body()!!

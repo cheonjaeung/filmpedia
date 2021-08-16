@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
 import io.woong.filmpedia.data.Movies
@@ -90,18 +91,23 @@ class MoviesFragment : Fragment(),
             }
         }
 
-        viewModel.update()
+        update()
 
         return binding.root
     }
 
     override fun onRefresh() {
-        viewModel.update()
+        update()
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it == false) {
                 binding.swipeLayout.isRefreshing = false
             }
         }
+    }
+
+    private fun update() {
+        val app = activity?.application as FilmpediaApp
+        viewModel.update(app.tmdbApiKey, app.language, app.region)
     }
 
     override fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?) {

@@ -1,8 +1,11 @@
 package io.woong.filmpedia.ui.page.series
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.data.Collection
 import io.woong.filmpedia.repository.CollectionRepository
 import io.woong.filmpedia.util.isNotNullOrBlank
@@ -38,11 +41,11 @@ class SeriesViewModel : ViewModel() {
     val movies: LiveData<List<Collection.Part>>
         get() = _movies
 
-    fun update(collectionId: Int) {
+    fun update(apiKey: String, collectionId: Int, language: String) {
         CoroutineScope(Dispatchers.Default).launch {
             _isLoading.postValue(true)
 
-            repository.fetchDetail(collectionId = collectionId) { collection ->
+            repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { collection ->
                 collection?.let { c ->
                     _backdrop.postValue(c.backdropPath)
                     _poster.postValue(c.posterPath)

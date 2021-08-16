@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.CreditListAdapter
 import io.woong.filmpedia.adapter.RecommendationListAdapter
@@ -104,7 +105,8 @@ class MovieDetailActivity : AppCompatActivity(),
             }
         }
 
-        viewModel.update(movieId)
+        val app = application as FilmpediaApp
+        viewModel.update(app.tmdbApiKey, movieId, app.language)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
