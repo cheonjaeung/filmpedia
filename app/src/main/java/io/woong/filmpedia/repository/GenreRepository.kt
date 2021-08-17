@@ -1,6 +1,6 @@
 package io.woong.filmpedia.repository
 
-import io.woong.filmpedia.data.Genre
+import io.woong.filmpedia.data.Genres
 import io.woong.filmpedia.network.GenreService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +14,7 @@ class GenreRepository {
     fun fetchGenres(
         key: String,
         lang: String,
-        onResponse: (genres: List<Genre>) -> Unit
+        onResponse: (genres: List<Genres.Genre>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = genreService.getGenres(apiKey = key, language = lang)
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Genre
+import io.woong.filmpedia.data.Genres
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
 import io.woong.filmpedia.repository.GenreRepository
@@ -50,7 +50,7 @@ class MoviesViewModel : ViewModel() {
     val top10UpcomingMovies: LiveData<List<Movies.Movie>>
         get() = _top10UpcomingMovies
 
-    private val genres: MutableList<Genre> = mutableListOf()
+    private val genres: MutableList<Genres.Genre> = mutableListOf()
 
     fun update(apiKey: String, language: String, region: String) {
         CoroutineScope(Dispatchers.Default).launch {
@@ -101,7 +101,7 @@ class MoviesViewModel : ViewModel() {
             }
 
             val genresFetchingJob = genreRepository.fetchGenres(key = apiKey, lang = language) { genres ->
-                if (genres != emptyList<Genre>()) {
+                if (genres != emptyList<Genres.Genre>()) {
                     this@MoviesViewModel.genres.apply {
                         clear()
                         addAll(genres)
@@ -177,8 +177,8 @@ class MoviesViewModel : ViewModel() {
         )
     }
 
-    private fun genreIdsToGenreList(genreIds: List<Int>, genres: List<Genre>): List<Genre> {
-        val result = mutableListOf<Genre>()
+    private fun genreIdsToGenreList(genreIds: List<Int>, genres: List<Genres.Genre>): List<Genres.Genre> {
+        val result = mutableListOf<Genres.Genre>()
         genres.forEach { genre ->
             if (genreIds.contains(genre.id)) {
                 result.add(genre)

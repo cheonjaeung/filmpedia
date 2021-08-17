@@ -10,7 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Genre
+import io.woong.filmpedia.data.Genres
 import io.woong.filmpedia.data.RecommendedMovie
 import io.woong.filmpedia.util.ImagePathUtil
 
@@ -69,11 +69,11 @@ class RecommendedMovieView @JvmOverloads constructor(
 
             titleTextView.text = m.movie.title
 
-            val g = mutableListOf<Genre>()
+            val g = mutableListOf<Genres.Genre>()
             g.addAll(m.genres)
             try {
                 val reason = resources.getString(m.recommendationReason)
-                g.add(Genre(-1, reason))
+                g.add(Genres.Genre(-1, reason))
             } catch (e: Resources.NotFoundException) {}
 
             genresTextView.genres = g

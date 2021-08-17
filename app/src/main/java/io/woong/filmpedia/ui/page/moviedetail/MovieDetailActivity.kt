@@ -22,10 +22,7 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.CreditListAdapter
 import io.woong.filmpedia.adapter.RecommendationListAdapter
-import io.woong.filmpedia.data.Credits
-import io.woong.filmpedia.data.Genre
-import io.woong.filmpedia.data.Movie
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.*
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
@@ -216,7 +213,7 @@ fun AppCompatImageView.bindPosterPath(path: String?) {
 }
 
 @BindingAdapter("movie_detail_genres")
-fun GenresTextView.bindGenres(genres: List<Genre>?) {
+fun GenresTextView.bindGenres(genres: List<Genres.Genre>?) {
     genres?.let { g ->
         this.genres = g
     }

@@ -13,7 +13,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.toSpannable
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Genre
+import io.woong.filmpedia.data.Genres
 
 class GenresTextView @JvmOverloads constructor(
     context: Context,
@@ -25,8 +25,8 @@ class GenresTextView @JvmOverloads constructor(
         const val DEFAULT_SEPARATOR: String = "·"
     }
 
-    private val _genres: MutableList<Genre> = mutableListOf()
-    var genres: List<Genre>
+    private val _genres: MutableList<Genres.Genre> = mutableListOf()
+    var genres: List<Genres.Genre>
         get() = _genres
         set(value) {
             _genres.apply {
@@ -78,13 +78,13 @@ class GenresTextView @JvmOverloads constructor(
         }
     }
 
-    private fun parseGenresAttribute(attr: String): List<Genre> {
-        val list = mutableListOf<Genre>()
+    private fun parseGenresAttribute(attr: String): List<Genres.Genre> {
+        val list = mutableListOf<Genres.Genre>()
 
         val substrings = attr.split(",")
         substrings.forEach { substring ->
             val s = substring.trim()
-            list.add(Genre(-1, s))
+            list.add(Genres.Genre(-1, s))
         }
 
         return list
