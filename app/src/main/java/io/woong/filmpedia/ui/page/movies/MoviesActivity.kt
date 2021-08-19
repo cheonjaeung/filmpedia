@@ -152,6 +152,11 @@ class MoviesActivity : AppCompatActivity(),
         intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movieId)
         startActivity(intent)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
 
 @BindingAdapter("movies_recommended_movie")
