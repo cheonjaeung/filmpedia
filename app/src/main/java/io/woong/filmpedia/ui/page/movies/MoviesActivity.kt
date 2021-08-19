@@ -1,15 +1,11 @@
 package io.woong.filmpedia.ui.page.movies
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -18,45 +14,43 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
-import io.woong.filmpedia.databinding.FragmentMoviesBinding
+import io.woong.filmpedia.databinding.ActivityMoviesBinding
 import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.ui.component.RecommendedMovieView
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.HorizontalItemDecoration
-import java.lang.NullPointerException
 
-class MoviesFragment : Fragment(),
+class MoviesActivity : AppCompatActivity(),
     SwipeRefreshLayout.OnRefreshListener,
     RecommendedMovieView.OnImageClickListener,
     RecommendedMovieView.OnInfoButtonClickListener,
     Top10MovieListAdapter.OnItemClickListener,
-    MovieDetailBottomSheet.OnDetailButtonClickListener{
+    MovieDetailBottomSheet.OnDetailButtonClickListener {
 
     private val viewModel: MoviesViewModel by viewModels()
-    private var _binding: FragmentMoviesBinding? = null
-    private val binding: FragmentMoviesBinding
+    private var _binding: ActivityMoviesBinding? = null
+    private val binding: ActivityMoviesBinding
         get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
-        
-        val context: Context = container?.context ?: throw NullPointerException("Context cannot be null.")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_movies)
 
         binding.apply {
-            lifecycleOwner = this@MoviesFragment
+            lifecycleOwner = this@MoviesActivity
             vm = viewModel
 
-            swipeLayout.setOnRefreshListener(this@MoviesFragment)
+            swipeLayout.setOnRefreshListener(this@MoviesActivity)
 
             recommendedMovie.apply {
-                setOnImageClickListener(this@MoviesFragment)
-                setOnInfoButtonClickListener(this@MoviesFragment)
+                setOnImageClickListener(this@MoviesActivity)
+                setOnInfoButtonClickListener(this@MoviesActivity)
             }
 
             val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
             top10NowPlayingList.apply {
                 adapter = Top10MovieListAdapter(context).apply {
-                    setOnItemClickListener(this@MoviesFragment)
+                    setOnItemClickListener(this@MoviesActivity)
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -65,7 +59,7 @@ class MoviesFragment : Fragment(),
 
             top10PopularList.apply {
                 adapter = Top10MovieListAdapter(context).apply {
-                    setOnItemClickListener(this@MoviesFragment)
+                    setOnItemClickListener(this@MoviesActivity)
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -74,7 +68,7 @@ class MoviesFragment : Fragment(),
 
             top10RatedList.apply {
                 adapter = Top10MovieListAdapter(context).apply {
-                    setOnItemClickListener(this@MoviesFragment)
+                    setOnItemClickListener(this@MoviesActivity)
                     setRatingEnabled(true)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -83,7 +77,7 @@ class MoviesFragment : Fragment(),
 
             top10UpcomingList.apply {
                 adapter = Top10MovieListAdapter(context).apply {
-                    setOnItemClickListener(this@MoviesFragment)
+                    setOnItemClickListener(this@MoviesActivity)
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -92,13 +86,11 @@ class MoviesFragment : Fragment(),
         }
 
         update()
-
-        return binding.root
     }
 
     override fun onRefresh() {
         update()
-        viewModel.isLoading.observe(viewLifecycleOwner) {
+        viewModel.isLoading.observe(this) {
             if (it == false) {
                 binding.swipeLayout.isRefreshing = false
             }
@@ -106,7 +98,7 @@ class MoviesFragment : Fragment(),
     }
 
     private fun update() {
-        val app = activity?.application as FilmpediaApp
+        val app = application as FilmpediaApp
         viewModel.update(app.tmdbApiKey, app.language, app.region)
     }
 
@@ -135,8 +127,8 @@ class MoviesFragment : Fragment(),
     private fun openMovieDetailBottomSheet(movie: Movies.Movie) {
         val sheet = MovieDetailBottomSheet(movie)
         sheet.apply {
-            setOnDetailButtonClickListener(this@MoviesFragment)
-            show(this@MoviesFragment.parentFragmentManager, sheet::class.java.simpleName)
+            setOnDetailButtonClickListener(this@MoviesActivity)
+            show(this@MoviesActivity.supportFragmentManager, sheet::class.java.simpleName)
         }
     }
 
@@ -145,14 +137,9 @@ class MoviesFragment : Fragment(),
     }
 
     private fun startMovieDetailActivity(movieId: Int) {
-        val intent = Intent(context, MovieDetailActivity::class.java)
+        val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movieId)
         startActivity(intent)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
 
@@ -170,3 +157,4 @@ fun RecyclerView.bindTop10Movies(movies: List<Movies.Movie>?) {
         adapter.setTop10(m)
     }
 }
+
