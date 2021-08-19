@@ -309,7 +309,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="@{vm.movie.tagline}"
-                        style="@style/FilmepediaTaglineTheme"
+                        style="@style/FilmpediaTaglineTheme"
                         tools:text="@tools:sample/lorem" />
 
                     <androidx.appcompat.widget.AppCompatTextView
