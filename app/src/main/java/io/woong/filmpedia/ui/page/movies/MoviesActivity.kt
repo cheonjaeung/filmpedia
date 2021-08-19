@@ -2,6 +2,7 @@ package io.woong.filmpedia.ui.page.movies
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
@@ -21,6 +23,7 @@ import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.HorizontalItemDecoration
 
 class MoviesActivity : AppCompatActivity(),
+    View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener,
     RecommendedMovieView.OnImageClickListener,
     RecommendedMovieView.OnInfoButtonClickListener,
@@ -46,6 +49,8 @@ class MoviesActivity : AppCompatActivity(),
                 setOnImageClickListener(this@MoviesActivity)
                 setOnInfoButtonClickListener(this@MoviesActivity)
             }
+
+            searchButton.setOnClickListener(this@MoviesActivity)
 
             val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
             top10NowPlayingList.apply {
@@ -100,6 +105,12 @@ class MoviesActivity : AppCompatActivity(),
     private fun update() {
         val app = application as FilmpediaApp
         viewModel.update(app.tmdbApiKey, app.language, app.region)
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.searchButton.id) {
+            Snackbar.make(this, binding.root, "Not support yet.", Snackbar.LENGTH_LONG).show()
+        }
     }
 
     override fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?) {
