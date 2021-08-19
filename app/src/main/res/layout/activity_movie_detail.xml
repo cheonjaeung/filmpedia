@@ -296,21 +296,21 @@
                     </TableLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tagline"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@{vm.movie.tagline}"
-                        style="@style/FilmepediaTaglineTheme"
-                        tools:text="@tools:sample/lorem" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
                         android:text="@string/overview"
                         style="@style/FilmpediaTitleTheme" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tagline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@{vm.movie.tagline}"
+                        style="@style/FilmepediaTaglineTheme"
+                        tools:text="@tools:sample/lorem" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/overview"
