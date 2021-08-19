@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.page.search.SearchActivity" />
         <activity android:name=".ui.page.moviedetail.MovieDetailActivity" />
         <activity android:name=".ui.page.series.SeriesActivity" />
     </application>

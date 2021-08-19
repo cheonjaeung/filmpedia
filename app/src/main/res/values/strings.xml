@@ -24,4 +24,6 @@
     <string name="production_companies" translatable="false">Production Companies</string>
     <string name="recommendations" translatable="false">Recommendations</string>
     <string name="movies" translatable="false">Movies</string>
+
+    <string name="search_hint" translatable="false">Search movies and actors.</string>
 </resources>

@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.Top10MovieListAdapter
@@ -20,6 +19,7 @@ import io.woong.filmpedia.databinding.ActivityMoviesBinding
 import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.ui.component.RecommendedMovieView
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.ui.page.search.SearchActivity
 import io.woong.filmpedia.util.HorizontalItemDecoration
 
 class MoviesActivity : AppCompatActivity(),
@@ -109,7 +109,8 @@ class MoviesActivity : AppCompatActivity(),
 
     override fun onClick(v: View?) {
         if (v?.id == binding.searchButton.id) {
-            Snackbar.make(this, binding.root, "Not support yet.", Snackbar.LENGTH_LONG).show()
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
         }
     }
 
