@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
@@ -40,11 +41,14 @@ class SearchResultListAdapter : RecyclerView.Adapter<SearchResultListAdapter.Vie
                 .load(ImagePathUtil.toFullUrl(movie.backdropPath))
                 .placeholder(R.drawable.placeholder_backdrop)
                 .into(holder.backdropView)
+
+            holder.titleView.text = movie.title
         }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val rootView: ViewGroup = itemView.findViewById(R.id.search_result_list_item_root)
         val backdropView: AppCompatImageView = itemView.findViewById(R.id.backdrop)
+        val titleView: AppCompatTextView = itemView.findViewById(R.id.title)
     }
 }
