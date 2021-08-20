@@ -25,6 +25,12 @@ class SearchResultListAdapter : RecyclerView.Adapter<SearchResultListAdapter.Vie
             notifyDataSetChanged()
         }
 
+    private var listener: OnSearchResultClickListener? = null
+
+    fun setOnSearchResultClickListener(listener: OnSearchResultClickListener) {
+        this.listener = listener
+    }
+
     override fun getItemCount(): Int = _results.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,9 +52,26 @@ class SearchResultListAdapter : RecyclerView.Adapter<SearchResultListAdapter.Vie
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val rootView: ViewGroup = itemView.findViewById(R.id.search_result_list_item_root)
         val backdropView: AppCompatImageView = itemView.findViewById(R.id.backdrop)
         val titleView: AppCompatTextView = itemView.findViewById(R.id.title)
+
+        init {
+            rootView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == rootView.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val result = _results[adapterPosition]
+                    listener?.onSearchResultClick(result)
+                }
+            }
+        }
+    }
+
+    interface OnSearchResultClickListener {
+        fun onSearchResultClick(result: Movies.Movie?)
     }
 }

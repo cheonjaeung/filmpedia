@@ -1,5 +1,6 @@
 package io.woong.filmpedia.ui.page.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -16,9 +17,13 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.adapter.SearchResultListAdapter
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.databinding.ActivitySearchBinding
+import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.VerticalItemDecoration
 
-class SearchActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEditorActionListener {
+class SearchActivity : AppCompatActivity(),
+    View.OnClickListener,
+    TextView.OnEditorActionListener,
+    SearchResultListAdapter.OnSearchResultClickListener {
 
     private val viewModel: SearchViewModel by viewModels()
     private var _binding: ActivitySearchBinding? = null
@@ -40,7 +45,9 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdi
             val listItemDeco = VerticalItemDecoration(1, resources.displayMetrics)
 
             resultList.apply {
-                adapter = SearchResultListAdapter()
+                adapter = SearchResultListAdapter().apply {
+                    setOnSearchResultClickListener(this@SearchActivity)
+                }
                 layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
                 addItemDecoration(listItemDeco)
             }
@@ -64,6 +71,14 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdi
             }
         } else {
             false
+        }
+    }
+
+    override fun onSearchResultClick(result: Movies.Movie?) {
+        if (result != null) {
+            val intent = Intent(this, MovieDetailActivity::class.java)
+            intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, result.id)
+            startActivity(intent)
         }
     }
 
