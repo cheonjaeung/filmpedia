@@ -25,5 +25,5 @@
     <string name="recommendations" translatable="false">Recommendations</string>
     <string name="movies" translatable="false">Movies</string>
 
-    <string name="search_hint" translatable="false">Search movies and actors.</string>
+    <string name="search_hint" translatable="false">Search movies.</string>
 </resources>
