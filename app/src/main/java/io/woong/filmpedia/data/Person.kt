@@ -7,7 +7,7 @@ data class Person(
     @SerializedName("also_known_as") val alsoKnownAs: List<String>,
     val biography: String,
     val birthday: String?,
-    val deathDay: String?,
+    val deathday: String?,
     val gender: Int,
     val homepage: String?,
     val id: Int,

@@ -73,9 +73,9 @@ fun AppCompatTextView.bindPersonBirthdayAndDeathday(person: Person?) {
         if (person.birthday != null) {
             val builder = StringBuilder(person.birthday)
 
-            if (person.deathDay != null) {
+            if (person.deathday != null) {
                 builder.append(" - ")
-                builder.append(person.deathDay)
+                builder.append(person.deathday)
             }
 
             this.text = builder.toString()
