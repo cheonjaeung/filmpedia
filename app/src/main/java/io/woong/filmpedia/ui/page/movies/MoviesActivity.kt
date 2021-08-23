@@ -20,7 +20,7 @@ import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.ui.component.RecommendedMovieView
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.ui.page.search.SearchActivity
-import io.woong.filmpedia.util.HorizontalItemDecoration
+import io.woong.filmpedia.util.itemdeco.HorizontalItemDecoration
 
 class MoviesActivity : AppCompatActivity(),
     View.OnClickListener,

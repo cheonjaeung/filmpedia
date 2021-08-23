@@ -28,7 +28,7 @@ import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
-import io.woong.filmpedia.util.HorizontalItemDecoration
+import io.woong.filmpedia.util.itemdeco.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder

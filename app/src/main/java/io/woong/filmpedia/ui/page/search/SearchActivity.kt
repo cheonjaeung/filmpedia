@@ -18,7 +18,7 @@ import io.woong.filmpedia.adapter.SearchResultListAdapter
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.databinding.ActivitySearchBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
-import io.woong.filmpedia.util.VerticalItemDecoration
+import io.woong.filmpedia.util.itemdeco.VerticalItemDecoration
 
 class SearchActivity : AppCompatActivity(),
     View.OnClickListener,

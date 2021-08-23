@@ -18,7 +18,7 @@ import io.woong.filmpedia.data.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.ImagePathUtil
-import io.woong.filmpedia.util.VerticalItemDecoration
+import io.woong.filmpedia.util.itemdeco.VerticalItemDecoration
 import io.woong.filmpedia.util.isNotNullOrBlank
 
 class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovieClickListener {
