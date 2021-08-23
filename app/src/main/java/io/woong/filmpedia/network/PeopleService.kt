@@ -2,6 +2,7 @@ package io.woong.filmpedia.network
 
 import io.woong.filmpedia.data.*
 import io.woong.filmpedia.data.people.MovieCredits
+import io.woong.filmpedia.data.people.Translations
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -42,5 +43,5 @@ interface PeopleService {
         @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
-    ): Response<PeopleTranslations>
+    ): Response<Translations>
 }

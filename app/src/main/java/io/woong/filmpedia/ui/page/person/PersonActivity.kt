@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Person
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
-import java.lang.StringBuilder
+import io.woong.filmpedia.util.itemdeco.GridItemDecoration
 
 class PersonActivity : AppCompatActivity() {
 
@@ -52,14 +50,17 @@ class PersonActivity : AppCompatActivity() {
                 setHomeAsUpIndicator(R.drawable.icon_back)
             }
 
+            val lineSize = 3
+            val deco = GridItemDecoration(lineSize, 2, resources.displayMetrics)
             movieCreditList.apply {
                 adapter = CreditListAdapter().apply {  }
-                layoutManager = GridLayoutManager(this@PersonActivity, 3)
+                layoutManager = GridLayoutManager(this@PersonActivity, lineSize)
+                addItemDecoration(deco)
             }
         }
 
         val app = application as FilmpediaApp
-        viewModel.update(personId, app.tmdbApiKey, app.language)
+        viewModel.update(personId, app.tmdbApiKey, app.language, app.region)
     }
 
     override fun onDestroy() {
@@ -74,22 +75,6 @@ fun AppCompatImageView.bindProfile(path: String?) {
         .load(ImagePathUtil.toFullUrl(path))
         .placeholder(R.drawable.placeholder_profile)
         .into(this)
-}
-
-@BindingAdapter("person_birthday_and_deathday")
-fun AppCompatTextView.bindPersonBirthdayAndDeathday(person: Person?) {
-    if (person != null) {
-        if (person.birthday != null) {
-            val builder = StringBuilder(person.birthday)
-
-            if (person.deathday != null) {
-                builder.append(" - ")
-                builder.append(person.deathday)
-            }
-
-            this.text = builder.toString()
-        }
-    }
 }
 
 @BindingAdapter("person_casted_movies")

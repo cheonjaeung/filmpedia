@@ -1,7 +1,7 @@
 package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.data.people.MovieCredits
-import io.woong.filmpedia.data.PeopleTranslations
+import io.woong.filmpedia.data.people.Translations
 import io.woong.filmpedia.data.Person
 import io.woong.filmpedia.network.PeopleService
 import io.woong.filmpedia.network.TmdbClient
@@ -47,7 +47,7 @@ class PeopleRepository {
         key: String,
         id: Int,
         lang: String,
-        onResponse: (translations: PeopleTranslations?) -> Unit
+        onResponse: (translations: Translations?) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
         val response = service.getTranslations(personId = id, apiKey = key, language = lang)
 

@@ -1,8 +1,8 @@
-package io.woong.filmpedia.data
+package io.woong.filmpedia.data.people
 
 import com.google.gson.annotations.SerializedName
 
-data class PeopleTranslations(
+data class Translations(
     val id: Int,
     val translations: List<Translation>
 ) {
