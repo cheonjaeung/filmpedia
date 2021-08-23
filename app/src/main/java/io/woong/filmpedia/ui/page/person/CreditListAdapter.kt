@@ -1,6 +1,7 @@
 package io.woong.filmpedia.ui.page.person
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,6 +23,12 @@ class CreditListAdapter : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
             notifyDataSetChanged()
         }
 
+    private var listener: OnCreditClickListener? = null
+
+    fun setOnCreditClickListener(listener: OnCreditClickListener) {
+        this.listener = listener
+    }
+
     override fun getItemCount(): Int = _credits.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,5 +47,23 @@ class CreditListAdapter : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
         }
     }
 
-    inner class ViewHolder(val binding: ItemPersonCreditsBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemPersonCreditsBinding) : RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
+
+        init {
+            binding.poster.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == binding.poster.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listener?.onCreditClick(credits[adapterPosition])
+                }
+            }
+        }
+    }
+
+    interface OnCreditClickListener {
+        fun onCreditClick(movie: MovieCredits.Cast?)
+    }
 }

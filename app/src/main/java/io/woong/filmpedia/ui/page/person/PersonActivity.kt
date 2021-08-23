@@ -1,6 +1,8 @@
 package io.woong.filmpedia.ui.page.person
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -13,11 +15,12 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
+import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import io.woong.filmpedia.util.itemdeco.GridItemDecoration
 
-class PersonActivity : AppCompatActivity() {
+class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListener {
 
     companion object {
         const val PERSON_ID_EXTRA_ID: String = "person_id"
@@ -53,7 +56,9 @@ class PersonActivity : AppCompatActivity() {
             val lineSize = 3
             val deco = GridItemDecoration(lineSize, 2, resources.displayMetrics)
             movieCreditList.apply {
-                adapter = CreditListAdapter().apply {  }
+                adapter = CreditListAdapter().apply {
+                    setOnCreditClickListener(this@PersonActivity)
+                }
                 layoutManager = GridLayoutManager(this@PersonActivity, lineSize)
                 addItemDecoration(deco)
             }
@@ -61,6 +66,24 @@ class PersonActivity : AppCompatActivity() {
 
         val app = application as FilmpediaApp
         viewModel.update(personId, app.tmdbApiKey, app.language, app.region)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreditClick(movie: MovieCredits.Cast?) {
+        if (movie != null) {
+            val intent = Intent(this, MovieDetailActivity::class.java)
+            intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movie.id)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroy() {
