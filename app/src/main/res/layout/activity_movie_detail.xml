@@ -317,7 +317,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{vm.movie.overview}"
-                        tools:text="This is a sample of the movie overview." />
+                        tools:text="@tools:sample/lorem/random" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
