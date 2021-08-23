@@ -18,7 +18,6 @@ import io.woong.filmpedia.util.ImagePathUtil
 class CreditListAdapter(private val context: Context, private val mod: Mod) : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
 
     private val _credits: MutableList<Credits.CreditsSubItem> = mutableListOf()
-
     var credits: List<Credits.CreditsSubItem>
         get() = _credits
         set(value) {
@@ -28,6 +27,12 @@ class CreditListAdapter(private val context: Context, private val mod: Mod) : Re
             }
             notifyDataSetChanged()
         }
+
+    private var listener: OnCreditClickListener? = null
+
+    fun setOnCreditClickListener(listener: OnCreditClickListener) {
+        this.listener = listener
+    }
 
     override fun getItemCount(): Int = _credits.size
 
@@ -76,15 +81,32 @@ class CreditListAdapter(private val context: Context, private val mod: Mod) : Re
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        private val rootView: ViewGroup = itemView.findViewById(R.id.cliv_root)
         val profileView: AppCompatImageView = itemView.findViewById(R.id.cliv_profile)
         val nameView: AppCompatTextView = itemView.findViewById(R.id.cliv_name)
         val subtitleView: AppCompatTextView = itemView.findViewById(R.id.cliv_subtitle)
+
+        init {
+            rootView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == rootView.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listener?.onCreditClick(mod, credits[adapterPosition])
+                }
+            }
+        }
     }
 
     enum class Mod(val value: Int) {
         CAST(1),
         CREW(2)
+    }
+
+    interface OnCreditClickListener {
+        fun onCreditClick(mod: Mod, credit: Credits.CreditsSubItem)
     }
 }

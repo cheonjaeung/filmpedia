@@ -26,6 +26,7 @@ import io.woong.filmpedia.data.*
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
+import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
@@ -35,6 +36,7 @@ import java.text.DecimalFormat
 
 class MovieDetailActivity : AppCompatActivity(),
     View.OnClickListener,
+    CreditListAdapter.OnCreditClickListener,
     SeriesButton.OnSeriesButtonClickListener,
     RecommendationListAdapter.OnRecommendationItemClickListener {
 
@@ -80,13 +82,17 @@ class MovieDetailActivity : AppCompatActivity(),
             val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
 
             castList.apply {
-                adapter = CreditListAdapter(context, CreditListAdapter.Mod.CAST)
+                adapter = CreditListAdapter(context, CreditListAdapter.Mod.CAST).apply {
+                    setOnCreditClickListener(this@MovieDetailActivity)
+                }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
 
             crewList.apply {
-                adapter = CreditListAdapter(context, CreditListAdapter.Mod.CREW)
+                adapter = CreditListAdapter(context, CreditListAdapter.Mod.CREW).apply {
+                    setOnCreditClickListener(this@MovieDetailActivity)
+                }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(itemDeco)
             }
@@ -162,6 +168,23 @@ class MovieDetailActivity : AppCompatActivity(),
             val intent = Intent(Intent.ACTION_VIEW, u)
             startActivity(intent)
         }
+    }
+
+    override fun onCreditClick(mod: CreditListAdapter.Mod, credit: Credits.CreditsSubItem) {
+        val intent = Intent(this, PersonActivity::class.java)
+
+        when (mod) {
+            CreditListAdapter.Mod.CAST -> {
+                credit as Credits.Cast
+                intent.putExtra(PersonActivity.PERSON_ID_EXTRA_ID, credit.id)
+            }
+            CreditListAdapter.Mod.CREW -> {
+                credit as Credits.Crew
+                intent.putExtra(PersonActivity.PERSON_ID_EXTRA_ID, credit.id)
+            }
+        }
+
+        startActivity(intent)
     }
 
     override fun onSeriesButtonClick(series: Movie.Collection?) {
