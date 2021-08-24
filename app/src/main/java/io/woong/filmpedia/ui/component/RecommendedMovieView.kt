@@ -10,8 +10,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Genres
-import io.woong.filmpedia.data.RecommendedMovie
+import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.movie.RecommendedMovie
 import io.woong.filmpedia.util.ImagePathUtil
 
 class RecommendedMovieView @JvmOverloads constructor(

@@ -1,4 +1,4 @@
-package io.woong.filmpedia.data
+package io.woong.filmpedia.data.collection
 
 import com.google.gson.annotations.SerializedName
 

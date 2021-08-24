@@ -1,6 +1,9 @@
 package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.data.*
+import io.woong.filmpedia.data.movie.Credits
+import io.woong.filmpedia.data.movie.Movie
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.network.MovieService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope

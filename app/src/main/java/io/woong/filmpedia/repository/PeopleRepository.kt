@@ -2,7 +2,7 @@ package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.data.people.Translations
-import io.woong.filmpedia.data.Person
+import io.woong.filmpedia.data.people.Person
 import io.woong.filmpedia.network.PeopleService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope

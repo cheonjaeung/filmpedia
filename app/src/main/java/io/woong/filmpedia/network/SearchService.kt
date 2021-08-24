@@ -1,6 +1,6 @@
 package io.woong.filmpedia.network
 
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movies
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

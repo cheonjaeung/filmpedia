@@ -1,12 +1,9 @@
 package io.woong.filmpedia.ui.page.series
 
-import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.woong.filmpedia.FilmpediaApp
-import io.woong.filmpedia.data.Collection
+import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.repository.CollectionRepository
 import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope

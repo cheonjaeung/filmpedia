@@ -3,7 +3,7 @@ package io.woong.filmpedia.ui.page.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.repository.SearchRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

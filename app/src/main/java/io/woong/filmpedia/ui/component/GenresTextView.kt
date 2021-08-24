@@ -13,7 +13,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.toSpannable
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Genres
+import io.woong.filmpedia.data.movie.Genres
 
 class GenresTextView @JvmOverloads constructor(
     context: Context,

@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.util.ImagePathUtil
 
 class SearchResultListAdapter : RecyclerView.Adapter<SearchResultListAdapter.ViewHolder>() {

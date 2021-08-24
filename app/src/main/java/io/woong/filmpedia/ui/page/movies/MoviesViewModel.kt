@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Genres
-import io.woong.filmpedia.data.Movies
-import io.woong.filmpedia.data.RecommendedMovie
+import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.movie.Movies
+import io.woong.filmpedia.data.movie.RecommendedMovie
 import io.woong.filmpedia.repository.GenreRepository
 import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope

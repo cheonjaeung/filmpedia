@@ -20,6 +20,10 @@ import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.*
+import io.woong.filmpedia.data.movie.Credits
+import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.movie.Movie
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton

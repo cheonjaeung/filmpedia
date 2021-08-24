@@ -2,6 +2,7 @@ package io.woong.filmpedia.network
 
 import io.woong.filmpedia.data.*
 import io.woong.filmpedia.data.people.MovieCredits
+import io.woong.filmpedia.data.people.Person
 import io.woong.filmpedia.data.people.Translations
 import retrofit2.Response
 import retrofit2.http.GET

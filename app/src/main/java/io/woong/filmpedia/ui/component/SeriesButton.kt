@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Movie
+import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.databinding.LayoutSeriesButtonBinding
 import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.ImagePathUtil

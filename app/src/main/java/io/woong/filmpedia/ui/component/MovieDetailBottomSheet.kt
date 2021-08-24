@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.databinding.LayoutMovieDetailBottomSheetBinding
 import io.woong.filmpedia.util.ImagePathUtil
 

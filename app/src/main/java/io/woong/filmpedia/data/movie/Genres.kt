@@ -1,4 +1,4 @@
-package io.woong.filmpedia.data
+package io.woong.filmpedia.data.movie
 
 data class Genres(
     val genres: List<Genre>

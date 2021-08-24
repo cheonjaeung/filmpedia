@@ -1,9 +1,9 @@
 package io.woong.filmpedia.network
 
-import io.woong.filmpedia.data.Credits
+import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.ExternalIds
-import io.woong.filmpedia.data.Movie
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movie
+import io.woong.filmpedia.data.movie.Movies
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

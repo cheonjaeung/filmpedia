@@ -3,10 +3,10 @@ package io.woong.filmpedia.ui.page.moviedetail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.woong.filmpedia.data.Credits
+import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.ExternalIds
-import io.woong.filmpedia.data.Movie
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movie
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.repository.MovieRepository
 import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope

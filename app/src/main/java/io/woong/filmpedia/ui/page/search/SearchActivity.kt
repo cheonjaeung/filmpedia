@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.Movies
+import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.databinding.ActivitySearchBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.itemdeco.VerticalItemDecoration
