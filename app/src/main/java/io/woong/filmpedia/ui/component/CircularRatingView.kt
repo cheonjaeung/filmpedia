@@ -3,10 +3,10 @@ package io.woong.filmpedia.ui.component
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
 import androidx.annotation.ColorInt
 import io.woong.filmpedia.R
+import io.woong.filmpedia.util.DimensionUtil
 import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
@@ -80,11 +80,7 @@ class CircularRatingView @JvmOverloads constructor(
 
             ratingArcSize = attrs.getDimension(
                 R.styleable.CircularRatingView_rating_arc_size,
-                TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    4f,
-                    context.resources.displayMetrics
-                )
+                DimensionUtil.dpToPx(4f, context.resources.displayMetrics)
             )
 
             ratingArcColor = attrs.getColor(
@@ -94,11 +90,7 @@ class CircularRatingView @JvmOverloads constructor(
 
             ratingTextSize = attrs.getDimension(
                 R.styleable.CircularRatingView_rating_text_size,
-                TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_SP,
-                    10f,
-                    context.resources.displayMetrics
-                )
+                DimensionUtil.dpToPx(10f, context.resources.displayMetrics)
             )
 
             ratingTextColor = attrs.getColor(

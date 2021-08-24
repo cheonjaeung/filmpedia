@@ -28,6 +28,7 @@ import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
+import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.itemdeco.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
@@ -221,11 +222,7 @@ fun AppCompatImageView.bindBackdropPath(path: String?) {
 @BindingAdapter("movie_detail_poster_path")
 fun AppCompatImageView.bindPosterPath(path: String?) {
     path?.let { p ->
-        val radiusDp = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            8f,
-            context.resources.displayMetrics
-        ).toInt()
+        val radiusDp = DimensionUtil.dpToPx(8, context.resources.displayMetrics)
 
         Glide.with(this)
             .load(ImagePathUtil.toFullUrl(p))

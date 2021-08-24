@@ -1,7 +1,6 @@
 package io.woong.filmpedia.adapter
 
 import android.content.Context
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Credits
+import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.ImagePathUtil
 
 class CreditListAdapter(private val context: Context, private val mod: Mod) : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
@@ -64,11 +64,7 @@ class CreditListAdapter(private val context: Context, private val mod: Mod) : Re
                 }
             }
 
-            val radiusDp = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                4f,
-                context.resources.displayMetrics
-            ).toInt()
+            val radiusDp = DimensionUtil.dpToPx(4, context.resources.displayMetrics)
 
             Glide.with(context)
                 .load(ImagePathUtil.toFullUrl(profilePath))

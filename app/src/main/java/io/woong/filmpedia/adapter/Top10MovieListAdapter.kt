@@ -1,7 +1,6 @@
 package io.woong.filmpedia.adapter
 
 import android.content.Context
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.ui.component.CircularRatingView
+import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.ImagePathUtil
 
 class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter<Top10MovieListAdapter.ViewHolder>() {
@@ -47,11 +47,7 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = top10[position]
 
-        val radiusDp = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            4f,
-            context.resources.displayMetrics
-        ).toInt()
+        val radiusDp = DimensionUtil.dpToPx(4, context.resources.displayMetrics)
 
         Glide.with(context)
             .load(ImagePathUtil.toFullUrl(movie.posterPath))

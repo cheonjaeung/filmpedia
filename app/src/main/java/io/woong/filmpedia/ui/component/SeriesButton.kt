@@ -2,7 +2,6 @@ package io.woong.filmpedia.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.Movie
 import io.woong.filmpedia.databinding.LayoutSeriesButtonBinding
+import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
 
@@ -91,11 +91,7 @@ class SeriesButton @JvmOverloads constructor(
 
     private fun loadSeriesInfo() {
         series?.let { s ->
-            val radiusDp = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                4f,
-                context.resources.displayMetrics
-            ).toInt()
+            val radiusDp = DimensionUtil.dpToPx(4, context.resources.displayMetrics)
 
             Glide.with(this)
                 .load(ImagePathUtil.toFullUrl(s.backdropPath))
