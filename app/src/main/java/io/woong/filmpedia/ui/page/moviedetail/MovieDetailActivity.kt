@@ -32,6 +32,7 @@ import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.itemdeco.HorizontalItemDecoration
 import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder
 import java.text.DecimalFormat
@@ -135,39 +136,27 @@ class MovieDetailActivity : AppCompatActivity(),
         when (v?.id) {
             binding.homepageButton.id -> {
                 val homepageUrl = viewModel.movie.value?.homepage
-                homepageUrl?.let { url ->
-                    uri = Uri.parse(url)
-                }
+                uri = UriUtil.getSocialUri(homepageUrl, UriUtil.SocialType.OTHER)
             }
             binding.facebookButton.id -> {
                 val facebookId = viewModel.socialIds.value?.facebookId
-                facebookId?.let { id ->
-                    uri = Uri.parse("https://www.facebook.com/$id")
-                }
+                uri = UriUtil.getSocialUri(facebookId, UriUtil.SocialType.FACEBOOK)
             }
             binding.instagramButton.id -> {
                 val instagramId = viewModel.socialIds.value?.instagramId
-                instagramId?.let { id ->
-                    uri = Uri.parse("https://www.instagram.com/$id")
-                }
+                uri = UriUtil.getSocialUri(instagramId, UriUtil.SocialType.INSTAGRAM)
             }
             binding.twitterButton.id -> {
                 val twitterId = viewModel.socialIds.value?.twitterId
-                twitterId?.let { id ->
-                    uri = Uri.parse("https://twitter.com/$id")
-                }
+                uri = UriUtil.getSocialUri(twitterId, UriUtil.SocialType.TWITTER)
             }
             binding.tmdbButton.id -> {
                 val tmdbId = viewModel.movie.value?.id
-                tmdbId?.let { id ->
-                    uri = Uri.parse("https://www.themoviedb.org/movie/$id")
-                }
+                uri = UriUtil.getSocialUri(tmdbId.toString(), UriUtil.SocialType.TMDB)
             }
             binding.imdbButton.id -> {
                 val imdbId = viewModel.socialIds.value?.imdbId
-                imdbId?.let { id ->
-                    uri = Uri.parse("https://www.imdb.com/title/$id")
-                }
+                uri = UriUtil.getSocialUri(imdbId, UriUtil.SocialType.IMDB)
             }
         }
 
