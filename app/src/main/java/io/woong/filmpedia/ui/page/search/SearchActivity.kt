@@ -17,7 +17,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.databinding.ActivitySearchBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
-import io.woong.filmpedia.util.itemdeco.VerticalItemDecoration
+import io.woong.filmpedia.util.ListDecoration
 
 class SearchActivity : AppCompatActivity(),
     TextView.OnEditorActionListener,
@@ -45,14 +45,14 @@ class SearchActivity : AppCompatActivity(),
 
             searchBar.setOnEditorActionListener(this@SearchActivity)
 
-            val listItemDeco = VerticalItemDecoration(1, resources.displayMetrics)
+            val deco = ListDecoration.VerticalDecoration(2)
 
             resultList.apply {
                 adapter = SearchResultListAdapter().apply {
                     setOnSearchResultClickListener(this@SearchActivity)
                 }
                 layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
-                addItemDecoration(listItemDeco)
+                addItemDecoration(deco)
             }
         }
     }

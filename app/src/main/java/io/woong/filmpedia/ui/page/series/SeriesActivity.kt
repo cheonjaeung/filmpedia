@@ -16,8 +16,8 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
-import io.woong.filmpedia.util.itemdeco.VerticalItemDecoration
 import io.woong.filmpedia.util.isNotNullOrBlank
 
 class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovieClickListener {
@@ -59,14 +59,14 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
                 title = collectionName
             }
 
-            val itemDeco = VerticalItemDecoration(8, resources.displayMetrics)
+            val deco = ListDecoration.VerticalDecoration(8)
 
             moviesList.apply {
                 adapter = SeriesMovieListAdapter().apply {
                     setOnSeriesMovieClickListener(this@SeriesActivity)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
         }
 

@@ -19,7 +19,7 @@ import io.woong.filmpedia.ui.component.MovieDetailBottomSheet
 import io.woong.filmpedia.ui.component.RecommendedMovieView
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.ui.page.search.SearchActivity
-import io.woong.filmpedia.util.itemdeco.HorizontalItemDecoration
+import io.woong.filmpedia.util.ListDecoration
 
 class MoviesActivity : AppCompatActivity(),
     View.OnClickListener,
@@ -51,14 +51,14 @@ class MoviesActivity : AppCompatActivity(),
 
             searchButton.setOnClickListener(this@MoviesActivity)
 
-            val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
+            val deco = ListDecoration.HorizontalDecoration(8)
             top10NowPlayingList.apply {
                 adapter = Top10MovieListAdapter(context).apply {
                     setOnItemClickListener(this@MoviesActivity)
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
 
             top10PopularList.apply {
@@ -67,7 +67,7 @@ class MoviesActivity : AppCompatActivity(),
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
 
             top10RatedList.apply {
@@ -76,7 +76,7 @@ class MoviesActivity : AppCompatActivity(),
                     setRatingEnabled(true)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
 
             top10UpcomingList.apply {
@@ -85,7 +85,7 @@ class MoviesActivity : AppCompatActivity(),
                     setRatingEnabled(false)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
         }
 

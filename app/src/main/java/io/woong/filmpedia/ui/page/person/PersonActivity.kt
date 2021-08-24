@@ -17,9 +17,9 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
-import io.woong.filmpedia.util.itemdeco.GridItemDecoration
 import java.lang.StringBuilder
 
 class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListener {
@@ -61,7 +61,7 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
             }
 
             val lineSize = 3
-            val deco = GridItemDecoration(lineSize, 2, resources.displayMetrics)
+            val deco = ListDecoration.GridDecoration(2)
             movieCreditList.apply {
                 adapter = CreditListAdapter().apply {
                     setOnCreditClickListener(this@PersonActivity)

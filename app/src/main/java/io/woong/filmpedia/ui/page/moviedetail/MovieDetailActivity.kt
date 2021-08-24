@@ -30,7 +30,7 @@ import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.DimensionUtil
-import io.woong.filmpedia.util.itemdeco.HorizontalItemDecoration
+import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder
@@ -86,14 +86,14 @@ class MovieDetailActivity : AppCompatActivity(),
             tmdbButton.setOnClickListener(this@MovieDetailActivity)
             imdbButton.setOnClickListener(this@MovieDetailActivity)
 
-            val itemDeco = HorizontalItemDecoration(8, resources.displayMetrics)
+            val deco = ListDecoration.HorizontalDecoration(8)
 
             castList.apply {
                 adapter = CreditListAdapter(context, CreditListAdapter.Mod.CAST).apply {
                     setOnCreditClickListener(this@MovieDetailActivity)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
 
             crewList.apply {
@@ -101,7 +101,7 @@ class MovieDetailActivity : AppCompatActivity(),
                     setOnCreditClickListener(this@MovieDetailActivity)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
 
             series.setOnSeriesButtonClickListener(this@MovieDetailActivity)
@@ -111,7 +111,7 @@ class MovieDetailActivity : AppCompatActivity(),
                     setOnRecommendationItemClickListener(this@MovieDetailActivity)
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(itemDeco)
+                addItemDecoration(deco)
             }
         }
 
