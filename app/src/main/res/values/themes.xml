@@ -17,6 +17,13 @@
         <item name="bottomSheetDialogTheme">@style/FilmpediaBottomSheetTheme</item>
     </style>
 
+    <style name="FilmpediaToolbarTheme" parent="Theme.Filmpedia">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@color/white</item>
+        <item name="android:colorControlNormal" tools:targetApi="m">@color/white</item>
+    </style>
+
     <style name="FilmpediaTitleTheme" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
