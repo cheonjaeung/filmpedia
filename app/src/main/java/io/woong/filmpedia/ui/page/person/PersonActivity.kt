@@ -26,6 +26,7 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
 
     companion object {
         const val PERSON_ID_EXTRA_ID: String = "person_id"
+        const val PERSON_NAME_EXTRA_ID: String = "person_name"
     }
 
     private val viewModel: PersonViewModel by viewModels()
@@ -38,12 +39,15 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_person)
 
-        val extra = intent.getIntExtra(PERSON_ID_EXTRA_ID, -1)
-        if (extra != -1) {
-            personId = extra
+        val personIdExtra = intent.getIntExtra(PERSON_ID_EXTRA_ID, -1)
+        if (personIdExtra != -1) {
+            personId = personIdExtra
         } else {
             finish()
         }
+
+        val personNameExtra = intent.getStringExtra(PERSON_NAME_EXTRA_ID)
+        val personName = personNameExtra ?: resources.getString(R.string.app_name)
 
         binding.apply {
             lifecycleOwner = this@PersonActivity
@@ -53,6 +57,7 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.icon_back)
+                title = personName
             }
 
             val lineSize = 3

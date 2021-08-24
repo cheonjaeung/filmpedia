@@ -182,10 +182,12 @@ class MovieDetailActivity : AppCompatActivity(),
             CreditListAdapter.Mod.CAST -> {
                 credit as Credits.Cast
                 intent.putExtra(PersonActivity.PERSON_ID_EXTRA_ID, credit.id)
+                intent.putExtra(PersonActivity.PERSON_NAME_EXTRA_ID, credit.name)
             }
             CreditListAdapter.Mod.CREW -> {
                 credit as Credits.Crew
                 intent.putExtra(PersonActivity.PERSON_ID_EXTRA_ID, credit.id)
+                intent.putExtra(PersonActivity.PERSON_NAME_EXTRA_ID, credit.name)
             }
         }
 
