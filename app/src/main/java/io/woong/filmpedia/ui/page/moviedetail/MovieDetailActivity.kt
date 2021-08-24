@@ -196,6 +196,7 @@ class MovieDetailActivity : AppCompatActivity(),
         series?.let { s ->
             val intent = Intent(this@MovieDetailActivity, SeriesActivity::class.java)
             intent.putExtra(SeriesActivity.COLLECTION_ID_EXTRA_ID, s.id)
+            intent.putExtra(SeriesActivity.COLLECTION_NAME_EXTRA_ID, s.name)
             startActivity(intent)
         }
     }

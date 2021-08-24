@@ -25,6 +25,7 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
 
     companion object {
         const val COLLECTION_ID_EXTRA_ID: String = "collection_id"
+        const val COLLECTION_NAME_EXTRA_ID: String = "collection_name"
     }
 
     private val viewModel: SeriesViewModel by viewModels()
@@ -38,22 +39,26 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_series)
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.icon_back)
-        }
-
-        val extra = intent.getIntExtra(COLLECTION_ID_EXTRA_ID, -1)
-        if (extra != -1) {
-            collectionId = extra
+        val collectionIdExtra = intent.getIntExtra(COLLECTION_ID_EXTRA_ID, -1)
+        if (collectionIdExtra != -1) {
+            collectionId = collectionIdExtra
         } else {
             finish()
         }
 
+        val collectionNameExtra = intent.getStringExtra(COLLECTION_NAME_EXTRA_ID)
+        val collectionName = collectionNameExtra ?: resources.getString(R.string.app_name)
+
         binding.apply {
             lifecycleOwner = this@SeriesActivity
             vm = viewModel
+
+            setSupportActionBar(toolbar)
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setHomeAsUpIndicator(R.drawable.icon_back)
+                title = collectionName
+            }
 
             val itemDeco = VerticalItemDecoration(8, resources.displayMetrics)
 
