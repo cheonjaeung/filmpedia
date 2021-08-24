@@ -2,7 +2,8 @@ package io.woong.filmpedia.ui.page.movies
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -22,7 +23,6 @@ import io.woong.filmpedia.ui.page.search.SearchActivity
 import io.woong.filmpedia.util.ListDecoration
 
 class MoviesActivity : AppCompatActivity(),
-    View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener,
     RecommendedMovieView.OnImageClickListener,
     RecommendedMovieView.OnInfoButtonClickListener,
@@ -42,14 +42,17 @@ class MoviesActivity : AppCompatActivity(),
             lifecycleOwner = this@MoviesActivity
             vm = viewModel
 
+            setSupportActionBar(toolbar)
+            supportActionBar?.apply {
+                setDisplayShowTitleEnabled(false)
+            }
+
             swipeLayout.setOnRefreshListener(this@MoviesActivity)
 
             recommendedMovie.apply {
                 setOnImageClickListener(this@MoviesActivity)
                 setOnInfoButtonClickListener(this@MoviesActivity)
             }
-
-            searchButton.setOnClickListener(this@MoviesActivity)
 
             val deco = ListDecoration.HorizontalDecoration(8)
             top10NowPlayingList.apply {
@@ -92,6 +95,21 @@ class MoviesActivity : AppCompatActivity(),
         update()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_movies_toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.menu_movies_search) {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onRefresh() {
         update()
         viewModel.isLoading.observe(this) {
@@ -104,13 +122,6 @@ class MoviesActivity : AppCompatActivity(),
     private fun update() {
         val app = application as FilmpediaApp
         viewModel.update(app.tmdbApiKey, app.language, app.region)
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == binding.searchButton.id) {
-            val intent = Intent(this, SearchActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?) {
