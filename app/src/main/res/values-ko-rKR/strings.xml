@@ -26,6 +26,7 @@
     <string name="movies" translatable="false">영화</string>
     <string name="casts" translatable="false">출연</string>
 
+    <string name="search" translatable="false">검색</string>
     <string name="search_hint" translatable="false">영화를 검색하세요.</string>
 
     <plurals name="year_old">

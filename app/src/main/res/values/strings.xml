@@ -25,6 +25,7 @@
     <string name="recommendations" translatable="false">Recommendations</string>
     <string name="movies" translatable="false">Movies</string>
 
+    <string name="search" translatable="false">Search</string>
     <string name="search_hint" translatable="false">Search movies.</string>
 
     <plurals name="year_old">
