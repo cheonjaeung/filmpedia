@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.adapter.SeriesMovieListAdapter
 import io.woong.filmpedia.data.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity

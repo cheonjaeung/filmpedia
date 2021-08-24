@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.adapter.Top10MovieListAdapter
 import io.woong.filmpedia.data.Movies
 import io.woong.filmpedia.data.RecommendedMovie
 import io.woong.filmpedia.databinding.ActivityMoviesBinding

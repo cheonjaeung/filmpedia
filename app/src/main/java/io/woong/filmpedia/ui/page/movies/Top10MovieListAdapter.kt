@@ -1,4 +1,4 @@
-package io.woong.filmpedia.adapter
+package io.woong.filmpedia.ui.page.movies
 
 import android.content.Context
 import android.view.LayoutInflater

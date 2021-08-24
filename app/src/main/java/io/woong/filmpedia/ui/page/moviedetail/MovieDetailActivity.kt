@@ -19,8 +19,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.adapter.CreditListAdapter
-import io.woong.filmpedia.adapter.RecommendationListAdapter
 import io.woong.filmpedia.data.*
 import io.woong.filmpedia.databinding.ActivityMovieDetailBinding
 import io.woong.filmpedia.ui.component.GenresTextView
