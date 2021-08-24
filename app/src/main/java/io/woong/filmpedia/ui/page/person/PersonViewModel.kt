@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.repository.PeopleRepository
+import io.woong.filmpedia.util.DateUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 class PersonViewModel : ViewModel() {
 
@@ -27,9 +27,17 @@ class PersonViewModel : ViewModel() {
     val biography: LiveData<String>
         get() = _biography
 
-    private val _birthdayAndDeathday: MutableLiveData<String> = MutableLiveData()
-    val birthdayAndDeathday: LiveData<String>
-        get() = _birthdayAndDeathday
+    private val _birthday: MutableLiveData<String> = MutableLiveData()
+    val birthday: LiveData<String>
+        get() = _birthday
+
+    private val _deathday: MutableLiveData<String> = MutableLiveData()
+    val deathday: LiveData<String>
+        get() = _deathday
+
+    private val _age: MutableLiveData<Int> = MutableLiveData(-1)
+    val age: LiveData<Int>
+        get() = _age
 
     private val _castedMovies: MutableLiveData<List<MovieCredits.Cast>> = MutableLiveData()
     val castedMovies: LiveData<List<MovieCredits.Cast>>
@@ -50,16 +58,15 @@ class PersonViewModel : ViewModel() {
                     val birthday = person.birthday
                     val deathday = person.deathday
 
-                    birthday?.let {
-                        val builder = StringBuilder(birthday)
-
-                        if (person.deathday != null) {
-                            builder.append(" - ")
-                            builder.append(deathday)
-                        }
-
-                        _birthdayAndDeathday.postValue(builder.toString())
+                    val age = if (birthday != null) {
+                        DateUtil.getAge(birthday, deathday, -1)
+                    } else {
+                        -1
                     }
+
+                    _birthday.postValue(birthday)
+                    _deathday.postValue(deathday)
+                    _age.postValue(age)
                 }
             }
 

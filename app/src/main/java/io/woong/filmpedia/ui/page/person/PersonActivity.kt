@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.util.ImagePathUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import io.woong.filmpedia.util.itemdeco.GridItemDecoration
+import java.lang.StringBuilder
 
 class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListener {
 
@@ -98,6 +100,22 @@ fun AppCompatImageView.bindProfile(path: String?) {
         .load(ImagePathUtil.toFullUrl(path))
         .placeholder(R.drawable.placeholder_profile)
         .into(this)
+}
+
+@BindingAdapter(value = ["person_birthday", "person_deathday", "person_age"])
+fun AppCompatTextView.bindPersonAge(birthday: String?, deathday: String?, age: Int) {
+    birthday?.let {
+        val builder = StringBuilder(birthday)
+
+        if (deathday != null) {
+            builder.append(" - $deathday")
+        }
+
+        val ageUnit = this.context.resources.getQuantityString(R.plurals.year_old, age)
+        builder.append(" ($age $ageUnit)")
+
+        this.text = builder.toString()
+    }
 }
 
 @BindingAdapter("person_casted_movies")

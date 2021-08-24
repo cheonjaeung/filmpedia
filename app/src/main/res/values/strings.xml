@@ -26,4 +26,9 @@
     <string name="movies" translatable="false">Movies</string>
 
     <string name="search_hint" translatable="false">Search movies.</string>
+
+    <plurals name="year_old">
+        <item quantity="one">year old</item>
+        <item quantity="other">years old</item>
+    </plurals>
 </resources>

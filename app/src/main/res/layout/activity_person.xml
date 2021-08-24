@@ -59,11 +59,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@{vm.birthdayAndDeathday}"
+                    person_birthday="@{vm.birthday}"
+                    person_deathday="@{vm.deathday}"
+                    person_age="@{vm.age}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name"
                     app:layout_constraintRight_toRightOf="parent"
-                    tools:text="1997-01-01 - 2021.01.01" />
+                    tools:text="1997-01-01 - 2021.01.01 (24 years old)" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/biography"
