@@ -17,7 +17,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import io.woong.filmpedia.util.itemdeco.GridItemDecoration
 import java.lang.StringBuilder
@@ -103,7 +103,7 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
 @BindingAdapter("person_profile")
 fun AppCompatImageView.bindProfile(path: String?) {
     Glide.with(this)
-        .load(ImagePathUtil.toFullUrl(path))
+        .load(UriUtil.getImageUrl(path))
         .placeholder(R.drawable.placeholder_profile)
         .into(this)
 }

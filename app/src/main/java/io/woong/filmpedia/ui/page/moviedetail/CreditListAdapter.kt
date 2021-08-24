@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.util.DimensionUtil
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class CreditListAdapter(private val context: Context, private val mod: Mod) : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
 
@@ -67,7 +67,7 @@ class CreditListAdapter(private val context: Context, private val mod: Mod) : Re
             val radiusDp = DimensionUtil.dpToPx(4, context.resources.displayMetrics)
 
             Glide.with(context)
-                .load(ImagePathUtil.toFullUrl(profilePath))
+                .load(UriUtil.getImageUrl(profilePath))
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
                 .placeholder(R.drawable.placeholder_profile)
                 .into(holder.profileView)

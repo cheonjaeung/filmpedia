@@ -12,7 +12,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.databinding.LayoutSeriesButtonBinding
 import io.woong.filmpedia.util.DimensionUtil
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
 
 class SeriesButton @JvmOverloads constructor(
@@ -94,7 +94,7 @@ class SeriesButton @JvmOverloads constructor(
             val radiusDp = DimensionUtil.dpToPx(4, context.resources.displayMetrics)
 
             Glide.with(this)
-                .load(ImagePathUtil.toFullUrl(s.backdropPath))
+                .load(UriUtil.getImageUrl(s.backdropPath))
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
                 .placeholder(R.drawable.placeholder_backdrop)
                 .into(binding.backdrop)

@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.databinding.LayoutMovieDetailBottomSheetBinding
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class MovieDetailBottomSheet(private val movie: Movies.Movie) : BottomSheetDialogFragment(), View.OnClickListener {
 
@@ -28,7 +28,7 @@ class MovieDetailBottomSheet(private val movie: Movies.Movie) : BottomSheetDialo
         binding.apply {
             movie.posterPath?.let { path ->
                 Glide.with(binding.root)
-                    .load(ImagePathUtil.toFullUrl(path))
+                    .load(UriUtil.getImageUrl(path))
                     .into(binding.poster)
             }
 

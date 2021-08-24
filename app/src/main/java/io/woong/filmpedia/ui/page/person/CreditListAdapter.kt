@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ItemPersonCreditsBinding
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class CreditListAdapter : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
 
@@ -41,7 +41,7 @@ class CreditListAdapter : RecyclerView.Adapter<CreditListAdapter.ViewHolder>() {
             val credit = credits[position]
 
             Glide.with(holder.itemView.context)
-                .load(ImagePathUtil.toFullUrl(credit.posterPath))
+                .load(UriUtil.getImageUrl(credit.posterPath))
                 .placeholder(R.drawable.placeholder_poster)
                 .into(holder.binding.poster)
         }

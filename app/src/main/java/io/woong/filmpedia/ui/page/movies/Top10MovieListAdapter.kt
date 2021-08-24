@@ -13,7 +13,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.ui.component.CircularRatingView
 import io.woong.filmpedia.util.DimensionUtil
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter<Top10MovieListAdapter.ViewHolder>() {
 
@@ -50,7 +50,7 @@ class Top10MovieListAdapter(private val context: Context) : RecyclerView.Adapter
         val radiusDp = DimensionUtil.dpToPx(4, context.resources.displayMetrics)
 
         Glide.with(context)
-            .load(ImagePathUtil.toFullUrl(movie.posterPath))
+            .load(UriUtil.getImageUrl(movie.posterPath))
             .apply(RequestOptions.bitmapTransform(RoundedCorners(radiusDp)))
             .placeholder(R.drawable.placeholder_poster)
             .into(holder.posterView)

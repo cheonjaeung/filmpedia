@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Genres
 import io.woong.filmpedia.data.movie.RecommendedMovie
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class RecommendedMovieView @JvmOverloads constructor(
     context: Context,
@@ -64,7 +64,7 @@ class RecommendedMovieView @JvmOverloads constructor(
     private fun loadMovieInfo() {
         movie?.let { m ->
             Glide.with(this)
-                .load(ImagePathUtil.toFullUrl(m.movie.backdropPath))
+                .load(UriUtil.getImageUrl(m.movie.backdropPath))
                 .into(backdropImageView)
 
             titleTextView.text = m.movie.title

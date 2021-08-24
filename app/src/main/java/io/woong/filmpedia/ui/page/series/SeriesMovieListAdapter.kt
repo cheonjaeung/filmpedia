@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class SeriesMovieListAdapter : RecyclerView.Adapter<SeriesMovieListAdapter.ViewHolder>() {
 
@@ -44,7 +44,7 @@ class SeriesMovieListAdapter : RecyclerView.Adapter<SeriesMovieListAdapter.ViewH
             val movie = movies[position]
 
             Glide.with(holder.itemView.context)
-                .load(ImagePathUtil.toFullUrl(movie.posterPath))
+                .load(UriUtil.getImageUrl(movie.posterPath))
                 .placeholder(R.drawable.placeholder_poster)
                 .into(holder.posterView)
 

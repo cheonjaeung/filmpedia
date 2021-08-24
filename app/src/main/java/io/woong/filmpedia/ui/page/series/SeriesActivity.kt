@@ -16,7 +16,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.itemdeco.VerticalItemDecoration
 import io.woong.filmpedia.util.isNotNullOrBlank
 
@@ -103,7 +103,7 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
 fun AppCompatImageView.bindBackdrop(path: String?) {
     if (path.isNotNullOrBlank()) {
         Glide.with(this)
-            .load(ImagePathUtil.toFullUrl(path))
+            .load(UriUtil.getImageUrl(path))
             .placeholder(R.drawable.placeholder_backdrop)
             .into(this)
     }
@@ -113,7 +113,7 @@ fun AppCompatImageView.bindBackdrop(path: String?) {
 fun AppCompatImageView.bindPoster(path: String?) {
     if (path.isNotNullOrBlank()) {
         Glide.with(this)
-            .load(ImagePathUtil.toFullUrl(path))
+            .load(UriUtil.getImageUrl(path))
             .placeholder(R.drawable.placeholder_poster)
             .into(this)
     }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movies
-import io.woong.filmpedia.util.ImagePathUtil
+import io.woong.filmpedia.util.UriUtil
 
 class SearchResultListAdapter : RecyclerView.Adapter<SearchResultListAdapter.ViewHolder>() {
 
@@ -44,7 +44,7 @@ class SearchResultListAdapter : RecyclerView.Adapter<SearchResultListAdapter.Vie
             val movie = results[position]
 
             Glide.with(holder.itemView.context)
-                .load(ImagePathUtil.toFullUrl(movie.backdropPath))
+                .load(UriUtil.getImageUrl(movie.backdropPath))
                 .placeholder(R.drawable.placeholder_backdrop)
                 .into(holder.backdropView)
 
