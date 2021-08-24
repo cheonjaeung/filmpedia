@@ -84,6 +84,7 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
         if (movie != null) {
             val intent = Intent(this, MovieDetailActivity::class.java)
             intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movie.id)
+            intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, movie.title)
             startActivity(intent)
         }
     }

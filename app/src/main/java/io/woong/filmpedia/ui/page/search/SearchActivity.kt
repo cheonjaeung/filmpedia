@@ -78,6 +78,7 @@ class SearchActivity : AppCompatActivity(),
         if (result != null) {
             val intent = Intent(this, MovieDetailActivity::class.java)
             intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, result.id)
+            intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, result.title)
             startActivity(intent)
         }
     }

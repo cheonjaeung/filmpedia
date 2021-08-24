@@ -3,7 +3,6 @@ package io.woong.filmpedia.ui.page.moviedetail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -43,6 +42,7 @@ class MovieDetailActivity : AppCompatActivity(),
 
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
+        const val MOVIE_TITLE_EXTRA_ID: String = "movie_title"
     }
 
     private val viewModel: MovieDetailViewModel by viewModels()
@@ -56,22 +56,26 @@ class MovieDetailActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.icon_back)
-        }
-
-        val extra = intent.getIntExtra(MOVIE_ID_EXTRA_ID, -1)
-        if (extra != -1) {
-            movieId = extra
+        val movieIdExtra = intent.getIntExtra(MOVIE_ID_EXTRA_ID, -1)
+        if (movieIdExtra != -1) {
+            movieId = movieIdExtra
         } else {
             finish()
         }
 
+        val movieTitleExtra = intent.getStringExtra(MOVIE_TITLE_EXTRA_ID)
+        val movieTitle = movieTitleExtra ?: resources.getString(R.string.app_name)
+
         binding.apply {
             lifecycleOwner = this@MovieDetailActivity
             vm = viewModel
+
+            setSupportActionBar(toolbar)
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setHomeAsUpIndicator(R.drawable.icon_back)
+                title = movieTitle
+            }
 
             homepageButton.setOnClickListener(this@MovieDetailActivity)
             facebookButton.setOnClickListener(this@MovieDetailActivity)

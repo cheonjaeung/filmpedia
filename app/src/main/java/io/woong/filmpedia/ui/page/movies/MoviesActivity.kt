@@ -117,7 +117,7 @@ class MoviesActivity : AppCompatActivity(),
     override fun onImageClickListener(view: RecommendedMovieView, movie: RecommendedMovie?) {
         if (view.id == binding.recommendedMovie.id) {
             movie?.let { m ->
-                startMovieDetailActivity(m.movie.id)
+                startMovieDetailActivity(m.movie.id, m.movie.title)
             }
         }
     }
@@ -145,12 +145,13 @@ class MoviesActivity : AppCompatActivity(),
     }
 
     override fun onDetailButtonClick(movie: Movies.Movie) {
-        startMovieDetailActivity(movie.id)
+        startMovieDetailActivity(movie.id, movie.title)
     }
 
-    private fun startMovieDetailActivity(movieId: Int) {
+    private fun startMovieDetailActivity(movieId: Int, movieTitle: String) {
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movieId)
+        intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, movieTitle)
         startActivity(intent)
     }
 

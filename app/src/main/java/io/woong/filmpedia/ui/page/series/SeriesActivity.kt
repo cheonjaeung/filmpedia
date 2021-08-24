@@ -84,6 +84,7 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
         if (position != RecyclerView.NO_POSITION) {
             val intent = Intent(this, MovieDetailActivity::class.java)
             intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movies[position].id)
+            intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, movies[position].title)
             startActivity(intent)
         }
     }
