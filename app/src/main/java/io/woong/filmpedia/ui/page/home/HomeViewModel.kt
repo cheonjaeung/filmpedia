@@ -71,7 +71,14 @@ class HomeViewModel : ViewModel() {
     ) = CoroutineScope(Dispatchers.Default).launch {
         val nextPage = popularPage + 1
 
-        repository.fetchPopularMovies(apiKey, nextPage, language, region) {}.join()
+        repository.fetchPopularMovies(apiKey, nextPage, language, region) { movies ->
+            if (movies != null) {
+                val newList = movies.results
+                val currentList = popularMovies.value
+                currentList?.addAll(newList)
+                _popularMovies.postValue(currentList)
+            }
+        }.join()
 
         popularPage = nextPage
     }
@@ -83,7 +90,14 @@ class HomeViewModel : ViewModel() {
     ) = CoroutineScope(Dispatchers.Default).launch {
         val nextPage = nowPlayingPage + 1
 
-        repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) {}.join()
+        repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) { movies ->
+            if (movies != null) {
+                val newList = movies.results
+                val currentList = popularMovies.value
+                currentList?.addAll(newList)
+                _nowPlayingMovies.postValue(currentList)
+            }
+        }.join()
 
         nowPlayingPage = nextPage
     }
@@ -95,7 +109,14 @@ class HomeViewModel : ViewModel() {
     ) = CoroutineScope(Dispatchers.Default).launch {
         val nextPage = highRatedPage + 1
 
-        repository.fetchHighRatedMovies(apiKey, nextPage, language, region) {}.join()
+        repository.fetchHighRatedMovies(apiKey, nextPage, language, region) { movies ->
+            if (movies != null) {
+                val newList = movies.results
+                val currentList = popularMovies.value
+                currentList?.addAll(newList)
+                _highRatedMovies.postValue(currentList)
+            }
+        }.join()
 
         highRatedPage = nextPage
     }
