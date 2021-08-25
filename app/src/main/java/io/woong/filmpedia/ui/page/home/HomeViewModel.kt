@@ -15,16 +15,19 @@ class HomeViewModel : ViewModel() {
     private val repository: MovieRepository = MovieRepository()
 
     private var popularPage: Int = 1
+    private var isPopularLoading: Boolean = false
     private val _popularMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
     val popularMovies: LiveData<MutableList<Movies.Movie>>
         get() = _popularMovies
 
     private var nowPlayingPage: Int = 1
+    private var isNowPlayingLoading: Boolean = false
     private val _nowPlayingMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
     val nowPlayingMovies: LiveData<MutableList<Movies.Movie>>
         get() = _nowPlayingMovies
 
     private var highRatedPage: Int = 1
+    private var isHighRatedLoading: Boolean = false
     private val _highRatedMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
     val highRatedMovies: LiveData<MutableList<Movies.Movie>>
         get() = _highRatedMovies
@@ -34,34 +37,44 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        val popularJob = repository.fetchPopularMovies(apiKey, 1, language, region) { movies ->
-            if (movies != null) {
-                val list = movies.results
-                if (list.isNotEmpty()) {
-                    _popularMovies.postValue(list.toMutableList())
+        if (!isPopularLoading && !isNowPlayingLoading && !isHighRatedLoading) {
+            isPopularLoading = true
+            isNowPlayingLoading = true
+            isHighRatedLoading = true
+
+            val popularJob = repository.fetchPopularMovies(apiKey, 1, language, region) { movies ->
+                if (movies != null) {
+                    val list = movies.results
+                    if (list.isNotEmpty()) {
+                        _popularMovies.postValue(list.toMutableList())
+                    }
                 }
             }
-        }
 
-        val nowPlayingJob = repository.fetchNowPlayingMovies(apiKey, 1, language, region) { movies ->
-            if (movies != null) {
-                val list = movies.results
-                if (list.isNotEmpty()) {
-                    _nowPlayingMovies.postValue(list.toMutableList())
+            val nowPlayingJob = repository.fetchNowPlayingMovies(apiKey, 1, language, region) { movies ->
+                if (movies != null) {
+                    val list = movies.results
+                    if (list.isNotEmpty()) {
+                        _nowPlayingMovies.postValue(list.toMutableList())
+                    }
                 }
             }
-        }
 
-        val highRatedJob = repository.fetchHighRatedMovies(apiKey, 1, language, region) { movies ->
-            if (movies != null) {
-                val list = movies.results
-                if (list.isNotEmpty()) {
-                    _highRatedMovies.postValue(list.toMutableList())
+            val highRatedJob = repository.fetchHighRatedMovies(apiKey, 1, language, region) { movies ->
+                if (movies != null) {
+                    val list = movies.results
+                    if (list.isNotEmpty()) {
+                        _highRatedMovies.postValue(list.toMutableList())
+                    }
                 }
             }
-        }
 
-        joinAll(popularJob, nowPlayingJob, highRatedJob)
+            joinAll(popularJob, nowPlayingJob, highRatedJob)
+
+            isPopularLoading = false
+            isNowPlayingLoading = false
+            isHighRatedLoading = false
+        }
     }
 
     fun updatePopular(
@@ -69,18 +82,22 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        val nextPage = popularPage + 1
+        if (!isPopularLoading) {
+            isPopularLoading = true
+            val nextPage = popularPage + 1
 
-        repository.fetchPopularMovies(apiKey, nextPage, language, region) { movies ->
-            if (movies != null) {
-                val newList = movies.results
-                val currentList = popularMovies.value
-                currentList?.addAll(newList)
-                _popularMovies.postValue(currentList)
-            }
-        }.join()
+            repository.fetchPopularMovies(apiKey, nextPage, language, region) { movies ->
+                if (movies != null) {
+                    val newList = movies.results
+                    val currentList = popularMovies.value
+                    currentList?.addAll(newList)
+                    _popularMovies.postValue(currentList)
+                }
+            }.join()
 
-        popularPage = nextPage
+            popularPage = nextPage
+            isPopularLoading = false
+        }
     }
 
     fun updateNowPlaying(
@@ -88,18 +105,22 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        val nextPage = nowPlayingPage + 1
+        if (!isNowPlayingLoading) {
+            isNowPlayingLoading = true
+            val nextPage = nowPlayingPage + 1
 
-        repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) { movies ->
-            if (movies != null) {
-                val newList = movies.results
-                val currentList = popularMovies.value
-                currentList?.addAll(newList)
-                _nowPlayingMovies.postValue(currentList)
-            }
-        }.join()
+            repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) { movies ->
+                if (movies != null) {
+                    val newList = movies.results
+                    val currentList = nowPlayingMovies.value
+                    currentList?.addAll(newList)
+                    _nowPlayingMovies.postValue(currentList)
+                }
+            }.join()
 
-        nowPlayingPage = nextPage
+            nowPlayingPage = nextPage
+            isNowPlayingLoading = false
+        }
     }
 
     fun updateHighRated(
@@ -107,17 +128,21 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        val nextPage = highRatedPage + 1
+        if (!isHighRatedLoading) {
+            isHighRatedLoading = true
+            val nextPage = highRatedPage + 1
 
-        repository.fetchHighRatedMovies(apiKey, nextPage, language, region) { movies ->
-            if (movies != null) {
-                val newList = movies.results
-                val currentList = popularMovies.value
-                currentList?.addAll(newList)
-                _highRatedMovies.postValue(currentList)
-            }
-        }.join()
+            repository.fetchHighRatedMovies(apiKey, nextPage, language, region) { movies ->
+                if (movies != null) {
+                    val newList = movies.results
+                    val currentList = highRatedMovies.value
+                    currentList?.addAll(newList)
+                    _highRatedMovies.postValue(currentList)
+                }
+            }.join()
 
-        highRatedPage = nextPage
+            highRatedPage = nextPage
+            isHighRatedLoading = false
+        }
     }
 }
