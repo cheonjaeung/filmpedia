@@ -60,13 +60,10 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$jetpack_fragment"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$jetpack_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$jetpack_lifecycle"
-    implementation "androidx.room:room-runtime:$jetpack_room"
-    kapt "androidx.room:room-compiler:$jetpack_room"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$jetpack_swiperefreshlayout"
+    implementation "androidx.viewpager2:viewpager2:$jetpack_viewpager2"
 
     implementation "com.google.android.material:material:$material_components"
-    implementation "com.google.dagger:dagger:$dagger"
-    kapt "com.google.dagger:dagger-compiler:$dagger"
 
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
@@ -74,8 +71,6 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
-
-    implementation "io.woong.shapedimageview:shapedimageview:$shapedimageview"
 
     testImplementation "junit:junit:$test_junit"
     androidTestImplementation "androidx.test.ext:junit:$jetpack_test_junit"
