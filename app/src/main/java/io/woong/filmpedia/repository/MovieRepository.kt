@@ -73,6 +73,22 @@ class MovieRepository {
         }
     }
 
+    fun fetchNowPlayingMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
+        onResponse: (movies: Movies?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getNowPlaying(apiKey = key, page = page, language = lang, region = region)
+
+        if (response.isSuccessful) {
+            onResponse(response.body()!!)
+        } else {
+            onResponse(null)
+        }
+    }
+
     fun fetchTop10NowPlayingMovies(
         key: String,
         page: Int,
@@ -91,6 +107,22 @@ class MovieRepository {
         }
     }
 
+    fun fetchPopularMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
+        onResponse: (movies: Movies?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
+
+        if (response.isSuccessful) {
+            onResponse(response.body()!!)
+        } else {
+            onResponse(null)
+        }
+    }
+
     fun fetchTop10PopularMovies(
         key: String,
         page: Int,
@@ -106,6 +138,22 @@ class MovieRepository {
             onResponse(top10)
         } else {
             onResponse(emptyList())
+        }
+    }
+
+    fun fetchHighRatedMovies(
+        key: String,
+        page: Int,
+        lang: String,
+        region: String,
+        onResponse: (movies: Movies?) -> Unit
+    ) = CoroutineScope(Dispatchers.IO).launch {
+        val response = movieService.getTopRated(apiKey = key, page = page, language = lang, region = region)
+
+        if (response.isSuccessful) {
+            onResponse(response.body()!!)
+        } else {
+            onResponse(null)
         }
     }
 

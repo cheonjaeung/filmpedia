@@ -2,6 +2,14 @@
 <resources>
     <string name="app_name">필름피디아</string>
 
+    <!-- HomeActivity -->
+    <string name="home_tab_0" translatable="false">인기</string>
+    <string name="home_tab_1" translatable="false">상영중</string>
+    <string name="home_tab_2" translatable="false">높은 평점</string>
+    <string name="home_title_popular" translatable="false">인기 영화</string>
+    <string name="home_title_now_playing" translatable="false">상영중인 영화</string>
+    <string name="home_title_high_rated" translatable="false">평점 높은 영화</string>
+
     <string name="now_playing" translatable="false">현재 상영중</string>
     <string name="popular" translatable="false">인기</string>
     <string name="high_rated" translatable="false">높은 평점</string>

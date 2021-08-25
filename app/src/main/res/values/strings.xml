@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">Filmpedia</string>
 
+    <!-- HomeActivity -->
+    <string name="home_tab_0" translatable="false">Popular</string>
+    <string name="home_tab_1" translatable="false">Now Playing</string>
+    <string name="home_tab_2" translatable="false">High Rated</string>
+    <string name="home_title_popular" translatable="false">Popular Movies</string>
+    <string name="home_title_now_playing" translatable="false">Now Playing Movies</string>
+    <string name="home_title_high_rated" translatable="false">High Rated Movies</string>
+
     <string name="now_playing" translatable="false">Now Playing</string>
     <string name="popular" translatable="false">Popular</string>
     <string name="high_rated" translatable="false">High Rated</string>
