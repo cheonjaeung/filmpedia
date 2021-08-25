@@ -305,7 +305,7 @@ fun AppCompatTextView.bindProductionCompanies(companies: List<Movie.Company>?) {
 }
 
 @BindingAdapter("movie_detail_money")
-fun AppCompatTextView.bindMoney(money: Int?) {
+fun AppCompatTextView.bindMoney(money: Long?) {
     money?.let { m ->
         if (m <= 0) {
             this.text = "-"
