@@ -18,7 +18,7 @@ sealed class ListDecoration : RecyclerView.ItemDecoration() {
 
             if (position != RecyclerView.NO_POSITION) {
                 if (position < itemCount) {
-                    outRect.left = margin
+                    outRect.right = margin
                 }
             }
         }
