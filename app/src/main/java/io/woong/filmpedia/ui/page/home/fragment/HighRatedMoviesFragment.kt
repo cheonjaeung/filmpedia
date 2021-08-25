@@ -1,4 +1,4 @@
-package io.woong.filmpedia.ui.page.home
+package io.woong.filmpedia.ui.page.home.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,28 +9,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movies
-import io.woong.filmpedia.databinding.FragmentPopularMoviesBinding
+import io.woong.filmpedia.databinding.FragmentHighRatedMoviesBinding
+import io.woong.filmpedia.ui.page.home.HomeViewModel
+import io.woong.filmpedia.ui.page.home.MovieListAdapter
+import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
 
-class PopularMoviesFragment : Fragment() {
+class HighRatedMoviesFragment : Fragment() {
 
     private val viewModel: HomeViewModel by activityViewModels()
-    private var _binding: FragmentPopularMoviesBinding? = null
-    private val binding: FragmentPopularMoviesBinding
+    private var _binding: FragmentHighRatedMoviesBinding? = null
+    private val binding: FragmentHighRatedMoviesBinding
         get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentPopularMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentHighRatedMoviesBinding.inflate(inflater, container, false)
         binding.apply {
-            lifecycleOwner = this@PopularMoviesFragment
+            lifecycleOwner = this@HighRatedMoviesFragment
             vm = viewModel
 
             movieList.apply {
                 val columnSize = 3
                 adapter = MovieListAdapter().apply {
-                    headerTitle = resources.getString(R.string.home_title_popular)
+                    headerTitle = resources.getString(R.string.home_title_high_rated)
                 }
                 setHasFixedSize(true)
                 val lm = GridLayoutManager(activity, columnSize, GridLayoutManager.VERTICAL, false)
@@ -45,6 +49,12 @@ class PopularMoviesFragment : Fragment() {
                 }
                 layoutManager = lm
                 addItemDecoration(ListDecoration.GridWithHeaderDecoration(columnSize, 2))
+                addOnScrollListener(
+                    InfinityScrollListener {
+                        val app = activity?.application as FilmpediaApp
+                        viewModel.updateHighRated(app.tmdbApiKey, app.language, app.region)
+                    }
+                )
             }
         }
 
@@ -58,8 +68,8 @@ class PopularMoviesFragment : Fragment() {
 
     companion object BindingAdapters {
         @JvmStatic
-        @BindingAdapter("popular_movies")
-        fun bindPopularMovies(view: RecyclerView, movies: List<Movies.Movie>?) {
+        @BindingAdapter("high_rated_movies")
+        fun bindHighRatedMovies(view: RecyclerView, movies: List<Movies.Movie>?) {
             if (movies != null && movies.isNotEmpty()) {
                 val adapter = view.adapter as MovieListAdapter
                 adapter.items = movies
