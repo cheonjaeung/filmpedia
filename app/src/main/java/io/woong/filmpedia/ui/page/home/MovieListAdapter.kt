@@ -1,6 +1,7 @@
 package io.woong.filmpedia.ui.page.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,6 +29,7 @@ class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             notifyDataSetChanged()
         }
+    var listener: OnMovieListItemClickListener? = null
 
     override fun getItemCount(): Int = _items.size + 1
 
@@ -42,11 +44,19 @@ class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_HEADER -> {
-                val binding = ItemHomeMovieListHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemHomeMovieListHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 HeaderViewHolder(binding)
             }
             else -> {
-                val binding = ItemHomeMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemHomeMovieListBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 ItemViewHolder(binding)
             }
         }
@@ -71,5 +81,25 @@ class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class HeaderViewHolder(val binding: ItemHomeMovieListHeaderBinding) : RecyclerView.ViewHolder(binding.root)
 
-    inner class ItemViewHolder(val binding: ItemHomeMovieListBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ItemViewHolder(val binding: ItemHomeMovieListBinding) : RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
+
+        init {
+            binding.poster.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == binding.poster.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val realPosition = adapterPosition - 1
+                    val item = items[realPosition]
+                    listener?.onMovieListItemClick(item)
+                }
+            }
+        }
+    }
+
+    interface OnMovieListItemClickListener {
+        fun onMovieListItemClick(item: Movies.Movie)
+    }
 }

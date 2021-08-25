@@ -13,12 +13,13 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.databinding.FragmentNowPlayingMoviesBinding
+import io.woong.filmpedia.ui.page.home.HomeActivity
 import io.woong.filmpedia.ui.page.home.HomeViewModel
 import io.woong.filmpedia.ui.page.home.MovieListAdapter
 import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
 
-class NowPlayingMoviesFragment : Fragment() {
+class NowPlayingMoviesFragment : Fragment(), MovieListAdapter.OnMovieListItemClickListener {
 
     private val viewModel: HomeViewModel by activityViewModels()
     private var _binding: FragmentNowPlayingMoviesBinding? = null
@@ -35,6 +36,7 @@ class NowPlayingMoviesFragment : Fragment() {
                 val columnSize = 3
                 adapter = MovieListAdapter().apply {
                     headerTitle = resources.getString(R.string.home_title_now_playing)
+                    listener = this@NowPlayingMoviesFragment
                 }
                 setHasFixedSize(true)
                 val lm = GridLayoutManager(activity, columnSize, GridLayoutManager.VERTICAL, false)
@@ -59,6 +61,12 @@ class NowPlayingMoviesFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onMovieListItemClick(item: Movies.Movie) {
+        if (activity is HomeActivity) {
+            (activity as HomeActivity).startMovieDetailActivity(item.title, item.id)
+        }
     }
 
     override fun onDestroyView() {

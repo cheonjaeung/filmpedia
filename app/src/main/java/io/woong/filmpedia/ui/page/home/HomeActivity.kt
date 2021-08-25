@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityHomeBinding
+import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
 import io.woong.filmpedia.ui.page.search.SearchActivity
 
 class HomeActivity : AppCompatActivity() {
@@ -64,6 +65,13 @@ class HomeActivity : AppCompatActivity() {
         } else {
             super.onOptionsItemSelected(item)
         }
+    }
+
+    fun startMovieDetailActivity(movieTitle: String, movieId: Int) {
+        val intent = Intent(this, MovieDetailActivity::class.java)
+        intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, movieTitle)
+        intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movieId)
+        startActivity(intent)
     }
 
     override fun onDestroy() {
