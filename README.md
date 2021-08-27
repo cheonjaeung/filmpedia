@@ -4,10 +4,12 @@
     <p>
     </p>
     <p>
-    Filmpedia is an android application based on android tech stacks and MVVM architecture.
+    Filmpedia is an unofficial TMDB movie information application for Android.
     </p>
     <p>
-    This Project is created for making sample of modern android stacks and MVVM architecture. I hope it will be helpful to android developers and learners.
+    This project is based on MVVM architecture and using famous android libraries like Retrofit, Glide, Coroutines and AAC.
+    It can be a sample of android application using AAC and MVVM.
+    I hope it will be helpful to android developers and learners.
     </p>
 </div>
 
@@ -16,7 +18,7 @@
 - Movie list
 - Movie detail
 - Movie series
-- Person (casts and crews)
+- Person
 - Search
 
 ## Tech Stacks
@@ -38,6 +40,7 @@
   - [Fragment](https://github.com/androidx/androidx/tree/androidx-main/fragment)
   - [Lifecycle](https://github.com/androidx/androidx/tree/androidx-main/lifecycle)
   - [Swipe Refresh Layout](https://github.com/androidx/androidx/tree/androidx-main/swiperefreshlayout)
+  - [ViewPager2](https://github.com/androidx/androidx/tree/androidx-main/viewpager2)
 - [Material Components](https://github.com/material-components/material-components-android) (Apache-2.0 License)
 - [Retrofit](https://github.com/square/retrofit) (Apache-2.0 License)
 - [Okhttp](https://github.com/square/okhttp) (Apache-2.0 License)
@@ -50,23 +53,25 @@ Filmpedia is based on MVVM (Model-View-ViewModel) architecture + Repository patt
 ![](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
 <div align="right">
     <small>
-        Image from <a href="https://developer.android.com/jetpack/guide?gclid=CjwKCAjw1JeJBhB9EiwAV612y_g-BW7h2BTGnW3IppKi9ZqdxaOpgKO02VhcRUCzH-7ECMUs7Q7F9RoCcbQQAvD_BwE&gclsrc=aw.ds">Android Developers</a>.
+        &lt;Image from <a href="https://developer.android.com/jetpack/guide?gclid=CjwKCAjw1JeJBhB9EiwAV612y_g-BW7h2BTGnW3IppKi9ZqdxaOpgKO02VhcRUCzH-7ECMUs7Q7F9RoCcbQQAvD_BwE&gclsrc=aw.ds">Android Developers&gt;</a>.
     </small>
 </div>
 
-In MVVM architecture, There are 3 layers.
+## Package Structure
 
-View (in android, Activity or Fragment) layer is controlling UI.
-
-ViewModel has buisness logics and holds data to displayed on UI.
-
-Model (Repository + Model + Remote Data Source) has data control (loading, saving or others) logic.
-
-For example, If I open a movie detail UI, MovieDetailActivity calls MovieDetailViewModel's method.
-And the method call repository's method for fetching movie detail information from API.
-
-After the API responsed, the repository returns response to the viewmodel and the viewmodel will save the data in livedata.
-And the activity will catch the changing of livedata's value and display it on UI.
+```
+.
+├─ data: data classes
+├─ network: Retrofit instance and services
+├─ repository: Repository classes
+├─ ui
+│  ├─ component: Custom views
+│  └─ page: Each activities, fragments, viewmodels and adapters
+│      ├─ home
+│      ├─ moviedetail
+│      └─ ...
+└─ util: Utility functions, classes and objects
+```
 
 ## Open API
 
