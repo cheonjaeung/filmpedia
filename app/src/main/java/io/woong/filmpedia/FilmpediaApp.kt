@@ -40,8 +40,8 @@ class FilmpediaApp : Application() {
                 resources.configuration.locale
             }
 
-            return when {
-                locale == null -> {
+            return when (locale) {
+                null -> {
                     "US"
                 }
                 else -> {

@@ -50,7 +50,7 @@ class PopularMoviesFragment : Fragment(), MovieListAdapter.OnMovieListItemClickL
                     }
                 }
                 layoutManager = lm
-                addItemDecoration(ListDecoration.GridWithHeaderDecoration(columnSize, 2))
+                addItemDecoration(ListDecoration.GridWithHeaderDecoration(2))
                 addOnScrollListener(
                     InfinityScrollListener {
                         val app = activity?.application as FilmpediaApp

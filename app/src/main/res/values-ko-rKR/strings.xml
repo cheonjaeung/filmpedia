@@ -10,15 +10,6 @@
     <string name="home_title_now_playing" translatable="false">상영중인 영화</string>
     <string name="home_title_high_rated" translatable="false">평점 높은 영화</string>
 
-    <string name="now_playing" translatable="false">현재 상영중</string>
-    <string name="popular" translatable="false">인기</string>
-    <string name="high_rated" translatable="false">높은 평점</string>
-    <string name="upcoming" translatable="false">개봉 예정</string>
-    <string name="top10_now_playing" translatable="false">상영중인 영화 Top 10</string>
-    <string name="top10_popular" translatable="false">인기 영화 Top 10</string>
-    <string name="top10_high_rated" translatable="false">평점 높은 영화 Top 10</string>
-    <string name="top10_upcoming" translatable="false">개봉 예정인 영화 Top 10</string>
-
     <string name="detail_information" translatable="false">자세히 알아보기</string>
     <string name="view_the_series" translatable="false">시리즈 보기</string>
 

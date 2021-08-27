@@ -58,7 +58,7 @@ sealed class ListDecoration : RecyclerView.ItemDecoration() {
         }
     }
 
-    class GridWithHeaderDecoration(private val column: Int, private val margin: Int) : ListDecoration() {
+    class GridWithHeaderDecoration(private val margin: Int) : ListDecoration() {
 
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             super.getItemOffsets(outRect, view, parent, state)
