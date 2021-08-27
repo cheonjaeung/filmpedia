@@ -16,6 +16,7 @@ import io.woong.filmpedia.databinding.FragmentNowPlayingMoviesBinding
 import io.woong.filmpedia.ui.page.home.HomeActivity
 import io.woong.filmpedia.ui.page.home.HomeViewModel
 import io.woong.filmpedia.ui.page.home.MovieListAdapter
+import io.woong.filmpedia.util.GoToTopScrollListener
 import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
 
@@ -55,6 +56,11 @@ class NowPlayingMoviesFragment : Fragment(), MovieListAdapter.OnMovieListItemCli
                     InfinityScrollListener {
                         val app = activity?.application as FilmpediaApp
                         viewModel.updateNowPlaying(app.tmdbApiKey, app.language, app.region)
+                    }
+                )
+                addOnScrollListener(
+                    GoToTopScrollListener(goToTopButton, 30, 2000) {
+                        binding.movieList.smoothScrollToPosition(0)
                     }
                 )
             }
