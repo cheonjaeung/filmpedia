@@ -83,9 +83,15 @@ TMDB API provides thousands of movie's information and RESTful API.
 
 MAD (Modern Android Development) Score is a score card service provided by Google.
 
+![madscore-summary](./madscore/summary.png)
+
+![madscore-kotlin](./madscore/kotlin.png)
+
+![madscore-jetpack](./madscore/jetpack.png)
+
 <div align="right">
     <small>
-        Score based on Filmpedia x.x.x version
+        &lt;Score based on Filmpedia x.x.x version&gt;
     </small>
 </div>
 
