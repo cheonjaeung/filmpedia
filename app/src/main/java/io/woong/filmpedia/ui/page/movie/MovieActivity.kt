@@ -17,6 +17,7 @@ import io.woong.filmpedia.data.movie.Genres
 import io.woong.filmpedia.databinding.ActivityMovieBinding
 import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.util.UriUtil
+import io.woong.filmpedia.util.isNotNullOrBlank
 
 class MovieActivity : AppCompatActivity() {
 
@@ -56,7 +57,7 @@ class MovieActivity : AppCompatActivity() {
         @JvmStatic
         @BindingAdapter("tagline")
         fun AppCompatTextView.bindTagline(tagline: String?) {
-            if (tagline != null) {
+            if (tagline.isNotNullOrBlank()) {
                 this.visibility = View.VISIBLE
                 this.text = tagline
             } else {
@@ -67,7 +68,7 @@ class MovieActivity : AppCompatActivity() {
         @JvmStatic
         @BindingAdapter("overview")
         fun AppCompatTextView.bindOverview(overview: String?) {
-            if (overview != null) {
+            if (overview.isNotNullOrBlank()) {
                 this.visibility = View.VISIBLE
                 this.text = overview
             } else {
