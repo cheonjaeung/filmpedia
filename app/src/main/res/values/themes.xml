@@ -19,6 +19,7 @@
 
     <style name="FilmpediaToolbarTheme" parent="Theme.Filmpedia">
         <item name="android:background">@color/background</item>
+        <item name="titleCentered">true</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:titleTextColor" tools:targetApi="m">@color/white</item>
