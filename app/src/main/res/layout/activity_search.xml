@@ -34,14 +34,32 @@
                 android:focusableInTouchMode="true" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/result_list"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            search_results="@{vm.results}"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:orientation="vertical"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_search_result" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/result_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                search_results="@{vm.results}"
+                tools:orientation="vertical"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_search_result" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/go_to_top_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_up"
+                android:background="@drawable/background_go_to_top_button"
+                android:padding="8dp"
+                android:visibility="gone"
+                style="@style/FilmpediaImageButtonTheme"
+                tools:visibility="visible" />
+        </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

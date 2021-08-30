@@ -5,41 +5,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
+    android:layout_height="200dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/backdrop"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scaleType="fitStart"
-        app:layout_constraintDimensionRatio="16:9"
+        android:id="@+id/poster"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="2:3"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/placeholder_backdrop" />
+        tools:src="@drawable/placeholder_poster" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="@drawable/background_search_result_gradient"
-        app:layout_constraintLeft_toLeftOf="@+id/backdrop"
-        app:layout_constraintTop_toTopOf="@+id/backdrop"
-        app:layout_constraintRight_toRightOf="@+id/line"
-        app:layout_constraintBottom_toBottomOf="@+id/backdrop">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/poster"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             style="@style/FilmpediaMovieTitleTheme"
             tools:text="Movie Title" />
+
+        <io.woong.filmpedia.ui.component.GenresTextView
+            android:id="@+id/genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:separator_color="@color/purple"
+            tools:genres="Action,Science Fiction,Adventure,Comedy" />
     </LinearLayout>
+
+    <io.woong.filmpedia.ui.component.CircularRatingView
+        android:id="@+id/rating"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="16dp"
+        app:rating_arc_size="2dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:rating="8.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

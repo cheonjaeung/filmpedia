@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.movie.Movies
+import io.woong.filmpedia.data.search.SearchResult
 import io.woong.filmpedia.databinding.ActivitySearchBinding
 import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.util.GoToTopScrollListener
+import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
 
 class SearchActivity : AppCompatActivity(),
@@ -45,16 +47,28 @@ class SearchActivity : AppCompatActivity(),
 
             searchBar.setOnEditorActionListener(this@SearchActivity)
 
-            val deco = ListDecoration.VerticalDecoration(2)
-
             resultList.apply {
                 adapter = SearchResultListAdapter().apply {
                     setOnSearchResultClickListener(this@SearchActivity)
                 }
                 layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
-                addItemDecoration(deco)
+                addItemDecoration(ListDecoration.VerticalDecoration(2))
+                addOnScrollListener(
+                    InfinityScrollListener {
+                        val app = application as FilmpediaApp
+                        viewModel.searchNext(app.tmdbApiKey, app.language, app.region, searchBar.text.toString())
+                    }
+                )
+                addOnScrollListener(
+                    GoToTopScrollListener(goToTopButton, 10, 2000) {
+                        this.smoothScrollToPosition(0)
+                    }
+                )
             }
         }
+
+        val app = application as FilmpediaApp
+        viewModel.updateGenres(app.tmdbApiKey, app.language)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -71,7 +85,7 @@ class SearchActivity : AppCompatActivity(),
         return if (v?.id == binding.searchBar.id) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val app = application as FilmpediaApp
-                viewModel.update(app.tmdbApiKey, app.language, app.region, v.text.toString())
+                viewModel.search(app.tmdbApiKey, app.language, app.region, v.text.toString())
                 true
             } else {
                 false
@@ -81,7 +95,7 @@ class SearchActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSearchResultClick(result: Movies.Movie?) {
+    override fun onSearchResultClick(result: SearchResult?) {
         if (result != null) {
             val intent = Intent(this, MovieDetailActivity::class.java)
             intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, result.id)
@@ -97,11 +111,11 @@ class SearchActivity : AppCompatActivity(),
 }
 
 @BindingAdapter("search_results")
-fun RecyclerView.bindSearchResults(searchResults: List<Movies.Movie>?) {
-    searchResults?.let { results ->
-        if (results.isNotEmpty()) {
+fun RecyclerView.bindSearchResults(searchResults: List<SearchResult>?) {
+    if (searchResults != null) {
+        if (searchResults.isNotEmpty()) {
             val adapter = this.adapter as SearchResultListAdapter
-            adapter.results = results
+            adapter.results = searchResults
         }
     }
 }
