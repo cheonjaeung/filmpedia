@@ -14,12 +14,9 @@ sealed class ListDecoration : RecyclerView.ItemDecoration() {
             val margin = DimensionUtil.dpToPx(margin, view.context.resources.displayMetrics)
 
             val position = parent.getChildAdapterPosition(view)
-            val itemCount = state.itemCount
 
             if (position != RecyclerView.NO_POSITION) {
-                if (position < itemCount) {
-                    outRect.right = margin
-                }
+                outRect.right = margin
             }
         }
     }
@@ -32,12 +29,9 @@ sealed class ListDecoration : RecyclerView.ItemDecoration() {
             val margin = DimensionUtil.dpToPx(margin, view.context.resources.displayMetrics)
 
             val position = parent.getChildAdapterPosition(view)
-            val itemCount = state.itemCount
 
             if (position != RecyclerView.NO_POSITION) {
-                if (position < itemCount) {
-                    outRect.bottom = margin
-                }
+                outRect.bottom = margin
             }
         }
     }
@@ -49,11 +43,15 @@ sealed class ListDecoration : RecyclerView.ItemDecoration() {
 
             val margin = DimensionUtil.dpToPx(margin, view.context.resources.displayMetrics)
 
-            outRect.apply {
-                left = margin / 2
-                top = margin / 2
-                right = margin / 2
-                bottom = margin / 2
+            val position = parent.getChildAdapterPosition(view)
+
+            if (position != RecyclerView.NO_POSITION) {
+                outRect.apply {
+                    left = margin / 2
+                    top = margin / 2
+                    right = margin / 2
+                    bottom = margin / 2
+                }
             }
         }
     }
@@ -69,11 +67,13 @@ sealed class ListDecoration : RecyclerView.ItemDecoration() {
 
             if (position == 0) return
 
-            outRect.apply {
-                left = margin / 2
-                top = margin / 2
-                right = margin / 2
-                bottom = margin / 2
+            if (position != RecyclerView.NO_POSITION) {
+                outRect.apply {
+                    left = margin / 2
+                    top = margin / 2
+                    right = margin / 2
+                    bottom = margin / 2
+                }
             }
         }
     }
