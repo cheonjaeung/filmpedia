@@ -1,5 +1,6 @@
 package io.woong.filmpedia.ui.page.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -13,17 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Genres
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityMovieBinding
 import io.woong.filmpedia.ui.component.GenresTextView
+import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
 
-class MovieActivity : AppCompatActivity() {
+class MovieActivity : AppCompatActivity(), PeopleListAdapter.OnPeopleListClickListener {
 
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
@@ -174,11 +177,26 @@ class MovieActivity : AppCompatActivity() {
     private fun initDirectorAndCastingList(binding: ActivityMovieBinding) {
         binding.apply {
             directorAndCasting.apply {
-                adapter = PeopleListAdapter()
+                adapter = PeopleListAdapter().apply {
+                    listener = this@MovieActivity
+                }
                 layoutManager = LinearLayoutManager(this@MovieActivity, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(ListDecoration.HorizontalDecoration(16))
             }
         }
+    }
+
+    override fun onPeopleItemClick(person: PersonSummary?) {
+        if (person != null) {
+            val intent = Intent(this, PersonActivity::class.java)
+            intent.putExtra(PersonActivity.PERSON_NAME_EXTRA_ID, person.name)
+            intent.putExtra(PersonActivity.PERSON_ID_EXTRA_ID, person.id)
+            startActivity(intent)
+        }
+    }
+
+    override fun onFullButtonClick() {
+        Snackbar.make(binding.root, "Not support yet.", Snackbar.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {

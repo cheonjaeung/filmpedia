@@ -1,6 +1,7 @@
 package io.woong.filmpedia.ui.page.movie
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,6 +29,8 @@ class PeopleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             notifyDataSetChanged()
         }
+
+    var listener: OnPeopleListClickListener? = null
 
     override fun getItemCount(): Int = _people.size + FOOTER_COUNT
 
@@ -78,7 +81,40 @@ class PeopleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun Int.isNotFooterPosition(): Boolean = !this.isFooterPosition()
 
-    inner class ItemViewHolder(val binding: ItemMovieDirectorAndCastingBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ItemViewHolder(val binding: ItemMovieDirectorAndCastingBinding) : RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
 
-    inner class FooterViewHolder(val binding: ItemMovieDirectorAndCastingFooterBinding) : RecyclerView.ViewHolder(binding.root)
+        init {
+            binding.itemRoot.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == binding.itemRoot.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listener?.onPeopleItemClick(people[adapterPosition])
+                }
+            }
+        }
+    }
+
+    inner class FooterViewHolder(val binding: ItemMovieDirectorAndCastingFooterBinding) : RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
+
+        init {
+            binding.itemRoot.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == binding.itemRoot.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listener?.onFullButtonClick()
+                }
+            }
+        }
+    }
+
+    interface OnPeopleListClickListener {
+        fun onPeopleItemClick(person: PersonSummary?)
+        fun onFullButtonClick()
+    }
 }
