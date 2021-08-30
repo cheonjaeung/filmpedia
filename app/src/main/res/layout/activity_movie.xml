@@ -31,24 +31,29 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/slideshow"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="horizontal"
-                    slides="@{vm.slides}"
-                    app:layout_constraintDimensionRatio="16:9"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/slideshow"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal"
+                        slides="@{vm.slides}"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/poster_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/slideshow">
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/poster"
@@ -139,21 +144,21 @@
                     android:id="@+id/tagline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     style="@style/FilmpediaTaglineTheme"
                     tagline="@{vm.tagline}"
-                    app:layout_constraintTop_toBottomOf="@+id/poster_layout"
                     tools:text="@tools:sample/lorem" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     overview="@{vm.overview}"
-                    app:layout_constraintTop_toBottomOf="@+id/tagline"
                     tools:text="@tools:sample/lorem/random" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </ScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
