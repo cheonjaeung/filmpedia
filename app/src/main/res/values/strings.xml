@@ -8,6 +8,11 @@
     <string name="home_title_popular" translatable="false">Popular Movies</string>
     <string name="home_title_now_playing" translatable="false">Now Playing Movies</string>
     <string name="home_title_high_rated" translatable="false">High Rated Movies</string>
+    
+    <!-- MovieActivity -->
+    <string name="movie_director_and_casting" translatable="false">Director and Casting</string>
+    <string name="movie_director" translatable="false">Director</string>
+    <string name="movie_director_and_casting_footer" translatable="false">Full Cast &amp; Crews</string>
 
     <string name="detail_information" translatable="false">Detail Information</string>
     <string name="view_the_series" translatable="false">View the Series</string>

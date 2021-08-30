@@ -34,7 +34,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -158,6 +159,26 @@
                     android:layout_marginTop="16dp"
                     text_or_gone="@{vm.overview}"
                     tools:text="@tools:sample/lorem/random" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/movie_director_and_casting"
+                    style="@style/FilmpediaTitleTheme" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/director_and_casting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    director_and_casting="@{vm.directorAndCasting}"
+                    tools:orientation="horizontal"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_movie_director_and_casting" />
             </LinearLayout>
         </ScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

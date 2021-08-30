@@ -9,13 +9,17 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityMovieBinding
 import io.woong.filmpedia.ui.component.GenresTextView
+import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
 
@@ -68,6 +72,15 @@ class MovieActivity : AppCompatActivity() {
                 }
             }
         }
+
+        @JvmStatic
+        @BindingAdapter("director_and_casting")
+        fun RecyclerView.bindDirectorAndCasting(people: List<PersonSummary>?) {
+            if (people != null) {
+                val adapter = this.adapter as PeopleListAdapter
+                adapter.people = people
+            }
+        }
     }
 
     private val viewModel: MovieViewModel by viewModels()
@@ -105,6 +118,7 @@ class MovieActivity : AppCompatActivity() {
 
             initToolbar(this)
             initSlideShow(this)
+            initDirectorAndCastingList(this)
         }
 
         viewModel.load(apiKey, language, movieId)
@@ -153,6 +167,16 @@ class MovieActivity : AppCompatActivity() {
         binding.apply {
             slideshow.apply {
                 adapter = SlideShowAdapter()
+            }
+        }
+    }
+
+    private fun initDirectorAndCastingList(binding: ActivityMovieBinding) {
+        binding.apply {
+            directorAndCasting.apply {
+                adapter = PeopleListAdapter()
+                layoutManager = LinearLayoutManager(this@MovieActivity, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(ListDecoration.HorizontalDecoration(16))
             }
         }
     }

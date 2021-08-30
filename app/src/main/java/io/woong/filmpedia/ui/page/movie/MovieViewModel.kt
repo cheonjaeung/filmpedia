@@ -3,7 +3,9 @@ package io.woong.filmpedia.ui.page.movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +52,10 @@ class MovieViewModel : ViewModel() {
     val overview: LiveData<String>
         get() = _overview
 
+    private val _directorAndCasting: MutableLiveData<List<PersonSummary>> = MutableLiveData()
+    val directorAndCasting: LiveData<List<PersonSummary>>
+        get() = _directorAndCasting
+
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
         repository.fetchMovieDetail(key = apiKey, lang = language, id = movieId) { movie ->
             if (movie != null) {
@@ -76,6 +82,21 @@ class MovieViewModel : ViewModel() {
                 }
             }
         }
+
+        repository.fetchCredits(key = apiKey, lang = language, id = movieId) { credits ->
+            if (credits != null) {
+                var count = 10
+                val people = mutableListOf<PersonSummary>()
+
+                val directors = extractDirectors(credits.crew)
+                count -= directors.size
+                people.addAll(directors)
+
+                people.addAll(subCastings(credits.cast, count))
+
+                _directorAndCasting.postValue(people)
+            }
+        }
     }
 
     private fun convertRuntimeToString(runtime: Int?): String? {
@@ -91,5 +112,47 @@ class MovieViewModel : ViewModel() {
         } else {
             null
         }
+    }
+
+    private fun extractDirectors(crewList: List<Credits.Crew>): List<PersonSummary> {
+        val directorDepartment = "Director"
+        val directors = mutableListOf<PersonSummary>()
+
+        crewList.forEach { crew ->
+            if (crew.job == directorDepartment) {
+                directors.add(
+                    PersonSummary(
+                        crew.id,
+                        crew.name,
+                        crew.job,
+                        crew.profilePath,
+                    )
+                )
+            }
+        }
+
+        return directors
+    }
+
+    private fun subCastings(castList: List<Credits.Cast>, endIndex: Int): List<PersonSummary> {
+        val casting = mutableListOf<PersonSummary>()
+
+        for (index in 0 until endIndex) {
+            if (index >= castList.lastIndex) {
+                break
+            }
+
+            val cast = castList[index]
+            casting.add(
+                PersonSummary(
+                    cast.id,
+                    cast.name,
+                    cast.character,
+                    cast.profilePath
+                )
+            )
+        }
+
+        return casting
     }
 }
