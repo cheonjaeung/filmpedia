@@ -147,7 +147,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     style="@style/FilmpediaTaglineTheme"
-                    tagline="@{vm.tagline}"
+                    text_or_gone="@{vm.tagline}"
                     tools:text="@tools:sample/lorem" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -156,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    overview="@{vm.overview}"
+                    text_or_gone="@{vm.overview}"
                     tools:text="@tools:sample/lorem/random" />
             </LinearLayout>
         </ScrollView>

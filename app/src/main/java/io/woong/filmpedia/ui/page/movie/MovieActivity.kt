@@ -55,24 +55,17 @@ class MovieActivity : AppCompatActivity() {
         }
 
         @JvmStatic
-        @BindingAdapter("tagline")
-        fun AppCompatTextView.bindTagline(tagline: String?) {
-            if (tagline.isNotNullOrBlank()) {
-                this.visibility = View.VISIBLE
-                this.text = tagline
+        @BindingAdapter("text_or_gone")
+        fun AppCompatTextView.bindTextOrGone(text: String?) {
+            if (text.isNotNullOrBlank()) {
+                if (this.visibility == View.GONE) {
+                    this.visibility = View.VISIBLE
+                }
+                this.text = text
             } else {
-                this.visibility = View.GONE
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("overview")
-        fun AppCompatTextView.bindOverview(overview: String?) {
-            if (overview.isNotNullOrBlank()) {
-                this.visibility = View.VISIBLE
-                this.text = overview
-            } else {
-                this.visibility = View.GONE
+                if (this.visibility == View.VISIBLE) {
+                    this.visibility = View.GONE
+                }
             }
         }
     }
