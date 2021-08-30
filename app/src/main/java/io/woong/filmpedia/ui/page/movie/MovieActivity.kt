@@ -1,6 +1,7 @@
 package io.woong.filmpedia.ui.page.movie
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -141,6 +142,16 @@ class MovieActivity : AppCompatActivity() {
                 setHomeAsUpIndicator(R.drawable.icon_back)
                 title = movieTitle
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
