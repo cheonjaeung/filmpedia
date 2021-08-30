@@ -3,6 +3,7 @@ package io.woong.filmpedia.network
 import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.ExternalIds
 import io.woong.filmpedia.data.movie.Movie
+import io.woong.filmpedia.data.movie.MovieImages
 import io.woong.filmpedia.data.movie.Movies
 import retrofit2.Response
 import retrofit2.http.GET
@@ -32,6 +33,13 @@ interface MovieService {
         @Query("api_key") apiKey: String
     ): Response<ExternalIds>
 
+    @GET("movie/{movie_id}/images")
+    suspend fun getImages(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String? = null
+    ): Response<MovieImages>
+
     @GET("movie/{movie_id}/recommendations")
     suspend fun getRecommendations(
         @Path("movie_id") movieId: Int,
@@ -58,14 +66,6 @@ interface MovieService {
 
     @GET("movie/top_rated")
     suspend fun getTopRated(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String? = null,
-        @Query("page") page: Int? = null,
-        @Query("region") region: String? = null
-    ): Response<Movies>
-
-    @GET("movie/upcoming")
-    suspend fun getUpcoming(
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
         @Query("page") page: Int? = null,

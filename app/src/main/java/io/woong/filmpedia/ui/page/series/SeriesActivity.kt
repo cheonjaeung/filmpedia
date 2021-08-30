@@ -15,7 +15,7 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
-import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
@@ -86,9 +86,9 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
 
     override fun onSeriesMovieClick(position: Int, movies: List<Collection.Part>) {
         if (position != RecyclerView.NO_POSITION) {
-            val intent = Intent(this, MovieDetailActivity::class.java)
-            intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movies[position].id)
-            intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, movies[position].title)
+            val intent = Intent(this, MovieActivity::class.java)
+            intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, movies[position].id)
+            intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, movies[position].title)
             startActivity(intent)
         }
     }

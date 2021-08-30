@@ -16,7 +16,7 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.search.SearchResult
 import io.woong.filmpedia.databinding.ActivitySearchBinding
-import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.GoToTopScrollListener
 import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
@@ -97,9 +97,9 @@ class SearchActivity : AppCompatActivity(),
 
     override fun onSearchResultClick(result: SearchResult?) {
         if (result != null) {
-            val intent = Intent(this, MovieDetailActivity::class.java)
-            intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, result.id)
-            intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, result.title)
+            val intent = Intent(this, MovieActivity::class.java)
+            intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, result.id)
+            intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, result.title)
             startActivity(intent)
         }
     }

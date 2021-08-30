@@ -71,7 +71,7 @@ class HighRatedMoviesFragment : Fragment(), MovieListAdapter.OnMovieListItemClic
 
     override fun onMovieListItemClick(item: Movies.Movie) {
         if (activity is HomeActivity) {
-            (activity as HomeActivity).startMovieDetailActivity(item.title, item.id)
+            (activity as HomeActivity).startMovieActivity(item.title, item.id)
         }
     }
 

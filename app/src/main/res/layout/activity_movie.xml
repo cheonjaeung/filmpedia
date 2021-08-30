@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="io.woong.filmpedia.ui.page.movie.MovieViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/FilmpediaToolbarTheme"
+                app:layout_scrollFlags="enterAlways"
+                tools:title="Movie Title" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/slideshow"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    slides="@{vm.slides}"
+                    app:layout_constraintDimensionRatio="16:9"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/poster_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/slideshow">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/poster"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:scaleType="centerCrop"
+                        poster="@{vm.poster}"
+                        app:layout_constraintDimensionRatio="2:3"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:src="@drawable/placeholder_poster" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintLeft_toRightOf="@+id/poster"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/FilmpediaMovieTitleTheme"
+                            android:text="@{vm.title}"
+                            tools:text="Movie Title" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/release_date"
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:gravity="center_vertical"
+                                android:layout_weight="0.5"
+                                style="@style/FilmpediaReleaseDateTheme"
+                                android:text="@{vm.releaseDate}"
+                                tools:text="2021-08-30" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_weight="0.05"
+                                android:tint="@color/white"
+                                android:src="@drawable/icon_time" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/runtime"
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:gravity="center_vertical"
+                                android:layout_weight="0.45"
+                                android:text="@{vm.runtime}"
+                                tools:text="2h 31m" />
+                        </LinearLayout>
+
+                        <io.woong.filmpedia.ui.component.GenresTextView
+                            android:id="@+id/genres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            app:separator_color="@color/purple"
+                            genre_list="@{vm.genres}"
+                            tools:genres="Action,Science Fiction,Horror" />
+
+                        <io.woong.filmpedia.ui.component.CircularRatingView
+                            android:id="@+id/rating"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginTop="16dp"
+                            app:rating_arc_size="2dp"
+                            app:rating="@{vm.rating}"
+                            tools:rating="8.5" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tagline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    style="@style/FilmpediaTaglineTheme"
+                    tagline="@{vm.tagline}"
+                    app:layout_constraintTop_toBottomOf="@+id/poster_layout"
+                    tools:text="@tools:sample/lorem" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    overview="@{vm.overview}"
+                    app:layout_constraintTop_toBottomOf="@+id/tagline"
+                    tools:text="@tools:sample/lorem/random" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

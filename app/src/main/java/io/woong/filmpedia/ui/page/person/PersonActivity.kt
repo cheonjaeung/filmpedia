@@ -16,7 +16,7 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
-import io.woong.filmpedia.ui.page.moviedetail.MovieDetailActivity
+import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
@@ -87,9 +87,9 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
 
     override fun onCreditClick(movie: MovieCredits.Cast?) {
         if (movie != null) {
-            val intent = Intent(this, MovieDetailActivity::class.java)
-            intent.putExtra(MovieDetailActivity.MOVIE_ID_EXTRA_ID, movie.id)
-            intent.putExtra(MovieDetailActivity.MOVIE_TITLE_EXTRA_ID, movie.title)
+            val intent = Intent(this, MovieActivity::class.java)
+            intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, movie.id)
+            intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, movie.title)
             startActivity(intent)
         }
     }
