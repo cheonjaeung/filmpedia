@@ -8,14 +8,12 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
@@ -49,15 +47,6 @@ class MovieActivity : AppCompatActivity(),
                 val adapter = this.adapter as SlideShowAdapter
                 adapter.imagePaths = slidePaths
             }
-        }
-
-        @JvmStatic
-        @BindingAdapter("poster")
-        fun AppCompatImageView.bindPoster(poster: String?) {
-            Glide.with(this)
-                .load(UriUtil.getImageUrl(poster))
-                .placeholder(R.drawable.placeholder_poster)
-                .into(this)
         }
 
         @JvmStatic
