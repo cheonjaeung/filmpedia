@@ -44,6 +44,22 @@ class MovieViewModel : ViewModel() {
     val rating: LiveData<Double>
         get() = _rating
 
+    private val _homepage: MutableLiveData<String> = MutableLiveData()
+    val homepage: LiveData<String>
+        get() = _homepage
+
+    private val _facebook: MutableLiveData<String> = MutableLiveData()
+    val facebook: LiveData<String>
+        get() = _facebook
+
+    private val _instagram: MutableLiveData<String> = MutableLiveData()
+    val instagram: LiveData<String>
+        get() = _instagram
+
+    private val _twitter: MutableLiveData<String> = MutableLiveData()
+    val twitter: LiveData<String>
+        get() = _twitter
+
     private val _tagline: MutableLiveData<String> = MutableLiveData()
     val tagline: LiveData<String>
         get() = _tagline
@@ -67,6 +83,7 @@ class MovieViewModel : ViewModel() {
                 _tagline.postValue(movie.tagline)
                 _overview.postValue(movie.overview)
                 _genres.postValue(movie.genres)
+                _homepage.postValue(movie.homepage)
             }
         }
 
@@ -80,6 +97,14 @@ class MovieViewModel : ViewModel() {
                     }
                     _slides.postValue(slidePaths)
                 }
+            }
+        }
+
+        repository.fetchExternalIds(key = apiKey, id = movieId) { ids ->
+            if (ids != null) {
+                _facebook.postValue(ids.facebookId)
+                _instagram.postValue(ids.instagramId)
+                _twitter.postValue(ids.twitterId)
             }
         }
 

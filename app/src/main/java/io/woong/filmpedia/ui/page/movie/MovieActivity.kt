@@ -1,11 +1,13 @@
 package io.woong.filmpedia.ui.page.movie
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
@@ -26,7 +28,7 @@ import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
 
-class MovieActivity : AppCompatActivity(), PeopleListAdapter.OnPeopleListClickListener {
+class MovieActivity : AppCompatActivity(), View.OnClickListener, PeopleListAdapter.OnPeopleListClickListener {
 
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
@@ -56,6 +58,16 @@ class MovieActivity : AppCompatActivity(), PeopleListAdapter.OnPeopleListClickLi
             if (genres != null) {
                 this.visibility = View.VISIBLE
                 this.genres = genres
+            } else {
+                this.visibility = View.GONE
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("social_uri")
+        fun AppCompatImageButton.bindButtonUri(uri: String?) {
+            if (uri.isNotNullOrBlank()) {
+                this.visibility = View.VISIBLE
             } else {
                 this.visibility = View.GONE
             }
@@ -114,15 +126,7 @@ class MovieActivity : AppCompatActivity(), PeopleListAdapter.OnPeopleListClickLi
 
         applyExtras()
         initKeys()
-
-        binding.apply {
-            lifecycleOwner = this@MovieActivity
-            vm = viewModel
-
-            initToolbar(this)
-            initSlideShow(this)
-            initDirectorAndCastingList(this)
-        }
+        initBinding()
 
         viewModel.load(apiKey, language, movieId)
     }
@@ -145,13 +149,33 @@ class MovieActivity : AppCompatActivity(), PeopleListAdapter.OnPeopleListClickLi
         _language = app.language
     }
 
-    private fun initToolbar(binding: ActivityMovieBinding) {
+    private fun initBinding() {
         binding.apply {
+            lifecycleOwner = this@MovieActivity
+            vm = viewModel
+
             setSupportActionBar(toolbar)
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.icon_back)
                 title = movieTitle
+            }
+
+            slideshow.apply {
+                adapter = SlideShowAdapter()
+            }
+
+            homepageButton.setOnClickListener(this@MovieActivity)
+            facebookButton.setOnClickListener(this@MovieActivity)
+            instagramButton.setOnClickListener(this@MovieActivity)
+            twitterButton.setOnClickListener(this@MovieActivity)
+
+            directorAndCasting.apply {
+                adapter = PeopleListAdapter().apply {
+                    listener = this@MovieActivity
+                }
+                layoutManager = LinearLayoutManager(this@MovieActivity, LinearLayoutManager.HORIZONTAL, false)
+                addItemDecoration(ListDecoration.HorizontalDecoration(16))
             }
         }
     }
@@ -166,23 +190,19 @@ class MovieActivity : AppCompatActivity(), PeopleListAdapter.OnPeopleListClickLi
         }
     }
 
-    private fun initSlideShow(binding: ActivityMovieBinding) {
-        binding.apply {
-            slideshow.apply {
-                adapter = SlideShowAdapter()
-            }
-        }
-    }
+    override fun onClick(v: View?) {
+        var uri: Uri? = null
 
-    private fun initDirectorAndCastingList(binding: ActivityMovieBinding) {
-        binding.apply {
-            directorAndCasting.apply {
-                adapter = PeopleListAdapter().apply {
-                    listener = this@MovieActivity
-                }
-                layoutManager = LinearLayoutManager(this@MovieActivity, LinearLayoutManager.HORIZONTAL, false)
-                addItemDecoration(ListDecoration.HorizontalDecoration(16))
-            }
+        when (v?.id) {
+            binding.homepageButton.id -> uri = UriUtil.getSocialUri(viewModel.homepage.value, UriUtil.SocialType.OTHER)
+            binding.facebookButton.id -> uri = UriUtil.getSocialUri(viewModel.facebook.value, UriUtil.SocialType.FACEBOOK)
+            binding.instagramButton.id -> uri = UriUtil.getSocialUri(viewModel.instagram.value, UriUtil.SocialType.INSTAGRAM)
+            binding.twitterButton.id -> uri = UriUtil.getSocialUri(viewModel.twitter.value, UriUtil.SocialType.TWITTER)
+        }
+
+        if (uri != null) {
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
         }
     }
 
