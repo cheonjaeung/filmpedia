@@ -14,17 +14,9 @@ class SeriesViewModel : ViewModel() {
 
     private val repository: CollectionRepository = CollectionRepository()
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-
     private val _backdrop: MutableLiveData<String> = MutableLiveData()
     val backdrop: LiveData<String>
         get() = _backdrop
-
-    private val _poster: MutableLiveData<String> = MutableLiveData()
-    val poster: LiveData<String>
-        get() = _poster
 
     private val _title: MutableLiveData<String> = MutableLiveData()
     val title: LiveData<String>
@@ -33,28 +25,30 @@ class SeriesViewModel : ViewModel() {
     private val _overview: MutableLiveData<String> = MutableLiveData()
     val overview: LiveData<String>
         get() = _overview
+    private val _isOverviewVisible: MutableLiveData<Boolean> = MutableLiveData()
+    val isOverviewVisible: LiveData<Boolean>
+        get() = _isOverviewVisible
 
     private val _movies: MutableLiveData<List<Collection.Part>> = MutableLiveData()
     val movies: LiveData<List<Collection.Part>>
         get() = _movies
 
-    fun update(apiKey: String, collectionId: Int, language: String) {
+    fun load(apiKey: String, language: String, collectionId: Int) {
         CoroutineScope(Dispatchers.Default).launch {
-            _isLoading.postValue(true)
-
             repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { collection ->
-                collection?.let { c ->
-                    _backdrop.postValue(c.backdropPath)
-                    _poster.postValue(c.posterPath)
-                    _title.postValue(c.name)
-                    _overview.postValue(c.overview)
+                if (collection != null) {
+                    _backdrop.postValue(collection.backdropPath)
+                    _title.postValue(collection.name)
 
-                    val sorted = c.parts.sortedBy { getPriorityByReleaseDate(it.releaseDate) }
+                    _overview.postValue(collection.overview)
+                    _isOverviewVisible.postValue(collection.overview.isNotNullOrBlank())
+
+                    val sorted = collection.parts.sortedBy {
+                        getPriorityByReleaseDate(it.releaseDate)
+                    }
                     _movies.postValue(sorted)
                 }
-            }.join()
-
-            _isLoading.postValue(false)
+            }
         }
     }
 
