@@ -127,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             app:separator_color="@color/purple"
-                            genre_list="@{vm.genres}"
+                            genres="@{vm.genres}"
                             tools:genres="Action,Science Fiction,Horror" />
 
                         <LinearLayout
@@ -155,7 +155,7 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icon_home"
                                 style="@style/FilmpediaImageButtonTheme"
-                                social_uri="@{vm.homepage}"
+                                is_visible="@{vm.isHomepageVisible}"
                                 tools:visibility="visible" />
 
                             <androidx.appcompat.widget.AppCompatImageButton
@@ -168,7 +168,7 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icon_facebook"
                                 style="@style/FilmpediaImageButtonTheme"
-                                social_uri="@{vm.facebook}"
+                                is_visible="@{vm.isFacebookVisible}"
                                 tools:visibility="visible" />
 
                             <androidx.appcompat.widget.AppCompatImageButton
@@ -181,7 +181,7 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icon_instagram"
                                 style="@style/FilmpediaImageButtonTheme"
-                                social_uri="@{vm.instagram}"
+                                is_visible="@{vm.isInstagramVisible}"
                                 tools:visibility="visible" />
 
                             <androidx.appcompat.widget.AppCompatImageButton
@@ -194,7 +194,7 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icon_twitter"
                                 style="@style/FilmpediaImageButtonTheme"
-                                social_uri="@{vm.twitter}"
+                                is_visible="@{vm.isTwitterVisible}"
                                 tools:visibility="visible" />
                         </LinearLayout>
                     </LinearLayout>
@@ -207,7 +207,8 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     style="@style/FilmpediaTaglineTheme"
-                    text_or_gone="@{vm.tagline}"
+                    is_visible="@{vm.isTaglineVisible}"
+                    android:text="@{vm.tagline}"
                     tools:text="@tools:sample/lorem" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -216,7 +217,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    text_or_gone="@{vm.overview}"
+                    is_visible="@{vm.isOverviewVisible}"
+                    android:text="@{vm.overview}"
                     tools:text="@tools:sample/lorem/random" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -245,7 +247,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    movie_series="@{vm.series}"
+                    is_visible="@{vm.isSeriesVisible}"
+                    app:series="@{vm.series}"
                     app:ratio="16:9" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -294,7 +297,6 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/spoken_language"
-                            spoken_languages="@{vm.spokenLanguages}"
                             tools:text="English\nKorean" />
                     </TableRow>
 

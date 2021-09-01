@@ -8,6 +8,7 @@ import io.woong.filmpedia.data.movie.Genres
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.repository.MovieRepository
+import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,26 +55,44 @@ class MovieViewModel : ViewModel() {
     private val _homepage: MutableLiveData<String> = MutableLiveData()
     val homepage: LiveData<String>
         get() = _homepage
+    private val _isHomepageVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isHomepageVisible: LiveData<Boolean>
+        get() = _isHomepageVisible
 
     private val _facebook: MutableLiveData<String> = MutableLiveData()
     val facebook: LiveData<String>
         get() = _facebook
+    private val _isFacebookVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFacebookVisible: LiveData<Boolean>
+        get() = _isFacebookVisible
 
     private val _instagram: MutableLiveData<String> = MutableLiveData()
     val instagram: LiveData<String>
         get() = _instagram
+    private val _isInstagramVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isInstagramVisible: LiveData<Boolean>
+        get() = _isInstagramVisible
 
     private val _twitter: MutableLiveData<String> = MutableLiveData()
     val twitter: LiveData<String>
         get() = _twitter
+    private val _isTwitterVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isTwitterVisible: LiveData<Boolean>
+        get() = _isTwitterVisible
 
     private val _tagline: MutableLiveData<String> = MutableLiveData()
     val tagline: LiveData<String>
         get() = _tagline
+    private val _isTaglineVisible: MutableLiveData<Boolean> = MutableLiveData()
+    val isTaglineVisible: LiveData<Boolean>
+        get() = _isTaglineVisible
 
     private val _overview: MutableLiveData<String> = MutableLiveData()
     val overview: LiveData<String>
         get() = _overview
+    private val _isOverviewVisible: MutableLiveData<Boolean> = MutableLiveData()
+    val isOverviewVisible: LiveData<Boolean>
+        get() = _isOverviewVisible
 
     private val _directorAndCasting: MutableLiveData<List<PersonSummary>> = MutableLiveData()
     val directorAndCasting: LiveData<List<PersonSummary>>
@@ -82,6 +101,9 @@ class MovieViewModel : ViewModel() {
     private val _series: MutableLiveData<Movie.Collection> = MutableLiveData()
     val series: LiveData<Movie.Collection>
         get() = _series
+    private val _isSeriesVisible: MutableLiveData<Boolean> = MutableLiveData()
+    val isSeriesVisible: LiveData<Boolean>
+        get() = _isSeriesVisible
 
     private val _spokenLanguages: MutableLiveData<List<String>> = MutableLiveData()
     val spokenLanguages: LiveData<List<String>>
@@ -104,14 +126,22 @@ class MovieViewModel : ViewModel() {
                 _releaseDate.postValue(movie.releaseDate)
                 _runtime.postValue(convertRuntimeToString(movie.runtime))
                 _rating.postValue(movie.voteAverage)
-                _tagline.postValue(movie.tagline)
-                _overview.postValue(movie.overview)
                 _genres.postValue(movie.genres)
-                _homepage.postValue(movie.homepage)
-                _series.postValue(movie.belongsToCollection)
+
                 _spokenLanguages.postValue(translateSpokenLanguages(language, movie.spokenLanguages))
                 _budget.postValue(movie.budget)
                 _revenue.postValue(movie.revenue)
+
+                _homepage.postValue(movie.homepage)
+                _isHomepageVisible.postValue(movie.homepage.isNotNullOrBlank())
+
+                _tagline.postValue(movie.tagline)
+                _isTaglineVisible.postValue(movie.tagline.isNotNullOrBlank())
+                _overview.postValue(movie.overview)
+                _isOverviewVisible.postValue(movie.overview.isNotNullOrBlank())
+
+                _series.postValue(movie.belongsToCollection)
+                _isSeriesVisible.postValue(movie.belongsToCollection != null)
             }
         }
 
@@ -133,6 +163,10 @@ class MovieViewModel : ViewModel() {
                 _facebook.postValue(ids.facebookId)
                 _instagram.postValue(ids.instagramId)
                 _twitter.postValue(ids.twitterId)
+
+                _isFacebookVisible.postValue(ids.facebookId.isNotNullOrBlank())
+                _isInstagramVisible.postValue(ids.instagramId.isNotNullOrBlank())
+                _isTwitterVisible.postValue(ids.twitterId.isNotNullOrBlank())
             }
         }
 

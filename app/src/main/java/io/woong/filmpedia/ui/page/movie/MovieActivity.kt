@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -27,9 +26,7 @@ import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
-import io.woong.filmpedia.util.isNotNullOrBlank
 import io.woong.filmpedia.util.isNotNullOrEmpty
-import java.lang.StringBuilder
 
 class MovieActivity : AppCompatActivity(),
     View.OnClickListener,
@@ -50,58 +47,11 @@ class MovieActivity : AppCompatActivity(),
         }
 
         @JvmStatic
-        @BindingAdapter("genre_list")
-        fun GenresTextView.bindGenres(genres: List<Genres.Genre>?) {
-            if (genres != null) {
-                this.visibility = View.VISIBLE
-                this.genres = genres
-            } else {
-                this.visibility = View.GONE
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("social_uri")
-        fun AppCompatImageButton.bindButtonUri(uri: String?) {
-            if (uri.isNotNullOrBlank()) {
-                this.visibility = View.VISIBLE
-            } else {
-                this.visibility = View.GONE
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("text_or_gone")
-        fun AppCompatTextView.bindTextOrGone(text: String?) {
-            if (text.isNotNullOrBlank()) {
-                if (this.visibility == View.GONE) {
-                    this.visibility = View.VISIBLE
-                }
-                this.text = text
-            } else {
-                if (this.visibility == View.VISIBLE) {
-                    this.visibility = View.GONE
-                }
-            }
-        }
-
-        @JvmStatic
         @BindingAdapter("director_and_casting")
         fun RecyclerView.bindDirectorAndCasting(people: List<PersonSummary>?) {
             if (people != null) {
                 val adapter = this.adapter as PeopleListAdapter
                 adapter.people = people
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("movie_series")
-        fun SeriesButton.bindMovieSeries(collection: Movie.Collection?) {
-            if (collection != null) {
-                this.visibility = View.VISIBLE
-                this.series = collection
-            } else {
-                this.visibility = View.GONE
             }
         }
 
@@ -113,18 +63,6 @@ class MovieActivity : AppCompatActivity(),
                 this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, list.size)
             } else {
                 this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, 2)
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("spoken_languages")
-        fun AppCompatTextView.bindSpokenLanguages(languages: List<String>?) {
-            if (languages.isNotNullOrEmpty()) {
-                languages!!
-                val builder = StringBuilder(languages[0])
-                for (index in 1 until languages.size) {
-                    builder.append("\n${languages[index]}")
-                }
             }
         }
     }
