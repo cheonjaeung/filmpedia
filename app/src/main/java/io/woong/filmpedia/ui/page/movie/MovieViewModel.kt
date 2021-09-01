@@ -12,7 +12,6 @@ import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 import java.lang.StringBuilder
 import java.util.*
 
@@ -201,23 +200,22 @@ class MovieViewModel : ViewModel() {
         }
     }
 
-    private fun translateSpokenLanguages(languageCode: String, list: List<Movie.Country>): List<String> {
+    private fun translateSpokenLanguages(languageCode: String, languageList: List<Movie.Country>): List<String> {
         try {
             val parsed = languageCode.split("-")
             val language = parsed[0]
-            val country = parsed[1]
-            val locale = Locale(language, country)
+            val locale = Locale(language)
 
             val translatedList = mutableListOf<String>()
-            list.forEach {
-                val translated = locale.getDisplayLanguage(Locale(it.iso3166_1))
-                translatedList.add(translated)
+            for (index in languageList.indices) {
+                val languageItem = languageList[index]
+                val itemLocal = Locale(languageItem.iso639_1)
+                val translatedLanguageName = itemLocal.getDisplayLanguage(locale)
+                translatedList.add(translatedLanguageName)
             }
 
             return translatedList
         } catch (e: IndexOutOfBoundsException) {
-            return emptyList()
-        } catch (e: NullPointerException) {
             return emptyList()
         }
     }

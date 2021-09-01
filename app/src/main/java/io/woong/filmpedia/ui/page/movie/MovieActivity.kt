@@ -16,17 +16,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.movie.Genres
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityMovieBinding
-import io.woong.filmpedia.ui.component.GenresTextView
 import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
-import io.woong.filmpedia.util.isNotNullOrEmpty
 
 class MovieActivity : AppCompatActivity(),
     View.OnClickListener,
@@ -56,10 +53,9 @@ class MovieActivity : AppCompatActivity(),
         }
 
         @JvmStatic
-        @BindingAdapter("spoken_language_plural")
+        @BindingAdapter("spoken_language_title_plural")
         fun AppCompatTextView.bindPlurals(list: List<String>?) {
-            if (list.isNotNullOrEmpty()) {
-                list!!
+            if (list != null) {
                 this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, list.size)
             } else {
                 this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, 2)
