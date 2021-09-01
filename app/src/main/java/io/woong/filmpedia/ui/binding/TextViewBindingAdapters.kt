@@ -26,6 +26,21 @@ object TextViewBindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("runtime")
+    fun AppCompatTextView.bindRuntime(runtime: Int?) {
+        if (runtime != null) {
+            val builder = StringBuilder()
+            var time = runtime
+
+            val hours = time / 60
+            time %= 60
+            builder.append("(${hours}h ${time}m)")
+
+            this.text = builder.toString()
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("money")
     fun bindMoney(view: AppCompatTextView, money: Long?) {
         if (money != null) {

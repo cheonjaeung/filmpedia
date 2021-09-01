@@ -117,7 +117,7 @@
                                 android:layout_height="24dp"
                                 android:gravity="center_vertical"
                                 android:layout_weight="0.45"
-                                android:text="@{vm.runtime}"
+                                runtime="@{vm.runtime}"
                                 tools:text="2h 31m" />
                         </LinearLayout>
 

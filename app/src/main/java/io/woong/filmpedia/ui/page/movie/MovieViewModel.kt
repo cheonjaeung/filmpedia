@@ -12,7 +12,6 @@ import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 import java.util.*
 
 class MovieViewModel : ViewModel() {
@@ -39,8 +38,8 @@ class MovieViewModel : ViewModel() {
     val releaseDate: LiveData<String>
         get() = _releaseDate
 
-    private val _runtime: MutableLiveData<String> = MutableLiveData()
-    val runtime: LiveData<String>
+    private val _runtime: MutableLiveData<Int> = MutableLiveData()
+    val runtime: LiveData<Int>
         get() = _runtime
 
     private val _genres: MutableLiveData<List<Genres.Genre>> = MutableLiveData()
@@ -123,7 +122,7 @@ class MovieViewModel : ViewModel() {
                 _originalTitle.postValue(movie.originalTitle)
                 _poster.postValue(movie.posterPath)
                 _releaseDate.postValue(movie.releaseDate)
-                _runtime.postValue(convertRuntimeToString(movie.runtime))
+                _runtime.postValue(movie.runtime)
                 _rating.postValue(movie.voteAverage)
                 _genres.postValue(movie.genres)
 
@@ -182,21 +181,6 @@ class MovieViewModel : ViewModel() {
 
                 _directorAndCasting.postValue(people)
             }
-        }
-    }
-
-    private fun convertRuntimeToString(runtime: Int?): String? {
-        return if (runtime != null) {
-            val builder = StringBuilder()
-            var time = runtime
-
-            val hours = time / 60
-            time %= 60
-            builder.append("(${hours}h ${time}m)")
-
-            builder.toString()
-        } else {
-            null
         }
     }
 
