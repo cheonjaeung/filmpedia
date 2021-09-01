@@ -1,15 +1,13 @@
 package io.woong.filmpedia.ui.page.series
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
+import io.woong.filmpedia.databinding.ItemSeriesMovieListBinding
 import io.woong.filmpedia.util.UriUtil
 
 class SeriesMovieListAdapter : RecyclerView.Adapter<SeriesMovieListAdapter.ViewHolder>() {
@@ -25,18 +23,13 @@ class SeriesMovieListAdapter : RecyclerView.Adapter<SeriesMovieListAdapter.ViewH
             notifyDataSetChanged()
         }
 
-    private var listener: OnSeriesMovieClickListener? = null
-
-    fun setOnSeriesMovieClickListener(listener: OnSeriesMovieClickListener) {
-        this.listener = listener
-    }
+    var listener: OnSeriesMovieClickListener? = null
 
     override fun getItemCount(): Int = _movies.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.item_series_movie_list, parent, false)
-        return ViewHolder(view)
+        val binding = ItemSeriesMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
@@ -46,29 +39,25 @@ class SeriesMovieListAdapter : RecyclerView.Adapter<SeriesMovieListAdapter.ViewH
             Glide.with(holder.itemView.context)
                 .load(UriUtil.getImageUrl(movie.posterPath))
                 .placeholder(R.drawable.placeholder_poster)
-                .into(holder.posterView)
+                .into(holder.binding.poster)
 
-            holder.apply {
-                titleView.text = movie.title
-                releaseDateView.text = movie.releaseDate
-                overviewView.text = movie.overview
+            holder.binding.apply {
+                title.text = movie.title
+                releaseDate.text = movie.releaseDate
+                overview.text = movie.overview
             }
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val rootView: ViewGroup = itemView.findViewById(R.id.root)
-        val posterView: AppCompatImageView = itemView.findViewById(R.id.poster)
-        val titleView: AppCompatTextView = itemView.findViewById(R.id.title)
-        val releaseDateView: AppCompatTextView = itemView.findViewById(R.id.release_date)
-        val overviewView: AppCompatTextView = itemView.findViewById(R.id.overview)
+    inner class ViewHolder(val binding: ItemSeriesMovieListBinding) : RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
 
         init {
-            rootView.setOnClickListener(this)
+            binding.itemRoot.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            if (v?.id == rootView.id) {
+            if (v?.id == binding.itemRoot.id) {
                 listener?.onSeriesMovieClick(adapterPosition, movies)
             }
         }

@@ -59,11 +59,11 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
                 title = collectionName
             }
 
-            val deco = ListDecoration.VerticalDecoration(8)
+            val deco = ListDecoration.VerticalDecoration(2)
 
             moviesList.apply {
                 adapter = SeriesMovieListAdapter().apply {
-                    setOnSeriesMovieClickListener(this@SeriesActivity)
+                    listener = this@SeriesActivity
                 }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 addItemDecoration(deco)
