@@ -1,36 +1,46 @@
 <resources>
-    <string name="app_name" translatable="false">Filmpedia</string>
+    <string name="app_name">Filmpedia</string>
 
     <!-- HomeActivity -->
-    <string name="home_tab_0" translatable="false">Popular</string>
-    <string name="home_tab_1" translatable="false">Now Playing</string>
-    <string name="home_tab_2" translatable="false">High Rated</string>
-    <string name="home_title_popular" translatable="false">Popular Movies</string>
-    <string name="home_title_now_playing" translatable="false">Now Playing Movies</string>
-    <string name="home_title_high_rated" translatable="false">High Rated Movies</string>
+    <string name="home_tab_0">Popular</string>
+    <string name="home_tab_1">Now Playing</string>
+    <string name="home_tab_2">High Rated</string>
+    <string name="home_title_popular">Popular Movies</string>
+    <string name="home_title_now_playing">Now Playing Movies</string>
+    <string name="home_title_high_rated">High Rated Movies</string>
     
     <!-- MovieActivity -->
-    <string name="movie_director_and_casting" translatable="false">Director and Casting</string>
-    <string name="movie_director" translatable="false">Director</string>
-    <string name="movie_director_and_casting_footer" translatable="false">Full Cast &amp; Crews</string>
+    <string name="movie_director_and_casting">Director and Casting</string>
+    <string name="movie_director">Director</string>
+    <string name="movie_director_and_casting_footer">Full Cast &amp; Crews</string>
+    <string name="movie_no_data">No Data</string>
+    <string name="movie_detail">Detail Information</string>
+    <string name="movie_title">Title</string>
+    <string name="movie_original_title">Original Title</string>
+    <plurals name="movie_spoken_language">
+        <item quantity="one">Spoken Language</item>
+        <item quantity="other">Spoken Languages</item>
+    </plurals>
+    <string name="movie_budget">Budget</string>
+    <string name="movie_revenue">Revenue</string>
 
-    <string name="detail_information" translatable="false">Detail Information</string>
-    <string name="view_the_series" translatable="false">View the Series</string>
+    <string name="detail_information">Detail Information</string>
+    <string name="view_the_series">View the Series</string>
 
-    <string name="overview" translatable="false">Overview</string>
-    <string name="status" translatable="false">Status</string>
-    <string name="languages" translatable="false">Languages</string>
-    <string name="production_countries" translatable="false">Production Countries</string>
-    <string name="budget" translatable="false">Budget</string>
-    <string name="revenue" translatable="false">Revenue</string>
-    <string name="casts" translatable="false">Casts</string>
-    <string name="crews" translatable="false">Crews</string>
-    <string name="production_companies" translatable="false">Production Companies</string>
-    <string name="recommendations" translatable="false">Recommendations</string>
-    <string name="movies" translatable="false">Movies</string>
+    <string name="overview">Overview</string>
+    <string name="status">Status</string>
+    <string name="languages">Languages</string>
+    <string name="production_countries">Production Countries</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
+    <string name="casts">Casts</string>
+    <string name="crews">Crews</string>
+    <string name="production_companies">Production Companies</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="movies">Movies</string>
 
-    <string name="search" translatable="false">Search</string>
-    <string name="search_hint" translatable="false">Search movies.</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search movies.</string>
 
     <plurals name="year_old">
         <item quantity="one">year old</item>

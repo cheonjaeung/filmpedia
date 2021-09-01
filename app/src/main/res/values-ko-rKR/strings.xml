@@ -3,35 +3,44 @@
     <string name="app_name">필름피디아</string>
 
     <!-- HomeActivity -->
-    <string name="home_tab_0" translatable="false">인기</string>
-    <string name="home_tab_1" translatable="false">상영중</string>
-    <string name="home_tab_2" translatable="false">높은 평점</string>
-    <string name="home_title_popular" translatable="false">인기 영화</string>
-    <string name="home_title_now_playing" translatable="false">상영중인 영화</string>
-    <string name="home_title_high_rated" translatable="false">평점 높은 영화</string>
+    <string name="home_tab_0">인기</string>
+    <string name="home_tab_1">상영중</string>
+    <string name="home_tab_2">높은 평점</string>
+    <string name="home_title_popular">인기 영화</string>
+    <string name="home_title_now_playing">상영중인 영화</string>
+    <string name="home_title_high_rated">평점 높은 영화</string>
 
     <!-- MovieActivity -->
-    <string name="movie_director_and_casting" translatable="false">감독 및 출연</string>
-    <string name="movie_director" translatable="false">감독</string>
-    <string name="movie_director_and_casting_footer" translatable="false">전체보기</string>
+    <string name="movie_director_and_casting">감독 및 출연</string>
+    <string name="movie_director">감독</string>
+    <string name="movie_director_and_casting_footer">전체보기</string>
+    <string name="movie_no_data">정보 없음</string>
+    <string name="movie_detail">상세 정보</string>
+    <string name="movie_title">제</string>
+    <string name="movie_original_title">원제</string>
+    <plurals name="movie_spoken_language">
+        <item quantity="other">원어</item>
+    </plurals>
+    <string name="movie_budget">제작비</string>
+    <string name="movie_revenue">수익</string>
 
-    <string name="detail_information" translatable="false">자세히 알아보기</string>
-    <string name="view_the_series" translatable="false">시리즈 보기</string>
+    <string name="detail_information">자세히 알아보기</string>
+    <string name="view_the_series">시리즈 보기</string>
 
-    <string name="overview" translatable="false">개요</string>
-    <string name="status" translatable="false">상태</string>
-    <string name="languages" translatable="false">언어</string>
-    <string name="budget" translatable="false">제작비</string>
-    <string name="revenue" translatable="false">수익</string>
-    <string name="production_countries" translatable="false">제작국</string>
-    <string name="crews" translatable="false">제작진</string>
-    <string name="production_companies" translatable="false">제작사</string>
-    <string name="recommendations" translatable="false">추천</string>
-    <string name="movies" translatable="false">영화</string>
-    <string name="casts" translatable="false">출연</string>
+    <string name="overview">개요</string>
+    <string name="status">상태</string>
+    <string name="languages">언어</string>
+    <string name="budget">제작비</string>
+    <string name="revenue">수익</string>
+    <string name="production_countries">제작국</string>
+    <string name="crews">제작진</string>
+    <string name="production_companies">제작사</string>
+    <string name="recommendations">추천</string>
+    <string name="movies">영화</string>
+    <string name="casts">출연</string>
 
-    <string name="search" translatable="false">검색</string>
-    <string name="search_hint" translatable="false">영화를 검색하세요.</string>
+    <string name="search">검색</string>
+    <string name="search_hint">영화를 검색하세요.</string>
 
     <plurals name="year_old">
         <item quantity="other">세</item>

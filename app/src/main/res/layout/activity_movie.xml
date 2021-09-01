@@ -238,6 +238,88 @@
                     tools:orientation="horizontal"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_movie_director_and_casting" />
+
+                <io.woong.filmpedia.ui.component.SeriesButton
+                    android:id="@+id/series_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    movie_series="@{vm.series}"
+                    app:ratio="16:9" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/movie_detail"
+                    style="@style/FilmpediaTitleTheme" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:stretchColumns="*">
+
+                    <TableRow>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="@string/movie_title"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/detail_title"
+                            android:text="@{vm.title}"
+                            tools:text="Movie Title" />
+                    </TableRow>
+
+                    <TableRow>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="@string/movie_original_title"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/original_title"
+                            android:text="@{vm.originalTitle}"
+                            tools:text="영화 제목" />
+                    </TableRow>
+
+                    <TableRow>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/spoken_language_title"
+                            android:textStyle="bold"
+                            spoken_language_plural="@{vm.spokenLanguages}"
+                            tools:text="Spoken Languages" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/spoken_language"
+                            spoken_languages="@{vm.spokenLanguages}"
+                            tools:text="English\nKorean" />
+                    </TableRow>
+
+                    <TableRow>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="@string/budget"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/budget"
+                            money_text="@{vm.budget}"
+                            tools:text="$ 100,000,000" />
+                    </TableRow>
+
+                    <TableRow>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="@string/revenue"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/revenue"
+                            money_text="@{vm.revenue}"
+                            tools:text="$ 200,000,000" />
+                    </TableRow>
+                </TableLayout>
             </LinearLayout>
         </ScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -20,15 +20,24 @@ import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityMovieBinding
 import io.woong.filmpedia.ui.component.GenresTextView
+import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.person.PersonActivity
+import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
+import io.woong.filmpedia.util.isNotNullOrEmpty
+import java.lang.StringBuilder
+import java.text.DecimalFormat
 
-class MovieActivity : AppCompatActivity(), View.OnClickListener, PeopleListAdapter.OnPeopleListClickListener {
+class MovieActivity : AppCompatActivity(),
+    View.OnClickListener,
+    PeopleListAdapter.OnPeopleListClickListener,
+    SeriesButton.OnSeriesButtonClickListener {
 
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
@@ -94,6 +103,53 @@ class MovieActivity : AppCompatActivity(), View.OnClickListener, PeopleListAdapt
             if (people != null) {
                 val adapter = this.adapter as PeopleListAdapter
                 adapter.people = people
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("movie_series")
+        fun SeriesButton.bindMovieSeries(collection: Movie.Collection?) {
+            if (collection != null) {
+                this.visibility = View.VISIBLE
+                this.series = collection
+            } else {
+                this.visibility = View.GONE
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("spoken_language_plural")
+        fun AppCompatTextView.bindPlurals(list: List<String>?) {
+            if (list.isNotNullOrEmpty()) {
+                list!!
+                this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, list.size)
+            } else {
+                this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, 2)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("spoken_languages")
+        fun AppCompatTextView.bindSpokenLanguages(languages: List<String>?) {
+            if (languages.isNotNullOrEmpty()) {
+                languages!!
+                val builder = StringBuilder(languages[0])
+                for (index in 1 until languages.size) {
+                    builder.append("\n${languages[index]}")
+                }
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("money_text")
+        fun AppCompatTextView.bindMoney(money: Long?) {
+            if (money != null) {
+                if (money <= 0) {
+                    this.text = "-"
+                } else {
+                    val pattern = DecimalFormat("$ #,###")
+                    this.text = pattern.format(money)
+                }
             }
         }
     }
@@ -177,6 +233,8 @@ class MovieActivity : AppCompatActivity(), View.OnClickListener, PeopleListAdapt
                 layoutManager = LinearLayoutManager(this@MovieActivity, LinearLayoutManager.HORIZONTAL, false)
                 addItemDecoration(ListDecoration.HorizontalDecoration(16))
             }
+
+            seriesButton.setOnSeriesButtonClickListener(this@MovieActivity)
         }
     }
 
@@ -217,6 +275,15 @@ class MovieActivity : AppCompatActivity(), View.OnClickListener, PeopleListAdapt
 
     override fun onFullButtonClick() {
         Snackbar.make(binding.root, "Not support yet.", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onSeriesButtonClick(series: Movie.Collection?) {
+        if (series != null) {
+            val intent = Intent(this, SeriesActivity::class.java)
+            intent.putExtra(SeriesActivity.COLLECTION_NAME_EXTRA_ID, series.name)
+            intent.putExtra(SeriesActivity.COLLECTION_ID_EXTRA_ID, series.id)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroy() {

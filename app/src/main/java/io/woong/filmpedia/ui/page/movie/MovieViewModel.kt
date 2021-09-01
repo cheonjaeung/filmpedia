@@ -5,12 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.movie.Genres
+import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 import java.lang.StringBuilder
+import java.util.*
 
 class MovieViewModel : ViewModel() {
 
@@ -19,6 +22,10 @@ class MovieViewModel : ViewModel() {
     private val _title: MutableLiveData<String> = MutableLiveData()
     val title: LiveData<String>
         get() = _title
+
+    private val _originalTitle: MutableLiveData<String> = MutableLiveData()
+    val originalTitle: LiveData<String>
+        get() = _originalTitle
 
     private val _poster: MutableLiveData<String> = MutableLiveData()
     val poster: LiveData<String>
@@ -72,10 +79,27 @@ class MovieViewModel : ViewModel() {
     val directorAndCasting: LiveData<List<PersonSummary>>
         get() = _directorAndCasting
 
+    private val _series: MutableLiveData<Movie.Collection> = MutableLiveData()
+    val series: LiveData<Movie.Collection>
+        get() = _series
+
+    private val _spokenLanguages: MutableLiveData<List<String>> = MutableLiveData()
+    val spokenLanguages: LiveData<List<String>>
+        get() = _spokenLanguages
+
+    private val _budget: MutableLiveData<Long> = MutableLiveData()
+    val budget: LiveData<Long>
+        get() = _budget
+
+    private val _revenue: MutableLiveData<Long> = MutableLiveData()
+    val revenue: LiveData<Long>
+        get() = _revenue
+
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
         repository.fetchMovieDetail(key = apiKey, lang = language, id = movieId) { movie ->
             if (movie != null) {
                 _title.postValue(movie.title)
+                _originalTitle.postValue(movie.originalTitle)
                 _poster.postValue(movie.posterPath)
                 _releaseDate.postValue(movie.releaseDate)
                 _runtime.postValue(convertRuntimeToString(movie.runtime))
@@ -84,6 +108,10 @@ class MovieViewModel : ViewModel() {
                 _overview.postValue(movie.overview)
                 _genres.postValue(movie.genres)
                 _homepage.postValue(movie.homepage)
+                _series.postValue(movie.belongsToCollection)
+                _spokenLanguages.postValue(translateSpokenLanguages(language, movie.spokenLanguages))
+                _budget.postValue(movie.budget)
+                _revenue.postValue(movie.revenue)
             }
         }
 
@@ -136,6 +164,27 @@ class MovieViewModel : ViewModel() {
             builder.toString()
         } else {
             null
+        }
+    }
+
+    private fun translateSpokenLanguages(languageCode: String, list: List<Movie.Country>): List<String> {
+        try {
+            val parsed = languageCode.split("-")
+            val language = parsed[0]
+            val country = parsed[1]
+            val locale = Locale(language, country)
+
+            val translatedList = mutableListOf<String>()
+            list.forEach {
+                val translated = locale.getDisplayLanguage(Locale(it.iso3166_1))
+                translatedList.add(translated)
+            }
+
+            return translatedList
+        } catch (e: IndexOutOfBoundsException) {
+            return emptyList()
+        } catch (e: NullPointerException) {
+            return emptyList()
         }
     }
 
