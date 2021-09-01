@@ -305,7 +305,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/budget"
-                            money_text="@{vm.budget}"
+                            money="@{vm.budget}"
                             tools:text="$ 100,000,000" />
                     </TableRow>
 
@@ -316,7 +316,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/revenue"
-                            money_text="@{vm.revenue}"
+                            money="@{vm.revenue}"
                             tools:text="$ 200,000,000" />
                     </TableRow>
                 </TableLayout>

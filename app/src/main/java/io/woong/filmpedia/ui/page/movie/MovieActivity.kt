@@ -32,7 +32,6 @@ import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder
-import java.text.DecimalFormat
 
 class MovieActivity : AppCompatActivity(),
     View.OnClickListener,
@@ -136,19 +135,6 @@ class MovieActivity : AppCompatActivity(),
                 val builder = StringBuilder(languages[0])
                 for (index in 1 until languages.size) {
                     builder.append("\n${languages[index]}")
-                }
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("money_text")
-        fun AppCompatTextView.bindMoney(money: Long?) {
-            if (money != null) {
-                if (money <= 0) {
-                    this.text = "-"
-                } else {
-                    val pattern = DecimalFormat("$ #,###")
-                    this.text = pattern.format(money)
                 }
             }
         }
