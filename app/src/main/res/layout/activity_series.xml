@@ -31,46 +31,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <FrameLayout
-                    android:id="@+id/backdrop_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/backdrop"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        series_backdrop="@{vm.backdrop}"
-                        android:scaleType="centerCrop"
-                        tools:src="@drawable/placeholder_backdrop" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/background_backdrop_mask" />
-                </FrameLayout>
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/poster"
-                    android:layout_width="0dp"
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_margin="16dp"
-                    series_poster="@{vm.poster}"
                     android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="2:3"
-                    app:layout_constraintLeft_toLeftOf="@+id/backdrop_layout"
-                    app:layout_constraintTop_toTopOf="@+id/backdrop_layout"
-                    app:layout_constraintRight_toRightOf="@+id/backdrop_layout"
-                    app:layout_constraintBottom_toBottomOf="@+id/backdrop_layout"
-                    tools:src="@drawable/placeholder_poster" />
+                    backdrop="@{vm.backdrop}"
+                    app:layout_constraintDimensionRatio="16:9"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/placeholder_backdrop" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingBottom="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/backdrop_layout">
+                    app:layout_constraintTop_toBottomOf="@+id/backdrop">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -87,8 +63,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        is_visible="@{vm.isOverviewVisible}"
                         android:text="@string/overview"
-                        style="@style/FilmpediaTitleTheme" />
+                        style="@style/FilmpediaTitleTheme"
+                        tools:visibility="visible" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/overview"
@@ -96,8 +75,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        is_visible="@{vm.isOverviewVisible}"
                         android:text="@{vm.overview}"
-                        tools:text="This is a sample of the movie overview." />
+                        tools:text="@tools:sample/lorem/random"
+                        tools:visibility="visible" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"

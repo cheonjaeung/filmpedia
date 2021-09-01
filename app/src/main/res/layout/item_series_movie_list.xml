@@ -32,7 +32,8 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             style="@style/FilmpediaMovieTitleTheme"
             tools:text="Movie Title" />
@@ -41,7 +42,8 @@
             android:id="@+id/release_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             style="@style/FilmpediaReleaseDateTheme"
             tools:text="2021-01-01" />
 
@@ -49,7 +51,8 @@
             android:id="@+id/overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:maxLines="4"
             android:ellipsize="end"
