@@ -16,10 +16,10 @@
     <string name="movie_director_and_casting_footer">전체보기</string>
     <string name="movie_no_data">정보 없음</string>
     <string name="movie_detail">상세 정보</string>
-    <string name="movie_title">제</string>
+    <string name="movie_title">제목</string>
     <string name="movie_original_title">원제</string>
     <plurals name="movie_spoken_language">
-        <item quantity="other">원어</item>
+        <item quantity="other">언어</item>
     </plurals>
     <string name="movie_budget">제작비</string>
     <string name="movie_revenue">수익</string>
