@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
-import io.woong.filmpedia.databinding.LayoutSeriesButtonBinding
+import io.woong.filmpedia.databinding.ComponentSeriesButtonBinding
 import io.woong.filmpedia.util.DimensionUtil
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrBlank
@@ -25,8 +25,8 @@ class SeriesButton @JvmOverloads constructor(
         val DEFAULT_RATIO: Pair<Int, Int> = Pair(4, 3)
     }
 
-    private var _binding: LayoutSeriesButtonBinding? = null
-    private val binding: LayoutSeriesButtonBinding
+    private var _binding: ComponentSeriesButtonBinding? = null
+    private val binding: ComponentSeriesButtonBinding
         get() = _binding!!
 
     var series: Movie.Collection? = null
@@ -45,7 +45,7 @@ class SeriesButton @JvmOverloads constructor(
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        _binding = LayoutSeriesButtonBinding.inflate(inflater, this, true)
+        _binding = ComponentSeriesButtonBinding.inflate(inflater, this, true)
 
         binding.button.setOnClickListener(this)
 
