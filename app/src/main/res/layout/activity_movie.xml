@@ -22,11 +22,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/FilmpediaToolbarTheme"
-                app:layout_scrollFlags="enterAlways"
+                app:layout_scrollFlags="scroll|enterAlways"
                 tools:title="Movie Title" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -324,6 +324,6 @@
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
