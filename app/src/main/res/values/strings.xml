@@ -24,6 +24,21 @@
     <string name="movie_budget">Budget</string>
     <string name="movie_revenue">Revenue</string>
 
+    <!-- PeopleActivity -->
+
+    <!-- PersonActivity -->
+    <string name="person_filmography">Filmography</string>
+
+    <!-- SearchActivity -->
+    <string name="search_toolbar_title">Search</string>
+    <string name="search_hint">Search movies.</string>
+
+    <!-- SeriesActivity -->
+    <plurals name="series_in_this_movie">
+        <item quantity="one">Movie in this Series</item>
+        <item quantity="other">Movies in this Series</item>
+    </plurals>
+
     <string name="detail_information">Detail Information</string>
     <string name="view_the_series">View the Series</string>
 
@@ -40,7 +55,6 @@
     <string name="movies">Movies</string>
 
     <string name="search">Search</string>
-    <string name="search_hint">Search movies.</string>
 
     <plurals name="year_old">
         <item quantity="one">year old</item>

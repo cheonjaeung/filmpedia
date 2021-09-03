@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/FilmpediaToolbarTheme"
+                app:title="@string/search_toolbar_title"
                 app:layout_scrollFlags="scroll|enterAlways" />
 
             <androidx.appcompat.widget.AppCompatEditText
