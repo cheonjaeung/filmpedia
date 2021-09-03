@@ -4,8 +4,8 @@
     android:layout_width="110dp"
     android:layout_height="220dp"
     android:orientation="vertical"
-    android:layout_gravity="center"
-    android:gravity="center">
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal">
 
     <FrameLayout
         android:layout_width="110dp"
