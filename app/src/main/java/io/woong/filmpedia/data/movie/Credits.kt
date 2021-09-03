@@ -8,8 +8,6 @@ data class Credits(
     val crew: List<Crew>
 ) {
 
-    interface CreditsSubItem
-
     data class Cast(
         val adult: Boolean,
         val gender: Int?,
@@ -23,7 +21,7 @@ data class Credits(
         val character: String,
         @SerializedName("credit_id") val creditId: String,
         val order: Int
-    ) : CreditsSubItem
+    )
 
     data class Crew(
         val adult: Boolean,
@@ -37,5 +35,5 @@ data class Credits(
         @SerializedName("cast_id") val castId: Int,
         val department: String,
         val job: String
-    ) : CreditsSubItem
+    )
 }
