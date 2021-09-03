@@ -12,7 +12,7 @@
     <!-- MovieActivity -->
     <string name="movie_director_and_casting">Director and Casting</string>
     <string name="movie_director">Director</string>
-    <string name="movie_director_and_casting_footer">Full Cast &amp; Crews</string>
+    <string name="movie_director_and_casting_footer">Full Casts &amp; Crews</string>
     <string name="movie_no_data">No Data</string>
     <string name="movie_detail">Detail Information</string>
     <string name="movie_title">Title</string>
