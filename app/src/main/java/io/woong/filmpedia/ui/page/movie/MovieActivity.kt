@@ -13,13 +13,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.snackbar.Snackbar
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityMovieBinding
 import io.woong.filmpedia.ui.component.SeriesButton
+import io.woong.filmpedia.ui.page.people.PeopleActivity
 import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.ListDecoration
@@ -183,7 +183,10 @@ class MovieActivity : AppCompatActivity(),
     }
 
     override fun onFullButtonClick() {
-        Snackbar.make(binding.root, "Not support yet.", Snackbar.LENGTH_LONG).show()
+        val intent = Intent(this, PeopleActivity::class.java)
+        intent.putExtra(PeopleActivity.MOVIE_TITLE_EXTRA_ID, movieTitle)
+        intent.putExtra(PeopleActivity.MOVIE_ID_EXTRA_ID, movieId)
+        startActivity(intent)
     }
 
     override fun onSeriesButtonClick(series: Movie.Collection?) {

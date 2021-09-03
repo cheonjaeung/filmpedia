@@ -21,6 +21,7 @@
         <activity android:name=".ui.page.search.SearchActivity" />
         <activity android:name=".ui.page.movie.MovieActivity" />
         <activity android:name=".ui.page.series.SeriesActivity" />
+        <activity android:name=".ui.page.people.PeopleActivity" />
         <activity android:name=".ui.page.person.PersonActivity" />
     </application>
 </manifest>
