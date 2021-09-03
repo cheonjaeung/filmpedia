@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.base
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -28,13 +29,14 @@ abstract class BaseActivity<B : ViewDataBinding>(private val layoutRes: Int) : A
     protected val region: String
         get() = app.region
 
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutRes)
         _app = application as FilmpediaApp
     }
 
-    protected fun log(priority: Int = Log.DEBUG, message: String) {
+    protected fun log(message: String, priority: Int = Log.DEBUG) {
         val tag = this::class.simpleName
         Log.println(priority, tag, message)
     }
@@ -57,8 +59,10 @@ abstract class BaseActivity<B : ViewDataBinding>(private val layoutRes: Int) : A
         Snackbar.make(this, binding.root, message, duration).show()
     }
 
+    @CallSuper
     override fun onDestroy() {
         super.onDestroy()
+        _app = null
         _binding?.unbind()
         _binding = null
     }
