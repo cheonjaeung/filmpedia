@@ -1,5 +1,6 @@
 package io.woong.filmpedia.ui.binding
 
+import androidx.annotation.PluralsRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import java.lang.StringBuilder
@@ -50,6 +51,17 @@ object TextViewBindingAdapters {
             } else {
                 view.text = "-"
             }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["plurals_resource", "plurals_count", "plurals_list"], requireAll = false)
+    fun AppCompatTextView.bindPlurals(@PluralsRes res: Int?, count: Int?, list: List<Any>?) {
+        val c = list?.size ?: 2
+
+        if (res != null) {
+            val plurals = resources.getQuantityText(res, c)
+            this.text = plurals
         }
     }
 }

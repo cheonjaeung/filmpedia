@@ -292,7 +292,8 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/spoken_language_title"
                             android:textStyle="bold"
-                            spoken_language_title_plural="@{vm.spokenLanguages}"
+                            plurals_resource="@{@plurals/movie_spoken_language}"
+                            plurals_list="@{vm.spokenLanguages}"
                             tools:text="Spoken Languages" />
 
                         <androidx.appcompat.widget.AppCompatTextView

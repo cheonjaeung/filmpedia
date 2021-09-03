@@ -59,20 +59,9 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_gravity="center"
-                        style="@style/FilmpediaMovieTitleTheme"
                         android:text="@{vm.title}"
+                        style="@style/FilmpediaMovieTitleTheme"
                         tools:text="Series Title" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
-                        android:visibility="gone"
-                        is_visible="@{vm.isOverviewVisible}"
-                        android:text="@string/overview"
-                        style="@style/FilmpediaTitleTheme"
-                        tools:visibility="visible" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/overview"
@@ -81,8 +70,8 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
                         android:visibility="gone"
-                        is_visible="@{vm.isOverviewVisible}"
                         android:text="@{vm.overview}"
+                        is_visible="@{vm.isOverviewVisible}"
                         tools:text="@tools:sample/lorem/random"
                         tools:visibility="visible" />
 
@@ -91,8 +80,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
-                        android:text="@string/movies"
-                        style="@style/FilmpediaTitleTheme" />
+                        plurals_resource="@{@plurals/series_in_this_movie}"
+                        plurals_list="@{vm.movies}"
+                        style="@style/FilmpediaTitleTheme"
+                        tools:text="Movies in this Series" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/movies_list"

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -37,16 +36,6 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
             if (slidePaths != null) {
                 val adapter = this.adapter as SlideShowAdapter
                 adapter.imagePaths = slidePaths
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("spoken_language_title_plural")
-        fun AppCompatTextView.bindPlurals(list: List<String>?) {
-            if (list != null) {
-                this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, list.size)
-            } else {
-                this.text = this.resources.getQuantityText(R.plurals.movie_spoken_language, 2)
             }
         }
     }
