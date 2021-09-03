@@ -11,7 +11,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
@@ -72,19 +71,10 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
     private val movieTitle: String
         get() = _movieTitle
 
-    private var _apiKey: String? = null
-    private val apiKey: String
-        get() = _apiKey!!
-
-    private var _language: String? = null
-    private val language: String
-        get() = _language!!
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         applyExtras()
-        initKeys()
 
         binding.apply {
             lifecycleOwner = this@MovieActivity
@@ -130,12 +120,6 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
 
         val movieTitleExtra = intent.getStringExtra(MOVIE_TITLE_EXTRA_ID)
         _movieTitle = movieTitleExtra ?: resources.getString(R.string.app_name)
-    }
-
-    private fun initKeys() {
-        val app = application as FilmpediaApp
-        _apiKey = app.tmdbApiKey
-        _language = app.language
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

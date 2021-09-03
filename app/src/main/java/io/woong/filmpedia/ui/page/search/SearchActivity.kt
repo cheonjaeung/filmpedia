@@ -62,8 +62,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             }
         }
 
-        val app = application as FilmpediaApp
-        viewModel.updateGenres(app.tmdbApiKey, app.language)
+        viewModel.updateGenres(apiKey, language)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

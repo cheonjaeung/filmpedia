@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
@@ -42,19 +41,10 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_ser
     private val collectionTitle: String
         get() = _collectionTitle
 
-    private var _apiKey: String? = null
-    private val apiKey: String
-        get() = _apiKey!!
-
-    private var _language: String? = null
-    private val language: String
-        get() = _language!!
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         applyExtras()
-        initKeys()
 
         binding.apply {
             lifecycleOwner = this@SeriesActivity
@@ -89,12 +79,6 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_ser
 
         val collectionNameExtra = intent.getStringExtra(COLLECTION_NAME_EXTRA_ID)
         _collectionTitle = collectionNameExtra ?: resources.getString(R.string.app_name)
-    }
-
-    private fun initKeys() {
-        val app = application as FilmpediaApp
-        _apiKey = app.tmdbApiKey
-        _language = app.language
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityPeopleBinding
@@ -26,14 +25,10 @@ class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_peo
     private var movieTitle: String = ""
     private var movieId: Int = -1
 
-    private var apiKey: String = ""
-    private var language: String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         applyExtras()
-        initKeys()
 
         binding.apply {
             lifecycleOwner = this@PeopleActivity
@@ -67,12 +62,6 @@ class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_peo
         } else {
             finish()
         }
-    }
-
-    private fun initKeys() {
-        val app = application as FilmpediaApp
-        apiKey = app.tmdbApiKey
-        language = app.language
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

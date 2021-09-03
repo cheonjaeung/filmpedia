@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
+import io.woong.filmpedia.FilmpediaApp
 
 @Suppress("unused")
 abstract class BaseActivity<B : ViewDataBinding>(private val layoutRes: Int) : AppCompatActivity() {
@@ -16,9 +17,21 @@ abstract class BaseActivity<B : ViewDataBinding>(private val layoutRes: Int) : A
     protected val binding: B
         get() = _binding!!
 
+    private var _app: FilmpediaApp? = null
+    protected val app: FilmpediaApp
+        get() = _app!!
+
+    protected val apiKey: String
+        get() = app.tmdbApiKey
+    protected val language: String
+        get() = app.language
+    protected val region: String
+        get() = app.region
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutRes)
+        _app = application as FilmpediaApp
     }
 
     protected fun log(priority: Int = Log.DEBUG, message: String) {

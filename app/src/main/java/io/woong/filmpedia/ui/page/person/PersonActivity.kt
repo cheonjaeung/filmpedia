@@ -10,7 +10,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
@@ -68,8 +67,7 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
             }
         }
 
-        val app = application as FilmpediaApp
-        viewModel.update(personId, app.tmdbApiKey, app.language, app.region)
+        viewModel.update(personId, apiKey, language, region)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

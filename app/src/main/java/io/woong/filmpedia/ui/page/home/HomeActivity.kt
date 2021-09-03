@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityHomeBinding
 import io.woong.filmpedia.ui.base.BaseActivity
@@ -43,8 +42,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }.attach()
         }
 
-        val app = application as FilmpediaApp
-        viewModel.updateAll(app.tmdbApiKey, app.language, app.region)
+        viewModel.updateAll(apiKey, language, region)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
