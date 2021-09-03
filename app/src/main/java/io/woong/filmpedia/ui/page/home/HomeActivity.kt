@@ -46,7 +46,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_movies_toolbar, menu)
+        menuInflater.inflate(R.menu.menu_home_toolbar, menu)
         return true
     }
 
