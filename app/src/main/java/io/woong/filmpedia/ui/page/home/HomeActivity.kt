@@ -5,25 +5,20 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayoutMediator
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityHomeBinding
+import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.ui.page.search.SearchActivity
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private val viewModel: HomeViewModel by viewModels()
-    private var _binding: ActivityHomeBinding? = null
-    private val binding: ActivityHomeBinding
-        get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         binding.apply {
             lifecycleOwner = this@HomeActivity
@@ -72,10 +67,5 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, movieTitle)
         intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, movieId)
         startActivity(intent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

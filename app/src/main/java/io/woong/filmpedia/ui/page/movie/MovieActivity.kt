@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -18,6 +16,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityMovieBinding
+import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.people.PeopleActivity
 import io.woong.filmpedia.ui.page.person.PersonActivity
@@ -25,7 +24,7 @@ import io.woong.filmpedia.ui.page.series.SeriesActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 
-class MovieActivity : AppCompatActivity(),
+class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie),
     View.OnClickListener,
     PeopleListAdapter.OnPeopleListClickListener,
     SeriesButton.OnSeriesButtonClickListener {
@@ -65,10 +64,6 @@ class MovieActivity : AppCompatActivity(),
 
     private val viewModel: MovieViewModel by viewModels()
 
-    private var _binding: ActivityMovieBinding? = null
-    private val binding: ActivityMovieBinding
-        get() = _binding!!
-
     private var _movieId: Int = -1
     private val movieId: Int
         get() = _movieId
@@ -87,34 +82,10 @@ class MovieActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
 
         applyExtras()
         initKeys()
-        initBinding()
 
-        viewModel.load(apiKey, language, movieId)
-    }
-
-    private fun applyExtras() {
-        val movieIdExtra = intent.getIntExtra(MOVIE_ID_EXTRA_ID, -1)
-        if (movieIdExtra != -1) {
-            _movieId = movieIdExtra
-        } else {
-            finish()
-        }
-
-        val movieTitleExtra = intent.getStringExtra(MOVIE_TITLE_EXTRA_ID)
-        _movieTitle = movieTitleExtra ?: resources.getString(R.string.app_name)
-    }
-
-    private fun initKeys() {
-        val app = application as FilmpediaApp
-        _apiKey = app.tmdbApiKey
-        _language = app.language
-    }
-
-    private fun initBinding() {
         binding.apply {
             lifecycleOwner = this@MovieActivity
             vm = viewModel
@@ -145,6 +116,26 @@ class MovieActivity : AppCompatActivity(),
 
             seriesButton.setOnSeriesButtonClickListener(this@MovieActivity)
         }
+
+        viewModel.load(apiKey, language, movieId)
+    }
+
+    private fun applyExtras() {
+        val movieIdExtra = intent.getIntExtra(MOVIE_ID_EXTRA_ID, -1)
+        if (movieIdExtra != -1) {
+            _movieId = movieIdExtra
+        } else {
+            finish()
+        }
+
+        val movieTitleExtra = intent.getStringExtra(MOVIE_TITLE_EXTRA_ID)
+        _movieTitle = movieTitleExtra ?: resources.getString(R.string.app_name)
+    }
+
+    private fun initKeys() {
+        val app = application as FilmpediaApp
+        _apiKey = app.tmdbApiKey
+        _language = app.language
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -196,10 +187,5 @@ class MovieActivity : AppCompatActivity(),
             intent.putExtra(SeriesActivity.COLLECTION_ID_EXTRA_ID, series.id)
             startActivity(intent)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

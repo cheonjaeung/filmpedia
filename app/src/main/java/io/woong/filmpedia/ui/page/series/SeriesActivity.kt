@@ -4,19 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
+import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.ListDecoration
 
-class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovieClickListener {
+class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_series),
+    SeriesMovieListAdapter.OnSeriesMovieClickListener {
 
     companion object {
         const val COLLECTION_ID_EXTRA_ID: String = "collection_id"
@@ -33,10 +33,6 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
     }
 
     private val viewModel: SeriesViewModel by viewModels()
-
-    private var _binding: ActivitySeriesBinding? = null
-    private val binding: ActivitySeriesBinding
-        get() = _binding!!
 
     private var _collectionId: Int = 0
     private val collectionId: Int
@@ -56,7 +52,6 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_series)
 
         applyExtras()
         initKeys()
@@ -119,10 +114,5 @@ class SeriesActivity : AppCompatActivity(), SeriesMovieListAdapter.OnSeriesMovie
             intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, movies[position].title)
             startActivity(intent)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

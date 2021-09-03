@@ -4,11 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,13 +14,15 @@ import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
+import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder
 
-class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListener {
+class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person),
+    CreditListAdapter.OnCreditClickListener {
 
     companion object {
         const val PERSON_ID_EXTRA_ID: String = "person_id"
@@ -30,14 +30,11 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
     }
 
     private val viewModel: PersonViewModel by viewModels()
-    private var _binding: ActivityPersonBinding? = null
-    private val binding: ActivityPersonBinding
-        get() = _binding!!
+
     private var personId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_person)
 
         val personIdExtra = intent.getIntExtra(PERSON_ID_EXTRA_ID, -1)
         if (personIdExtra != -1) {
@@ -92,11 +89,6 @@ class PersonActivity : AppCompatActivity(), CreditListAdapter.OnCreditClickListe
             intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, movie.title)
             startActivity(intent)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
 

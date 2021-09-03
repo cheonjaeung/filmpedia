@@ -7,32 +7,27 @@ import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.search.SearchResult
 import io.woong.filmpedia.databinding.ActivitySearchBinding
+import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.GoToTopScrollListener
 import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
 
-class SearchActivity : AppCompatActivity(),
+class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search),
     TextView.OnEditorActionListener,
     SearchResultListAdapter.OnSearchResultClickListener {
 
     private val viewModel: SearchViewModel by viewModels()
-    private var _binding: ActivitySearchBinding? = null
-    private val binding: ActivitySearchBinding
-        get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
         binding.apply {
             lifecycleOwner = this@SearchActivity
@@ -102,11 +97,6 @@ class SearchActivity : AppCompatActivity(),
             intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, result.title)
             startActivity(intent)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
 
