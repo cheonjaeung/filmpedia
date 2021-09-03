@@ -7,9 +7,7 @@ import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.search.SearchResult
@@ -95,16 +93,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, result.id)
             intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, result.title)
             startActivity(intent)
-        }
-    }
-}
-
-@BindingAdapter("search_results")
-fun RecyclerView.bindSearchResults(searchResults: List<SearchResult>?) {
-    if (searchResults != null) {
-        if (searchResults.isNotEmpty()) {
-            val adapter = this.adapter as SearchResultListAdapter
-            adapter.results = searchResults
         }
     }
 }

@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    person_casted_movies="@{vm.castedMovies}"
+                    list_item="@{vm.castedMovies}"
                     app:layout_constraintTop_toBottomOf="@+id/movies_title"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:spanCount="3"

@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
-                        series_movies="@{vm.movies}"
+                        list_item="@{vm.movies}"
                         tools:orientation="vertical"
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_series_movie_list" />

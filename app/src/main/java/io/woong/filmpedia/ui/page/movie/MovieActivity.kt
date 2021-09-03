@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
@@ -38,15 +37,6 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
             if (slidePaths != null) {
                 val adapter = this.adapter as SlideShowAdapter
                 adapter.imagePaths = slidePaths
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("director_and_casting")
-        fun RecyclerView.bindDirectorAndCasting(people: List<PersonSummary>?) {
-            if (people != null) {
-                val adapter = this.adapter as PeopleListAdapter
-                adapter.people = people
             }
         }
 

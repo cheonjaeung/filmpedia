@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.R
@@ -20,15 +19,6 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_ser
     companion object {
         const val COLLECTION_ID_EXTRA_ID: String = "collection_id"
         const val COLLECTION_NAME_EXTRA_ID: String = "collection_name"
-
-        @JvmStatic
-        @BindingAdapter("series_movies")
-        fun RecyclerView.bindSeriesMovies(movies: List<Collection.Part>?) {
-            movies?.let { list ->
-                val adapter = this.adapter as SeriesMovieListAdapter
-                adapter.movies = list
-            }
-        }
     }
 
     private val viewModel: SeriesViewModel by viewModels()

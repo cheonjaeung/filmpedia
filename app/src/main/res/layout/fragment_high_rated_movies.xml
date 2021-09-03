@@ -15,9 +15,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movie_list"
-            high_rated_movies="@{vm.highRatedMovies}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            list_item="@{vm.highRatedMovies}"
             app:layout_constraintTop_toTopOf="parent"
             tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             tools:listitem="@layout/item_home_movie_list"

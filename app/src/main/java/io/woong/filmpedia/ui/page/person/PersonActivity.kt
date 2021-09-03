@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.people.MovieCredits
@@ -17,7 +16,6 @@ import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
-import io.woong.filmpedia.util.isNotNullOrEmpty
 import java.lang.StringBuilder
 
 class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person),
@@ -111,14 +109,5 @@ fun AppCompatTextView.bindPersonAge(birthday: String?, deathday: String?, age: I
         builder.append(" ($age $ageUnit)")
 
         this.text = builder.toString()
-    }
-}
-
-@BindingAdapter("person_casted_movies")
-fun RecyclerView.bindPersonCastedMovies(credits: List<MovieCredits.Cast>?) {
-    if (credits.isNotNullOrEmpty()) {
-        credits as List<MovieCredits.Cast>
-        val adapter = this.adapter as CreditListAdapter
-        adapter.credits = credits
     }
 }

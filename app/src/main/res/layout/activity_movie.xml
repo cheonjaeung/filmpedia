@@ -236,7 +236,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    director_and_casting="@{vm.directorAndCasting}"
+                    list_item="@{vm.directorAndCasting}"
                     tools:orientation="horizontal"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_movie_director_and_casting" />

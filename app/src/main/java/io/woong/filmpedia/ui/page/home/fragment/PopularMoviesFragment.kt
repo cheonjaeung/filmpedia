@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.FilmpediaApp
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movies
@@ -78,16 +76,5 @@ class PopularMoviesFragment : Fragment(), MovieListAdapter.OnMovieListItemClickL
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object BindingAdapters {
-        @JvmStatic
-        @BindingAdapter("popular_movies")
-        fun bindPopularMovies(view: RecyclerView, movies: List<Movies.Movie>?) {
-            if (movies != null && movies.isNotEmpty()) {
-                val adapter = view.adapter as MovieListAdapter
-                adapter.items = movies
-            }
-        }
     }
 }
