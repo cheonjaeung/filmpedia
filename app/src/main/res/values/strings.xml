@@ -35,6 +35,10 @@
     <string name="person_gender_non_binary">Non-binary</string>
     <string name="person_place_of_birth">Place of Birth</string>
     <string name="person_filmography">Filmography</string>
+    <string name="person_filmography_acting">Acting</string>
+    <string name="person_filmography_directing">Directing</string>
+    <string name="person_filmography_staff">Staff</string>
+    <string name="person_filmography_acting_item">%s as %s</string>
 
     <!-- SearchActivity -->
     <string name="search_toolbar_title">Search</string>

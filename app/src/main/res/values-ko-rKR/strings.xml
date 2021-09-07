@@ -35,6 +35,10 @@
     <string name="person_gender_non_binary">논바이너리</string>
     <string name="person_place_of_birth">출생지</string>
     <string name="person_filmography">필모그래피</string>
+    <string name="person_filmography_acting">연기</string>
+    <string name="person_filmography_directing">감독</string>
+    <string name="person_filmography_staff">스태프</string>
+    <string name="person_filmography_acting_item">%s %s 역</string>
 
     <!-- SearchActivity -->
     <string name="search_toolbar_title">검색</string>
