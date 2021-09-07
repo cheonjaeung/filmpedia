@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import io.woong.filmpedia.R
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.people.PersonSummary
@@ -29,15 +27,6 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
     companion object {
         const val MOVIE_ID_EXTRA_ID: String = "movie_id"
         const val MOVIE_TITLE_EXTRA_ID: String = "movie_title"
-
-        @JvmStatic
-        @BindingAdapter("slides")
-        fun ViewPager2.bindSlides(slidePaths: List<String>?) {
-            if (slidePaths != null) {
-                val adapter = this.adapter as SlideShowAdapter
-                adapter.imagePaths = slidePaths
-            }
-        }
     }
 
     private val viewModel: MovieViewModel by viewModels()
@@ -66,8 +55,8 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
                 title = movieTitle
             }
 
-            slideshow.apply {
-                adapter = SlideShowAdapter()
+            slideShow.apply {
+                slideDelay = 3000
             }
 
             homepageButton.setOnClickListener(this@MovieActivity)
