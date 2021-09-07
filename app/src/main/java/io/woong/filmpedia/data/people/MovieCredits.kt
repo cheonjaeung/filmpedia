@@ -8,23 +8,24 @@ data class MovieCredits(
     @SerializedName("crew") val crews: List<Crew>
 ) {
 
-    interface CreditsSubItem {
+    interface SubItem {
         val id: Int
         val title: String
-        val posterPath: String?
+        val releaseDate: String?
     }
 
     data class Cast(
         override val id: Int,
         override val title: String,
-        @SerializedName("poster_path") override val posterPath: String?,
-        val character: String
-    ) : CreditsSubItem
+        val character: String,
+        @SerializedName("release_date") override val releaseDate: String?
+    ) : SubItem
 
     data class Crew(
         override val id: Int,
         override val title: String,
-        @SerializedName("poster_path") override val posterPath: String?,
-        val department: String
-    ) : CreditsSubItem
+        val department: String,
+        val job: String,
+        @SerializedName("release_date") override val releaseDate: String?
+    ) : SubItem
 }
