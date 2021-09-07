@@ -12,10 +12,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ComponentSlideShowBinding
 import io.woong.filmpedia.databinding.ComponentSlideShowItemBinding
 import io.woong.filmpedia.util.UriUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SlideShowView @JvmOverloads constructor(
     context: Context,
@@ -90,20 +87,29 @@ class SlideShowView @JvmOverloads constructor(
 
     private inner class AutoSlideCallback : ViewPager2.OnPageChangeCallback() {
 
+        private var delayingJob: Job? = null
+
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             if (position != RecyclerView.NO_POSITION) {
                 setSlideCount(position)
 
                 if (position < slides.lastIndex) {
-                    slideAfter(slideDelay) {
+                    delayingJob = slideAfter(slideDelay) {
                         binding.viewPager.currentItem = position + 1
                     }
                 } else {
-                    slideAfter(slideDelay) {
+                    delayingJob = slideAfter(slideDelay) {
                         binding.viewPager.currentItem = 0
                     }
                 }
+            }
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                delayingJob?.cancel()
             }
         }
 
@@ -117,7 +123,9 @@ class SlideShowView @JvmOverloads constructor(
             CoroutineScope(Dispatchers.Default).launch {
                 delay(milliseconds)
             }.join()
-            postDelayed()
+            if (isActive) {
+                postDelayed()
+            }
         }
     }
 }
