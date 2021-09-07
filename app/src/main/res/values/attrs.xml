@@ -11,6 +11,15 @@
         <attr name="center_circle_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="FilmographyTextView">
+        <attr name="movie_title" format="string" />
+        <attr name="movie_title_color" format="color" />
+        <attr name="movie_title_size" format="dimension" />
+        <attr name="department" format="string" />
+        <attr name="department_color" format="color" />
+        <attr name="department_size" format="dimension" />
+    </declare-styleable>
+
     <declare-styleable name="GenresTextView">
         <attr name="genres" format="string" />
         <attr name="separator" format="string" />
