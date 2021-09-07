@@ -4,11 +4,11 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.data.movie.Movies
-import io.woong.filmpedia.data.people.MovieCredits
+import io.woong.filmpedia.data.people.Filmography
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.data.search.SearchResult
 import io.woong.filmpedia.ui.page.home.MovieListAdapter
-import io.woong.filmpedia.ui.page.person.CreditListAdapter
+import io.woong.filmpedia.ui.page.person.FilmographyListAdapter
 import io.woong.filmpedia.ui.page.search.SearchResultListAdapter
 import io.woong.filmpedia.ui.page.series.SeriesMovieListAdapter
 
@@ -34,9 +34,9 @@ object RecyclerViewBindingAdapters {
                     adapter.people = list as List<PersonSummary>
                 }
 
-                is CreditListAdapter -> {
-                    val adapter = this.adapter as CreditListAdapter
-                    adapter.credits = list as List<MovieCredits.Cast>
+                is FilmographyListAdapter -> {
+                    val adapter = this.adapter as FilmographyListAdapter
+                    adapter.items = list as List<Filmography>
                 }
 
                 is SearchResultListAdapter -> {
