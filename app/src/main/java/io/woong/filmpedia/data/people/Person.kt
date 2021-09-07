@@ -17,4 +17,15 @@ data class Person(
     @SerializedName("place_of_birth") val placeOfBirth: String?,
     val popularity: Double,
     @SerializedName("profile_path") val profilePath: String?,
-)
+) {
+
+    /**
+     * According to TMDB's gender code.
+     */
+    enum class Gender(val value: Int) {
+        UNSPECIFIED(0),
+        FEMALE(1),
+        MALE(2),
+        NON_BINARY(3)
+    }
+}
