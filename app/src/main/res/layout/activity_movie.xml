@@ -104,19 +104,15 @@
                                 android:text="@{vm.releaseDate}"
                                 tools:text="2021-08-30" />
 
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_weight="0.05"
-                                android:tint="@color/white"
-                                android:src="@drawable/icon_time" />
-
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/runtime"
                                 android:layout_width="0dp"
                                 android:layout_height="24dp"
                                 android:gravity="center_vertical"
                                 android:layout_weight="0.45"
+                                android:drawableLeft="@drawable/icon_time"
+                                android:drawableStart="@drawable/icon_time"
+                                android:drawablePadding="8dp"
                                 runtime="@{vm.runtime}"
                                 tools:text="2h 31m" />
                         </LinearLayout>
