@@ -16,6 +16,7 @@ import io.woong.filmpedia.ui.component.SeriesButton
 import io.woong.filmpedia.ui.page.people.PeopleActivity
 import io.woong.filmpedia.ui.page.person.PersonActivity
 import io.woong.filmpedia.ui.page.series.SeriesActivity
+import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.ListDecoration
 import io.woong.filmpedia.util.UriUtil
 
@@ -73,6 +74,8 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
             }
 
             seriesButton.setOnSeriesButtonClickListener(this@MovieActivity)
+
+            AnimationUtil.blink(loading, 1000)
         }
 
         viewModel.load(apiKey, language, movieId)

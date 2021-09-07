@@ -11,12 +11,17 @@ import io.woong.filmpedia.repository.MovieRepository
 import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import java.util.*
 
 class MovieViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
+
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
     private val _title: MutableLiveData<String> = MutableLiveData()
     val title: LiveData<String>
@@ -116,7 +121,9 @@ class MovieViewModel : ViewModel() {
         get() = _revenue
 
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
-        repository.fetchMovieDetail(key = apiKey, lang = language, id = movieId) { movie ->
+        _isLoading.postValue(true)
+
+        val detailJob = repository.fetchMovieDetail(key = apiKey, lang = language, id = movieId) { movie ->
             if (movie != null) {
                 _title.postValue(movie.title)
                 _originalTitle.postValue(movie.originalTitle)
@@ -143,7 +150,7 @@ class MovieViewModel : ViewModel() {
             }
         }
 
-        repository.fetchImages(key = apiKey, id = movieId) { images ->
+        val imageJob = repository.fetchImages(key = apiKey, id = movieId) { images ->
             if (images != null) {
                 val slides = images.backdrops
                 if (slides.isNotEmpty()) {
@@ -156,7 +163,7 @@ class MovieViewModel : ViewModel() {
             }
         }
 
-        repository.fetchExternalIds(key = apiKey, id = movieId) { ids ->
+        val socialJob = repository.fetchExternalIds(key = apiKey, id = movieId) { ids ->
             if (ids != null) {
                 _facebook.postValue(ids.facebookId)
                 _instagram.postValue(ids.instagramId)
@@ -168,7 +175,7 @@ class MovieViewModel : ViewModel() {
             }
         }
 
-        repository.fetchCredits(key = apiKey, lang = language, id = movieId) { credits ->
+        val creditJob = repository.fetchCredits(key = apiKey, lang = language, id = movieId) { credits ->
             if (credits != null) {
                 var count = 10
                 val people = mutableListOf<PersonSummary>()
@@ -182,6 +189,9 @@ class MovieViewModel : ViewModel() {
                 _directorAndCasting.postValue(people)
             }
         }
+
+        joinAll(detailJob, imageJob, socialJob, creditJob)
+        _isLoading.postValue(false)
     }
 
     private fun translateSpokenLanguages(languageCode: String, languageList: List<Movie.Country>): List<String> {

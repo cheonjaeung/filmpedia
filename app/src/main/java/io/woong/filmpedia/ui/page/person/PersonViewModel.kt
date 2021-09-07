@@ -17,6 +17,10 @@ class PersonViewModel : ViewModel() {
 
     private val repository: PeopleRepository = PeopleRepository()
 
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private val _profile: MutableLiveData<String> = MutableLiveData()
     val profile: LiveData<String>
         get() = _profile
@@ -72,7 +76,9 @@ class PersonViewModel : ViewModel() {
     val isStaffMoviesVisible: LiveData<Boolean>
         get() = _isStaffMoviesVisible
 
-    fun update(personId: Int, apiKey: String, language: String, region: String) {
+    fun load(personId: Int, apiKey: String, language: String, region: String) {
+        _isLoading.postValue(true)
+
         CoroutineScope(Dispatchers.Default).launch {
             val detailJob = repository.fetchDetail(key = apiKey, id = personId, lang = language) { person ->
                 if (person != null) {
@@ -176,6 +182,8 @@ class PersonViewModel : ViewModel() {
             }
 
             joinAll(detailJob, biographyJob, creditsJob)
+
+            _isLoading.postValue(false)
         }
     }
 

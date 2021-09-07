@@ -10,6 +10,7 @@ import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.databinding.ActivityPeopleBinding
 import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.person.PersonActivity
+import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.ListDecoration
 
 class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_people),
@@ -48,6 +49,8 @@ class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_peo
                 layoutManager = GridLayoutManager(this@PeopleActivity, 2, GridLayoutManager.VERTICAL, false)
                 addItemDecoration(ListDecoration.GridDecoration(2))
             }
+
+            AnimationUtil.blink(loading, 1000)
         }
 
         viewModel.load(apiKey, language, movieId)

@@ -9,6 +9,7 @@ import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.component.FilmographyTextView
+import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.ListDecoration
 
 class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person) {
@@ -48,9 +49,11 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
 
             initList(FilmographyTextView.TextType.ACTING, actingList)
             initList(FilmographyTextView.TextType.STAFF, directingList, otherList)
+
+            AnimationUtil.blink(loading, 1000)
         }
 
-        viewModel.update(personId, apiKey, language, region)
+        viewModel.load(personId, apiKey, language, region)
     }
 
     private fun initList(type: FilmographyTextView.TextType, vararg list: RecyclerView) {

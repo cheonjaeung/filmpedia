@@ -16,6 +16,10 @@ class SearchViewModel : ViewModel() {
     private val searchRepository: SearchRepository = SearchRepository()
     private val genreRepository: GenreRepository = GenreRepository()
 
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private var resultPage: Int = 1
     private var isResultLoading: Boolean = false
     private val _results: MutableLiveData<MutableList<SearchResult>> = MutableLiveData()
@@ -27,23 +31,18 @@ class SearchViewModel : ViewModel() {
     private val isGenresReady: Boolean
         get() = _isGenresReady
 
-    fun updateGenres(apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
-        genreRepository.fetchGenres(key = apiKey, lang = language) { genres ->
-            if (genres.isNotEmpty()) {
-                genres.forEach { genre ->
-                    genreMap[genre.id] = genre.name
-                }
-                _isGenresReady = true
-            }
-        }
-    }
-
     fun search(
         apiKey: String,
         language: String,
         region: String,
         query: String
     ) = CoroutineScope(Dispatchers.Default).launch {
+        _isLoading.postValue(true)
+
+        if (!isGenresReady) {
+            updateGenres(apiKey, language).join()
+        }
+
         if (!isResultLoading && isGenresReady) {
             isResultLoading = true
 
@@ -76,6 +75,9 @@ class SearchViewModel : ViewModel() {
             }.join()
 
             isResultLoading = false
+            _isLoading.postValue(false)
+        } else {
+            _isLoading.postValue(false)
         }
     }
 
@@ -85,6 +87,12 @@ class SearchViewModel : ViewModel() {
         region: String,
         query: String
     ) = CoroutineScope(Dispatchers.Default).launch {
+        _isLoading.postValue(true)
+
+        if (!isGenresReady) {
+            updateGenres(apiKey, language).join()
+        }
+
         if (!isResultLoading && isGenresReady) {
             isResultLoading = true
             val nextPage = resultPage + 1
@@ -118,6 +126,20 @@ class SearchViewModel : ViewModel() {
             }
 
             isResultLoading = false
+            _isLoading.postValue(false)
+        } else {
+            _isLoading.postValue(false)
+        }
+    }
+
+    private fun updateGenres(apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
+        genreRepository.fetchGenres(key = apiKey, lang = language) { genres ->
+            if (genres.isNotEmpty()) {
+                genres.forEach { genre ->
+                    genreMap[genre.id] = genre.name
+                }
+                _isGenresReady = true
+            }
         }
     }
 

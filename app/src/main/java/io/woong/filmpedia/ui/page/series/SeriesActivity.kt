@@ -11,6 +11,7 @@ import io.woong.filmpedia.data.collection.Collection
 import io.woong.filmpedia.databinding.ActivitySeriesBinding
 import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
+import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.ListDecoration
 
 class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_series),
@@ -54,6 +55,8 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_ser
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 addItemDecoration(ListDecoration.VerticalDecoration(2))
             }
+
+            AnimationUtil.blink(loading, 1000)
         }
 
         viewModel.load(apiKey, language, collectionId)

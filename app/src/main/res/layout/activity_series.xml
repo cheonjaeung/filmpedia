@@ -27,77 +27,99 @@
                 tools:title="Series Title" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/backdrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        glide_image="@{vm.backdrop}"
+                        glide_placeholder="@{@drawable/placeholder_backdrop}"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/placeholder_backdrop" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/backdrop">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_gravity="center"
+                            android:text="@{vm.title}"
+                            style="@style/FilmpediaMovieTitleTheme"
+                            tools:text="Series Title" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/overview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            android:visibility="gone"
+                            android:text="@{vm.overview}"
+                            is_visible="@{vm.isOverviewVisible}"
+                            tools:text="@tools:sample/lorem/random"
+                            tools:visibility="visible" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            plurals_resource="@{@plurals/series_in_this_movie}"
+                            plurals_list="@{vm.movies}"
+                            style="@style/FilmpediaTitleTheme"
+                            tools:text="Movies in this Series" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/movies_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            list_item="@{vm.movies}"
+                            tools:orientation="vertical"
+                            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_series_movie_list" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                is_visible="@{vm.isLoading}"
+                tools:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/backdrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:scaleType="centerCrop"
-                    glide_image="@{vm.backdrop}"
-                    glide_placeholder="@{@drawable/placeholder_backdrop}"
-                    app:layout_constraintDimensionRatio="16:9"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/placeholder_backdrop" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/loading"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/backdrop">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_gravity="center"
-                        android:text="@{vm.title}"
-                        style="@style/FilmpediaMovieTitleTheme"
-                        tools:text="Series Title" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/overview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
-                        android:visibility="gone"
-                        android:text="@{vm.overview}"
-                        is_visible="@{vm.isOverviewVisible}"
-                        tools:text="@tools:sample/lorem/random"
-                        tools:visibility="visible" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
-                        plurals_resource="@{@plurals/series_in_this_movie}"
-                        plurals_list="@{vm.movies}"
-                        style="@style/FilmpediaTitleTheme"
-                        tools:text="Movies in this Series" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/movies_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
-                        list_item="@{vm.movies}"
-                        tools:orientation="vertical"
-                        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_series_movie_list" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_logo"
+                    android:tint="@color/white"
+                    is_visible="@{vm.isLoading}" />
+            </FrameLayout>
+        </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -14,6 +14,10 @@ class SeriesViewModel : ViewModel() {
 
     private val repository: CollectionRepository = CollectionRepository()
 
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private val _backdrop: MutableLiveData<String> = MutableLiveData()
     val backdrop: LiveData<String>
         get() = _backdrop
@@ -33,23 +37,24 @@ class SeriesViewModel : ViewModel() {
     val movies: LiveData<List<Collection.Part>>
         get() = _movies
 
-    fun load(apiKey: String, language: String, collectionId: Int) {
-        CoroutineScope(Dispatchers.Default).launch {
-            repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { collection ->
-                if (collection != null) {
-                    _backdrop.postValue(collection.backdropPath)
-                    _title.postValue(collection.name)
+    fun load(apiKey: String, language: String, collectionId: Int) = CoroutineScope(Dispatchers.Default).launch {
+        _isLoading.postValue(true)
 
-                    _overview.postValue(collection.overview)
-                    _isOverviewVisible.postValue(collection.overview.isNotNullOrBlank())
+        repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { collection ->
+            if (collection != null) {
+                _backdrop.postValue(collection.backdropPath)
+                _title.postValue(collection.name)
+                _overview.postValue(collection.overview)
+                _isOverviewVisible.postValue(collection.overview.isNotNullOrBlank())
 
-                    val sorted = collection.parts.sortedBy {
-                        getPriorityByReleaseDate(it.releaseDate)
-                    }
-                    _movies.postValue(sorted)
+                val sorted = collection.parts.sortedBy {
+                    getPriorityByReleaseDate(it.releaseDate)
                 }
+                _movies.postValue(sorted)
             }
-        }
+        }.join()
+
+        _isLoading.postValue(false)
     }
 
     private fun getPriorityByReleaseDate(releaseDate: String?): Int {

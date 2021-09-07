@@ -14,6 +14,7 @@ import io.woong.filmpedia.data.search.SearchResult
 import io.woong.filmpedia.databinding.ActivitySearchBinding
 import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
+import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.GoToTopScrollListener
 import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
@@ -58,9 +59,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                     }
                 )
             }
-        }
 
-        viewModel.updateGenres(apiKey, language)
+            AnimationUtil.blink(loading, 1000)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

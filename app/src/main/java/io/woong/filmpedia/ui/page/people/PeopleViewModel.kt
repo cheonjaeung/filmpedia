@@ -13,11 +13,17 @@ class PeopleViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
 
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private val _people: MutableLiveData<List<PersonSummary>> = MutableLiveData()
     val people: LiveData<List<PersonSummary>>
         get() = _people
 
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
+        _isLoading.postValue(true)
+
         repository.fetchCredits(key = apiKey, lang = language, id = movieId) { credits ->
             if (credits != null) {
                 val castList = credits.cast
@@ -37,6 +43,8 @@ class PeopleViewModel : ViewModel() {
 
                 _people.postValue(list)
             }
-        }
+        }.join()
+
+        _isLoading.postValue(false)
     }
 }

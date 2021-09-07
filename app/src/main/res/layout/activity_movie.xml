@@ -26,301 +26,323 @@
                 tools:title="Movie Title" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="16dp">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
 
-                    <io.woong.filmpedia.ui.component.SlideShowView
-                        android:id="@+id/slide_show"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        slides="@{vm.slides}"
-                        app:layout_constraintDimensionRatio="16:9"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/poster_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <io.woong.filmpedia.ui.component.SlideShowView
+                            android:id="@+id/slide_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            slides="@{vm.slides}"
+                            app:layout_constraintDimensionRatio="16:9"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/poster"
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"
-                        glide_image="@{vm.poster}"
-                        glide_placeholder="@{@drawable/placeholder_poster}"
-                        app:layout_constraintDimensionRatio="2:3"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        tools:src="@drawable/placeholder_poster" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/poster_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/poster"
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            android:scaleType="centerCrop"
+                            glide_image="@{vm.poster}"
+                            glide_placeholder="@{@drawable/placeholder_poster}"
+                            app:layout_constraintDimensionRatio="2:3"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:src="@drawable/placeholder_poster" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintLeft_toRightOf="@+id/poster"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/FilmpediaMovieTitleTheme"
+                                android:text="@{vm.title}"
+                                tools:text="Movie Title" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/release_date"
+                                    android:layout_width="0dp"
+                                    android:layout_height="24dp"
+                                    android:gravity="center_vertical"
+                                    android:layout_weight="0.5"
+                                    style="@style/FilmpediaReleaseDateTheme"
+                                    android:text="@{vm.releaseDate}"
+                                    tools:text="2021-08-30" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/runtime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="24dp"
+                                    android:gravity="center_vertical"
+                                    android:layout_weight="0.45"
+                                    android:drawableLeft="@drawable/icon_time"
+                                    android:drawableStart="@drawable/icon_time"
+                                    android:drawablePadding="8dp"
+                                    runtime="@{vm.runtime}"
+                                    tools:text="2h 31m" />
+                            </LinearLayout>
+
+                            <io.woong.filmpedia.ui.component.GenresTextView
+                                android:id="@+id/genres"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                app:separator_color="@color/purple"
+                                genres="@{vm.genres}"
+                                tools:genres="Action,Science Fiction,Horror" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center_vertical">
+
+                                <io.woong.filmpedia.ui.component.CircularRatingView
+                                    android:id="@+id/rating"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    app:rating_arc_size="2dp"
+                                    app:rating="@{vm.rating}"
+                                    tools:rating="8.5" />
+
+                                <androidx.appcompat.widget.AppCompatImageButton
+                                    android:id="@+id/homepage_button"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:visibility="gone"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/icon_home"
+                                    style="@style/FilmpediaImageButtonTheme"
+                                    is_visible="@{vm.isHomepageVisible}"
+                                    tools:visibility="visible" />
+
+                                <androidx.appcompat.widget.AppCompatImageButton
+                                    android:id="@+id/facebook_button"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:visibility="gone"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/icon_facebook"
+                                    style="@style/FilmpediaImageButtonTheme"
+                                    is_visible="@{vm.isFacebookVisible}"
+                                    tools:visibility="visible" />
+
+                                <androidx.appcompat.widget.AppCompatImageButton
+                                    android:id="@+id/instagram_button"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:visibility="gone"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/icon_instagram"
+                                    style="@style/FilmpediaImageButtonTheme"
+                                    is_visible="@{vm.isInstagramVisible}"
+                                    tools:visibility="visible" />
+
+                                <androidx.appcompat.widget.AppCompatImageButton
+                                    android:id="@+id/twitter_button"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:visibility="gone"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/icon_twitter"
+                                    style="@style/FilmpediaImageButtonTheme"
+                                    is_visible="@{vm.isTwitterVisible}"
+                                    tools:visibility="visible" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tagline"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
-                        app:layout_constraintLeft_toRightOf="@+id/poster"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
+                        style="@style/FilmpediaTaglineTheme"
+                        is_visible="@{vm.isTaglineVisible}"
+                        android:text="@{vm.tagline}"
+                        tools:text="@tools:sample/lorem" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/FilmpediaMovieTitleTheme"
-                            android:text="@{vm.title}"
-                            tools:text="Movie Title" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/overview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        is_visible="@{vm.isOverviewVisible}"
+                        android:text="@{vm.overview}"
+                        tools:text="@tools:sample/lorem/random" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/movie_director_and_casting"
+                        style="@style/FilmpediaTitleTheme" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/director_and_casting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        list_item="@{vm.directorAndCasting}"
+                        tools:orientation="horizontal"
+                        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_movie_director_and_casting" />
+
+                    <io.woong.filmpedia.ui.component.SeriesButton
+                        android:id="@+id/series_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        is_visible="@{vm.isSeriesVisible}"
+                        app:series="@{vm.series}"
+                        app:ratio="16:9" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/movie_detail"
+                        style="@style/FilmpediaTitleTheme" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:stretchColumns="*">
+
+                        <TableRow>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:text="@string/movie_title"
+                                android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/release_date"
-                                android:layout_width="0dp"
-                                android:layout_height="24dp"
-                                android:gravity="center_vertical"
-                                android:layout_weight="0.5"
-                                style="@style/FilmpediaReleaseDateTheme"
-                                android:text="@{vm.releaseDate}"
-                                tools:text="2021-08-30" />
+                                android:id="@+id/detail_title"
+                                android:text="@{vm.title}"
+                                tools:text="Movie Title" />
+                        </TableRow>
+
+                        <TableRow>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:text="@string/movie_original_title"
+                                android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/runtime"
-                                android:layout_width="0dp"
-                                android:layout_height="24dp"
-                                android:gravity="center_vertical"
-                                android:layout_weight="0.45"
-                                android:drawableLeft="@drawable/icon_time"
-                                android:drawableStart="@drawable/icon_time"
-                                android:drawablePadding="8dp"
-                                runtime="@{vm.runtime}"
-                                tools:text="2h 31m" />
-                        </LinearLayout>
+                                android:id="@+id/original_title"
+                                android:text="@{vm.originalTitle}"
+                                tools:text="영화 제목" />
+                        </TableRow>
 
-                        <io.woong.filmpedia.ui.component.GenresTextView
-                            android:id="@+id/genres"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            app:separator_color="@color/purple"
-                            genres="@{vm.genres}"
-                            tools:genres="Action,Science Fiction,Horror" />
+                        <TableRow>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/spoken_language_title"
+                                android:textStyle="bold"
+                                plurals_resource="@{@plurals/movie_spoken_language}"
+                                plurals_list="@{vm.spokenLanguages}"
+                                tools:text="Spoken Languages" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="16dp"
-                            android:gravity="center_vertical">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/spoken_language"
+                                multiline_text="@{vm.spokenLanguages}"
+                                tools:text="English\nKorean" />
+                        </TableRow>
 
-                            <io.woong.filmpedia.ui.component.CircularRatingView
-                                android:id="@+id/rating"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                app:rating_arc_size="2dp"
-                                app:rating="@{vm.rating}"
-                                tools:rating="8.5" />
+                        <TableRow>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:text="@string/budget"
+                                android:textStyle="bold" />
 
-                            <androidx.appcompat.widget.AppCompatImageButton
-                                android:id="@+id/homepage_button"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginStart="8dp"
-                                android:visibility="gone"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/icon_home"
-                                style="@style/FilmpediaImageButtonTheme"
-                                is_visible="@{vm.isHomepageVisible}"
-                                tools:visibility="visible" />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/budget"
+                                money="@{vm.budget}"
+                                tools:text="$ 100,000,000" />
+                        </TableRow>
 
-                            <androidx.appcompat.widget.AppCompatImageButton
-                                android:id="@+id/facebook_button"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginStart="8dp"
-                                android:visibility="gone"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/icon_facebook"
-                                style="@style/FilmpediaImageButtonTheme"
-                                is_visible="@{vm.isFacebookVisible}"
-                                tools:visibility="visible" />
+                        <TableRow>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:text="@string/revenue"
+                                android:textStyle="bold" />
 
-                            <androidx.appcompat.widget.AppCompatImageButton
-                                android:id="@+id/instagram_button"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginStart="8dp"
-                                android:visibility="gone"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/icon_instagram"
-                                style="@style/FilmpediaImageButtonTheme"
-                                is_visible="@{vm.isInstagramVisible}"
-                                tools:visibility="visible" />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/revenue"
+                                money="@{vm.revenue}"
+                                tools:text="$ 200,000,000" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-                            <androidx.appcompat.widget.AppCompatImageButton
-                                android:id="@+id/twitter_button"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginStart="8dp"
-                                android:visibility="gone"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/icon_twitter"
-                                style="@style/FilmpediaImageButtonTheme"
-                                is_visible="@{vm.isTwitterVisible}"
-                                tools:visibility="visible" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                is_visible="@{vm.isLoading}"
+                tools:visibility="gone">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tagline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    style="@style/FilmpediaTaglineTheme"
-                    is_visible="@{vm.isTaglineVisible}"
-                    android:text="@{vm.tagline}"
-                    tools:text="@tools:sample/lorem" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/overview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    is_visible="@{vm.isOverviewVisible}"
-                    android:text="@{vm.overview}"
-                    tools:text="@tools:sample/lorem/random" />
-
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/movie_director_and_casting"
-                    style="@style/FilmpediaTitleTheme" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/director_and_casting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    list_item="@{vm.directorAndCasting}"
-                    tools:orientation="horizontal"
-                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_movie_director_and_casting" />
-
-                <io.woong.filmpedia.ui.component.SeriesButton
-                    android:id="@+id/series_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    is_visible="@{vm.isSeriesVisible}"
-                    app:series="@{vm.series}"
-                    app:ratio="16:9" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/movie_detail"
-                    style="@style/FilmpediaTitleTheme" />
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:stretchColumns="*">
-
-                    <TableRow>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:text="@string/movie_title"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/detail_title"
-                            android:text="@{vm.title}"
-                            tools:text="Movie Title" />
-                    </TableRow>
-
-                    <TableRow>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:text="@string/movie_original_title"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/original_title"
-                            android:text="@{vm.originalTitle}"
-                            tools:text="영화 제목" />
-                    </TableRow>
-
-                    <TableRow>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/spoken_language_title"
-                            android:textStyle="bold"
-                            plurals_resource="@{@plurals/movie_spoken_language}"
-                            plurals_list="@{vm.spokenLanguages}"
-                            tools:text="Spoken Languages" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/spoken_language"
-                            multiline_text="@{vm.spokenLanguages}"
-                            tools:text="English\nKorean" />
-                    </TableRow>
-
-                    <TableRow>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:text="@string/budget"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/budget"
-                            money="@{vm.budget}"
-                            tools:text="$ 100,000,000" />
-                    </TableRow>
-
-                    <TableRow>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:text="@string/revenue"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/revenue"
-                            money="@{vm.revenue}"
-                            tools:text="$ 200,000,000" />
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_logo"
+                    android:tint="@color/white"
+                    is_visible="@{vm.isLoading}" />
+            </FrameLayout>
+        </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

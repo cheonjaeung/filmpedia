@@ -14,6 +14,10 @@ class HomeViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
 
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private var popularPage: Int = 1
     private var isPopularLoading: Boolean = false
     private val _popularMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
@@ -38,6 +42,7 @@ class HomeViewModel : ViewModel() {
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
         if (!isPopularLoading && !isNowPlayingLoading && !isHighRatedLoading) {
+            _isLoading.postValue(true)
             isPopularLoading = true
             isNowPlayingLoading = true
             isHighRatedLoading = true
@@ -74,6 +79,7 @@ class HomeViewModel : ViewModel() {
             isPopularLoading = false
             isNowPlayingLoading = false
             isHighRatedLoading = false
+            _isLoading.postValue(false)
         }
     }
 

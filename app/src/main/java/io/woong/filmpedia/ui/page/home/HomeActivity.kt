@@ -11,6 +11,7 @@ import io.woong.filmpedia.databinding.ActivityHomeBinding
 import io.woong.filmpedia.ui.base.BaseActivity
 import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.ui.page.search.SearchActivity
+import io.woong.filmpedia.util.AnimationUtil
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -40,6 +41,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 )
                 tab.text = tabNames[position]
             }.attach()
+
+            AnimationUtil.blink(loading, 1000)
         }
 
         viewModel.updateAll(apiKey, language, region)
