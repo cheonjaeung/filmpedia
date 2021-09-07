@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.binding
 import androidx.annotation.PluralsRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
+import io.woong.filmpedia.R
 import java.lang.StringBuilder
 import java.text.DecimalFormat
 
@@ -30,14 +31,12 @@ object TextViewBindingAdapters {
     @BindingAdapter("runtime")
     fun AppCompatTextView.bindRuntime(runtime: Int?) {
         if (runtime != null) {
-            val builder = StringBuilder()
-            var time = runtime
+            val hours = runtime / 60
+            val minutes = runtime % 60
 
-            val hours = time / 60
-            time %= 60
-            builder.append("(${hours}h ${time}m)")
+            val runtimeString = resources.getString(R.string.movie_runtime, hours, minutes)
 
-            this.text = builder.toString()
+            this.text = runtimeString
         }
     }
 

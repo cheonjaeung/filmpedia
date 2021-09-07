@@ -10,6 +10,7 @@
     <string name="home_title_high_rated">High Rated Movies</string>
     
     <!-- MovieActivity -->
+    <string name="movie_runtime">%dh %dm</string>
     <string name="movie_director_and_casting">Director and Casting</string>
     <string name="movie_director">Director</string>
     <string name="movie_director_and_casting_footer">Full Casts &amp; Crews</string>

@@ -11,6 +11,7 @@
     <string name="home_title_high_rated">평점 높은 영화</string>
 
     <!-- MovieActivity -->
+    <string name="movie_runtime">%d시간 %d분</string>
     <string name="movie_director_and_casting">감독 및 출연</string>
     <string name="movie_director">감독</string>
     <string name="movie_director_and_casting_footer">전체보기</string>
