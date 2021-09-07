@@ -30,6 +30,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -124,6 +125,84 @@
                     android:text="@{vm.biography}"
                     is_visible="@{vm.isBiographyVisible}"
                     tools:text="@tools:sample/lorem/random" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/person_filmography"
+                    style="@style/FilmpediaTitleTheme" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/person_filmography_acting"
+                    android:textColor="@color/gray"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    is_visible="@{vm.isActingMoviesVisible}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/acting_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    is_visible="@{vm.isActingMoviesVisible}"
+                    list_item="@{vm.actingMovies}"
+                    tools:orientation="vertical"
+                    tools:listitem="@layout/item_person_filmography"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/person_filmography_directing"
+                    android:textColor="@color/gray"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    is_visible="@{vm.isDirectingMoviesVisible}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/directing_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    is_visible="@{vm.isDirectingMoviesVisible}"
+                    list_item="@{vm.directingMovies}"
+                    tools:orientation="vertical"
+                    tools:listitem="@layout/item_person_filmography"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/person_filmography_staff"
+                    android:textColor="@color/gray"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    is_visible="@{vm.isStaffMoviesVisible}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/other_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    is_visible="@{vm.isStaffMoviesVisible}"
+                    list_item="@{vm.staffMovies}"
+                    tools:orientation="vertical"
+                    tools:listitem="@layout/item_person_filmography"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

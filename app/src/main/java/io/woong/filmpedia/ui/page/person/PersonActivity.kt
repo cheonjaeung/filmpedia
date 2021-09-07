@@ -1,17 +1,16 @@
 package io.woong.filmpedia.ui.page.person
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.R
-import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.base.BaseActivity
-import io.woong.filmpedia.ui.page.movie.MovieActivity
+import io.woong.filmpedia.util.ListDecoration
 
-class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person),
-    CreditListAdapter.OnCreditClickListener {
+class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person) {
 
     companion object {
         const val PERSON_ID_EXTRA_ID: String = "person_id"
@@ -45,9 +44,21 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
                 setHomeAsUpIndicator(R.drawable.icon_back)
                 title = personName
             }
+
+            initList(actingList, directingList, otherList)
         }
 
         viewModel.update(personId, apiKey, language, region)
+    }
+
+    private fun initList(vararg list: RecyclerView) {
+        list.forEach {
+            it.apply {
+                adapter = FilmographyListAdapter()
+                layoutManager = LinearLayoutManager(this@PersonActivity, LinearLayoutManager.VERTICAL, false)
+                addItemDecoration(ListDecoration.VerticalDecoration(8))
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -57,15 +68,6 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onCreditClick(movie: MovieCredits.Cast?) {
-        if (movie != null) {
-            val intent = Intent(this, MovieActivity::class.java)
-            intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, movie.id)
-            intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, movie.title)
-            startActivity(intent)
         }
     }
 }
