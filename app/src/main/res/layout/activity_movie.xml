@@ -48,15 +48,6 @@
                         slides="@{vm.slides}"
                         app:layout_constraintDimensionRatio="16:9"
                         app:layout_constraintTop_toTopOf="parent" />
-
-<!--                    <androidx.viewpager2.widget.ViewPager2-->
-<!--                        android:id="@+id/slideshow"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="0dp"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        slides="@{vm.slides}"-->
-<!--                        app:layout_constraintDimensionRatio="16:9"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
