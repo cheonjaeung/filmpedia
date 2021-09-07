@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.page.person
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.woong.filmpedia.data.people.Filmography
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.data.people.Person
 import io.woong.filmpedia.repository.PeopleRepository
@@ -50,13 +51,26 @@ class PersonViewModel : ViewModel() {
     val isBiographyVisible: LiveData<Boolean>
         get() = _isBiographyVisible
 
-    private val _castedMovies: MutableLiveData<List<MovieCredits.Cast>> = MutableLiveData()
-    val castedMovies: LiveData<List<MovieCredits.Cast>>
-        get() = _castedMovies
+    private val _actingMovies: MutableLiveData<List<Filmography>> = MutableLiveData()
+    val actingMovies: LiveData<List<Filmography>>
+        get() = _actingMovies
+    private val _isActingMoviesVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isActingMoviesVisible: LiveData<Boolean>
+        get() = _isActingMoviesVisible
 
-    private val _producedMovies: MutableLiveData<List<MovieCredits.Crew>> = MutableLiveData()
-    val producedMovies: LiveData<List<MovieCredits.Crew>>
-        get() = _producedMovies
+    private val _directingMovies: MutableLiveData<List<Filmography>> = MutableLiveData()
+    val directingMovies: LiveData<List<Filmography>>
+        get() = _directingMovies
+    private val _isDirectingMoviesVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isDirectingMoviesVisible: LiveData<Boolean>
+        get() = _isDirectingMoviesVisible
+
+    private val _staffMovies: MutableLiveData<List<Filmography>> = MutableLiveData()
+    val staffMovies: LiveData<List<Filmography>>
+        get() = _staffMovies
+    private val _isStaffMoviesVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isStaffMoviesVisible: LiveData<Boolean>
+        get() = _isStaffMoviesVisible
 
     fun update(personId: Int, apiKey: String, language: String, region: String) {
         CoroutineScope(Dispatchers.Default).launch {
@@ -131,12 +145,109 @@ class PersonViewModel : ViewModel() {
 
             val creditsJob = repository.fetchMovieCredits(key = apiKey, id = personId, lang = language) { credits ->
                 if (credits != null) {
-                    _castedMovies.postValue(credits.casts)
-                    _producedMovies.postValue(credits.crews)
+                    val castList = credits.casts
+                    val crewList = credits.crews
+
+                    CoroutineScope(Dispatchers.Default).launch {
+                        val sortedCastList = castList.sortedByDescending { it.releaseDate }
+                        val actingList = sortedCastList.toFilmographyList()
+                        _actingMovies.postValue(actingList)
+                        _isActingMoviesVisible.postValue(actingList.isNotEmpty())
+                    }
+
+                    val pair = crewList.divideDirectorAndStaff()
+
+                    CoroutineScope(Dispatchers.Default).launch {
+                        val extractedList = pair.first
+                        val sortedList = extractedList.sortedByDescending { it.releaseDate }
+                        val directingList = sortedList.toFilmographyList()
+                        _directingMovies.postValue(directingList)
+                        _isDirectingMoviesVisible.postValue(directingList.isNotEmpty())
+                    }
+
+                    CoroutineScope(Dispatchers.Default).launch {
+                        val extractedList = pair.second
+                        val sortedList = extractedList.sortedByDescending { it.releaseDate }
+                        val staffList = sortedList.toFilmographyList()
+                        _staffMovies.postValue(staffList)
+                        _isStaffMoviesVisible.postValue(staffList.isNotEmpty())
+                    }
                 }
             }
 
             joinAll(detailJob, biographyJob, creditsJob)
         }
     }
+
+    private fun List<MovieCredits.SubItem>.toFilmographyList(): List<Filmography> {
+        val filmographies = mutableListOf<Filmography>()
+
+        var currentYear = ""
+        for ((index, item) in this.withIndex()) {
+            if (index == 0) {
+                val new = item.toFilmography()
+                filmographies.add(new)
+                currentYear = new.releasedYear
+            } else {
+                val new = item.toFilmography()
+
+                if (new.releasedYear == currentYear) {
+                    filmographies.add(new)
+                } else {
+                    currentYear = new.releasedYear
+                    filmographies.add(createDividerFilmography())
+                    filmographies.add(new)
+                }
+            }
+        }
+
+        return filmographies
+    }
+
+    private fun List<MovieCredits.Crew>.divideDirectorAndStaff(): Pair<List<MovieCredits.Crew>, List<MovieCredits.Crew>> {
+        val directingList = mutableListOf<MovieCredits.Crew>()
+        val staffList = mutableListOf<MovieCredits.Crew>()
+
+        for (item in this) {
+            val job = item.job
+            if (job == "Director") {
+                directingList.add(item)
+            } else {
+                staffList.add(item)
+            }
+        }
+
+        return directingList to staffList
+    }
+
+    private fun MovieCredits.SubItem.toFilmography(): Filmography {
+        val year = if (releaseDate.isNotNullOrBlank()) {
+            releaseDate!!.substring(0, 4)
+        } else {
+            "-"
+        }
+
+        val department = if (this is MovieCredits.Cast) {
+            character
+        } else {
+            this as MovieCredits.Crew
+            job
+        }
+
+        return Filmography(
+            id,
+            FilmographyListAdapter.ITEM_VIEW_TYPE,
+            year,
+            title,
+            department
+        )
+    }
+
+    private fun createDividerFilmography(): Filmography = Filmography(
+        0,
+        FilmographyListAdapter.DIVIDER_VIEW_TYPE,
+        "",
+        "",
+        ""
+    )
 }
