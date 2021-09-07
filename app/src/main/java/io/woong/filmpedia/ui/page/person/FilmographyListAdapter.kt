@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.data.people.Filmography
 import io.woong.filmpedia.databinding.ItemPersonFilmographyBinding
 import io.woong.filmpedia.databinding.ItemPersonFilmographyDividerBinding
+import io.woong.filmpedia.ui.component.FilmographyTextView
 
 class FilmographyListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -24,6 +25,8 @@ class FilmographyListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             notifyDataSetChanged()
         }
+
+    var type: FilmographyTextView.TextType = FilmographyTextView.TextType.ACTING
 
     override fun getItemViewType(position: Int): Int {
         return if (items[position].viewType == ITEM_VIEW_TYPE) {
@@ -63,7 +66,12 @@ class FilmographyListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    inner class ItemViewHolder(val binding: ItemPersonFilmographyBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ItemViewHolder(val binding: ItemPersonFilmographyBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.info.textType = type
+        }
+    }
 
     inner class DividerViewHolder(val binding: ItemPersonFilmographyDividerBinding) : RecyclerView.ViewHolder(binding.root)
 }

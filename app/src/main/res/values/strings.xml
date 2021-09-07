@@ -39,6 +39,7 @@
     <string name="person_filmography_directing">Directing</string>
     <string name="person_filmography_staff">Staff</string>
     <string name="person_filmography_acting_item">%s as %s</string>
+    <string name="person_filmography_staff_item">%s %s</string>
 
     <!-- SearchActivity -->
     <string name="search_toolbar_title">Search</string>

@@ -39,6 +39,7 @@
     <string name="person_filmography_directing">감독</string>
     <string name="person_filmography_staff">스태프</string>
     <string name="person_filmography_acting_item">%s %s 역</string>
+    <string name="person_filmography_staff_item">%s %s</string>
 
     <!-- SearchActivity -->
     <string name="search_toolbar_title">검색</string>

@@ -20,6 +20,11 @@ class FilmographyTextView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : AppCompatTextView(context, attrs, defStyle) {
 
+    enum class TextType(val value: Int) {
+        ACTING(0),
+        STAFF(1)
+    }
+
     var movieTitle: String = ""
     @ColorInt
     private var movieTitleColor: Int = 0
@@ -29,6 +34,8 @@ class FilmographyTextView @JvmOverloads constructor(
     @ColorInt
     private var departmentColor: Int = 0
     private var departmentSize: Float = 0f
+
+    var textType: TextType = TextType.ACTING
 
     init {
         applyAttributes(attrs, defStyle)
@@ -53,6 +60,13 @@ class FilmographyTextView @JvmOverloads constructor(
             department = attrs.getString(R.styleable.FilmographyTextView_department) ?: ""
             departmentColor = attrs.getColor(R.styleable.FilmographyTextView_department_color, defaultTextColor)
             departmentSize = attrs.getDimension(R.styleable.FilmographyTextView_department_size, defaultTextSize)
+
+            val textTypeInt = attrs.getInt(R.styleable.FilmographyTextView_text_type, TextType.ACTING.value)
+            textType = when (textTypeInt) {
+                TextType.ACTING.value -> TextType.ACTING
+                TextType.STAFF.value -> TextType.STAFF
+                else -> TextType.STAFF
+            }
         } finally {
             attrs.recycle()
         }
@@ -64,7 +78,12 @@ class FilmographyTextView @JvmOverloads constructor(
     }
 
     private fun buildFilmographyText(): Spannable {
-        val fString = resources.getString(R.string.person_filmography_acting_item, movieTitle, department)
+        val fString = if (textType == TextType.ACTING) {
+            resources.getString(R.string.person_filmography_acting_item, movieTitle, department)
+        } else {
+            resources.getString(R.string.person_filmography_staff_item, movieTitle, department)
+        }
+
         val builder = SpannableStringBuilder(fString)
 
         val titleStartPos = 0

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.base.BaseActivity
+import io.woong.filmpedia.ui.component.FilmographyTextView
 import io.woong.filmpedia.util.ListDecoration
 
 class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person) {
@@ -45,16 +46,19 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
                 title = personName
             }
 
-            initList(actingList, directingList, otherList)
+            initList(FilmographyTextView.TextType.ACTING, actingList)
+            initList(FilmographyTextView.TextType.STAFF, directingList, otherList)
         }
 
         viewModel.update(personId, apiKey, language, region)
     }
 
-    private fun initList(vararg list: RecyclerView) {
+    private fun initList(type: FilmographyTextView.TextType, vararg list: RecyclerView) {
         list.forEach {
             it.apply {
-                adapter = FilmographyListAdapter()
+                adapter = FilmographyListAdapter().apply {
+                    this.type = type
+                }
                 layoutManager = LinearLayoutManager(this@PersonActivity, LinearLayoutManager.VERTICAL, false)
                 addItemDecoration(ListDecoration.VerticalDecoration(8))
             }
