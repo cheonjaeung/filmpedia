@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.woong.filmpedia.data.people.MovieCredits
+import io.woong.filmpedia.data.people.Person
 import io.woong.filmpedia.repository.PeopleRepository
-import io.woong.filmpedia.util.DateUtil
+import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
@@ -23,10 +24,6 @@ class PersonViewModel : ViewModel() {
     val name: LiveData<String>
         get() = _name
 
-    private val _biography: MutableLiveData<String> = MutableLiveData()
-    val biography: LiveData<String>
-        get() = _biography
-
     private val _birthday: MutableLiveData<String> = MutableLiveData()
     val birthday: LiveData<String>
         get() = _birthday
@@ -35,9 +32,23 @@ class PersonViewModel : ViewModel() {
     val deathday: LiveData<String>
         get() = _deathday
 
-    private val _age: MutableLiveData<Int> = MutableLiveData(-1)
-    val age: LiveData<Int>
-        get() = _age
+    private val _gender: MutableLiveData<Person.Gender> = MutableLiveData()
+    val gender: LiveData<Person.Gender>
+        get() = _gender
+
+    private val _placeOfBirth: MutableLiveData<String> = MutableLiveData()
+    val placeOfBirth: LiveData<String>
+        get() = _placeOfBirth
+    private val _isPlaceOfBirthVisible: MutableLiveData<Boolean> = MutableLiveData()
+    val isPlaceOfBirthVisible: LiveData<Boolean>
+        get() = _isPlaceOfBirthVisible
+
+    private val _biography: MutableLiveData<String> = MutableLiveData()
+    val biography: LiveData<String>
+        get() = _biography
+    private val _isBiographyVisible: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isBiographyVisible: LiveData<Boolean>
+        get() = _isBiographyVisible
 
     private val _castedMovies: MutableLiveData<List<MovieCredits.Cast>> = MutableLiveData()
     val castedMovies: LiveData<List<MovieCredits.Cast>>
@@ -52,21 +63,26 @@ class PersonViewModel : ViewModel() {
             val detailJob = repository.fetchDetail(key = apiKey, id = personId, lang = language) { person ->
                 if (person != null) {
                     _profile.postValue(person.profilePath)
-
                     _name.postValue(person.name)
+                    _birthday.postValue(person.birthday)
+                    _deathday.postValue(person.deathday)
 
-                    val birthday = person.birthday
-                    val deathday = person.deathday
+                    _gender.postValue(
+                        when (person.gender) {
+                            Person.Gender.MALE.value -> Person.Gender.MALE
+                            Person.Gender.FEMALE.value -> Person.Gender.FEMALE
+                            Person.Gender.NON_BINARY.value -> Person.Gender.NON_BINARY
+                            else -> Person.Gender.UNSPECIFIED
+                        }
+                    )
 
-                    val age = if (birthday != null) {
-                        DateUtil.getAge(birthday, deathday, -1)
+                    val pob = person.placeOfBirth
+                    if (pob != null) {
+                        _placeOfBirth.postValue(pob)
+                        _isPlaceOfBirthVisible.postValue(true)
                     } else {
-                        -1
+                        _isPlaceOfBirthVisible.postValue(false)
                     }
-
-                    _birthday.postValue(birthday)
-                    _deathday.postValue(deathday)
-                    _age.postValue(age)
                 }
             }
 
@@ -74,19 +90,42 @@ class PersonViewModel : ViewModel() {
                 if (translations != null) {
                     val list = translations.translations
 
-                    var index = 0
-                    for (item in list) {
-                        if (item.iso3166_1 == region) {
-                            break
+                    if (list.isNotEmpty()) {
+                        var index = 0
+                        var englishIndex = 0
+                        for (item in list) {
+                            if (item.iso3166_1 == "US" && item.iso639_1 == "en") {
+                                englishIndex = index
+                            }
+                            if (item.iso3166_1 == region) {
+                                break
+                            }
+                            index++
                         }
-                        index++
-                    }
 
-                    if (index < list.lastIndex) {
-                        _biography.postValue(list[index].translated.biography)
+                        val bio = if (index < list.lastIndex) {
+                            val bioTemp = list[index].translated.biography
+
+                            if (bioTemp.isNotNullOrBlank()) {
+                                bioTemp
+                            } else {
+                                list[englishIndex].translated.biography
+                            }
+                        } else {
+                            list[englishIndex].translated.biography
+                        }
+
+                        if (bio.isNotBlank()) {
+                            _biography.postValue(bio)
+                            _isBiographyVisible.postValue(true)
+                        } else {
+                            _isBiographyVisible.postValue(false)
+                        }
                     } else {
-                        _biography.postValue(list[0].translated.biography)
+                        _isBiographyVisible.postValue(false)
                     }
+                } else {
+                    _isBiographyVisible.postValue(false)
                 }
             }
 

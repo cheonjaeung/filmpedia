@@ -28,6 +28,12 @@
     <!-- PeopleActivity -->
 
     <!-- PersonActivity -->
+    <string name="person_gender">성별</string>
+    <string name="person_gender_unspecified">정보 없음</string>
+    <string name="person_gender_male">남성</string>
+    <string name="person_gender_female">여성</string>
+    <string name="person_gender_non_binary">논바이너리</string>
+    <string name="person_place_of_birth">출생지</string>
     <string name="person_filmography">필모그래피</string>
 
     <!-- SearchActivity -->
