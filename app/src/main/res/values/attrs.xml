@@ -18,10 +18,6 @@
         <attr name="department" format="string" />
         <attr name="department_color" format="color" />
         <attr name="department_size" format="dimension" />
-        <attr name="text_type" format="enum">
-            <enum name="acting" value="0" />
-            <enum name="staff" value="1" />
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="GenresTextView">
