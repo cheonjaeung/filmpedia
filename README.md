@@ -1,6 +1,6 @@
 <div align="center"><img alt="logo" src="./art/filmpedia_logo.png" width="150" /></div>
 
-# Filmpedia &middot; ![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) [![test-ci](https://github.com/woongdev/Filmpedia/actions/workflows/test.yml/badge.svg)](https://github.com/woongdev/Filmpedia/actions/workflows/test.yml) [![build-ci](https://github.com/woongdev/Filmpedia/actions/workflows/build.yml/badge.svg)](https://github.com/woongdev/Filmpedia/actions/workflows/build.yml) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue)
+# Filmpedia &middot; ![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue)
 
 **Filmpedia** is an unofficial Android movie information application using TMDB API.
 
@@ -70,6 +70,13 @@ Filmpedia is based on MVVM (Model-View-ViewModel) architecture + Repository patt
 Filmpedia is using [TMDB API](https://developers.themoviedb.org/3).
 
 TMDB API provides thousands of movie's information and RESTful API.
+
+If you want to build on your local, create your API key.
+And add below line in to `local.properties`.
+
+```
+api.key="Your TMDB API key"
+```
 
 ## MAD Score
 
