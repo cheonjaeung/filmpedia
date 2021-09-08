@@ -27,6 +27,8 @@ class FilmographyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             notifyDataSetChanged()
         }
 
+    var listener: OnMovieClickListener? = null
+
     enum class ViewType(val value: Int) {
         PROFILE(0),
         BIOGRAPHY(1),
@@ -209,9 +211,29 @@ class FilmographyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MovieViewHolder(
         val binding: ItemPersonFilmographyMovieBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.info.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (v?.id == binding.info.id) {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val item = items[adapterPosition]
+                    if (item is Filmography.Movie) {
+                        listener?.onMovieClick(item)
+                    }
+                }
+            }
+        }
+    }
 
     inner class DividerViewHolder(
         val binding: ItemPersonFilmographyDividerBinding
     ) : RecyclerView.ViewHolder(binding.root)
+
+    interface OnMovieClickListener {
+        fun onMovieClick(item: Filmography.Movie)
+    }
 }

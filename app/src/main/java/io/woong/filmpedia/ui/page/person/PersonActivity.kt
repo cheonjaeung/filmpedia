@@ -1,15 +1,19 @@
 package io.woong.filmpedia.ui.page.person
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.woong.filmpedia.R
+import io.woong.filmpedia.data.people.Filmography
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.base.BaseActivity
+import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.AnimationUtil
 
-class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person) {
+class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person),
+    FilmographyAdapter.OnMovieClickListener {
 
     companion object {
         const val PERSON_ID_EXTRA_ID: String = "person_id"
@@ -45,7 +49,9 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
             }
 
             filmography.apply {
-                adapter = FilmographyAdapter()
+                adapter = FilmographyAdapter().apply {
+                    listener = this@PersonActivity
+                }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
 
@@ -63,5 +69,12 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onMovieClick(item: Filmography.Movie) {
+        val intent = Intent(this, MovieActivity::class.java)
+        intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, item.title)
+        intent.putExtra(MovieActivity.MOVIE_ID_EXTRA_ID, item.id)
+        startActivity(intent)
     }
 }
