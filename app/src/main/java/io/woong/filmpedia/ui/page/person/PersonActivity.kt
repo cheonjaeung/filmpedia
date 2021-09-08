@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import io.woong.filmpedia.R
 import io.woong.filmpedia.databinding.ActivityPersonBinding
 import io.woong.filmpedia.ui.base.BaseActivity
-import io.woong.filmpedia.ui.component.FilmographyTextView
 import io.woong.filmpedia.util.AnimationUtil
-import io.woong.filmpedia.util.ListDecoration
 
 class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person) {
 
@@ -47,25 +44,15 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
                 title = personName
             }
 
-            initList(FilmographyTextView.TextType.ACTING, actingList)
-            initList(FilmographyTextView.TextType.STAFF, directingList, otherList)
+            filmography.apply {
+                adapter = FilmographyAdapter()
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
 
             AnimationUtil.blink(loading, 1000)
         }
 
-        viewModel.load(personId, apiKey, language, region)
-    }
-
-    private fun initList(type: FilmographyTextView.TextType, vararg list: RecyclerView) {
-        list.forEach {
-            it.apply {
-                adapter = FilmographyListAdapter().apply {
-                    this.type = type
-                }
-                layoutManager = LinearLayoutManager(this@PersonActivity, LinearLayoutManager.VERTICAL, false)
-                addItemDecoration(ListDecoration.VerticalDecoration(8))
-            }
-        }
+        viewModel.load(this, personId, apiKey, language, region)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
