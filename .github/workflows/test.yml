@@ -22,5 +22,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create temp local.properties
+        env:
+          TEMP_KEY: ${{ secrets.TEMP_LOCAL_PROPERTIES }}
+        run: echo TEMP_KEY="$TEMP_KEY" > ./local.properties
+
       - name: Test with gradle
         run: ./gradlew test --stacktrace
