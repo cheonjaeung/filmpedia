@@ -8,7 +8,7 @@ import io.woong.filmpedia.data.people.Filmography
 import io.woong.filmpedia.data.people.PersonSummary
 import io.woong.filmpedia.data.search.SearchResult
 import io.woong.filmpedia.ui.page.home.MovieListAdapter
-import io.woong.filmpedia.ui.page.person.FilmographyListAdapter
+import io.woong.filmpedia.ui.page.person.FilmographyAdapter
 import io.woong.filmpedia.ui.page.search.SearchResultListAdapter
 import io.woong.filmpedia.ui.page.series.SeriesMovieListAdapter
 
@@ -34,8 +34,8 @@ object RecyclerViewBindingAdapters {
                     adapter.people = list as List<PersonSummary>
                 }
 
-                is FilmographyListAdapter -> {
-                    val adapter = this.adapter as FilmographyListAdapter
+                is FilmographyAdapter -> {
+                    val adapter = this.adapter as FilmographyAdapter
                     adapter.items = list as List<Filmography>
                 }
 
