@@ -21,6 +21,7 @@ build/
 # Jetbrains
 .idea/
 out/
+release/
 *.iml
 *.iws
 *.ipr
