@@ -65,40 +65,4 @@ object TextViewBindingAdapters {
             }
         }
     }
-
-    @JvmStatic
-    @BindingAdapter("gender")
-    fun AppCompatTextView.bindGender(gender: Person.Gender?) {
-        if (gender != null) {
-            val genderString: String = when (gender) {
-                Person.Gender.UNSPECIFIED -> resources.getString(R.string.person_gender_unspecified)
-                Person.Gender.MALE -> resources.getString(R.string.person_gender_male)
-                Person.Gender.FEMALE -> resources.getString(R.string.person_gender_female)
-                Person.Gender.NON_BINARY -> resources.getString(R.string.person_gender_non_binary)
-            }
-
-            this.text = genderString
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter(value = ["birthday", "deathday"], requireAll = false)
-    fun AppCompatTextView.bindLife(birthday: String?, deathday: String?) {
-        if (birthday != null) {
-            val age = DateUtil.getAge(birthday, deathday, -1)
-
-            val builder = StringBuilder(birthday)
-
-            if (deathday != null) {
-                builder.append("~")
-                builder.append(" ")
-                builder.append("$deathday")
-            }
-
-            builder.append(" ")
-            builder.append("($age)")
-
-            this.text = builder.toString()
-        }
-    }
 }
