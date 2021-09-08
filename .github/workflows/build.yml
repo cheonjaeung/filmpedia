@@ -25,7 +25,7 @@ jobs:
       - name: Create temp local.properties
         env:
           TEMP_KEY: ${{ secrets.TEMP_LOCAL_PROPERTIES }}
-        run: echo TEMP_KEY="$TEMP_KEY" > ./local.properties
+        run: echo api.key="$TEMP_KEY" > ./local.properties
 
       - name: Build with gradle
         run: ./gradlew build
