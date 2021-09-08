@@ -304,7 +304,7 @@
 
                         <TableRow>
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:text="@string/budget"
+                                android:text="@string/movie_budget"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -315,7 +315,7 @@
 
                         <TableRow>
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:text="@string/revenue"
+                                android:text="@string/movie_revenue"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatTextView
