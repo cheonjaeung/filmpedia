@@ -36,7 +36,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.icon_back)
-                title = resources.getString(R.string.search)
+                title = resources.getString(R.string.search_toolbar_title)
             }
 
             searchBar.setOnEditorActionListener(this@SearchActivity)

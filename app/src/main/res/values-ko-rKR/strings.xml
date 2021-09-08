@@ -49,24 +49,5 @@
         <item quantity="other">이 시리즈에 포함된 영화</item>
     </plurals>
 
-    <string name="detail_information">자세히 알아보기</string>
     <string name="view_the_series">시리즈 보기</string>
-
-    <string name="overview">개요</string>
-    <string name="status">상태</string>
-    <string name="languages">언어</string>
-    <string name="budget">제작비</string>
-    <string name="revenue">수익</string>
-    <string name="production_countries">제작국</string>
-    <string name="crews">제작진</string>
-    <string name="production_companies">제작사</string>
-    <string name="recommendations">추천</string>
-    <string name="movies">영화</string>
-    <string name="casts">출연</string>
-
-    <string name="search">검색</string>
-
-    <plurals name="year_old">
-        <item quantity="other">세</item>
-    </plurals>
 </resources>
