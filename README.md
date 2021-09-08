@@ -1,33 +1,26 @@
-<div align="center">
-    <p><img alt="logo" src="./art/filmpedia_logo.png" width="150" /></p>
-    <h1>Filmpedia</h1>
-    <p>
-    </p>
-    <p>
-    Filmpedia is an unofficial TMDB movie information application for Android.
-    </p>
-    <p>
-    This project is based on MVVM architecture and using famous android libraries like Retrofit, Glide, Coroutines and AAC.
-    It can be a sample of android application using AAC and MVVM.
-    I hope it will be helpful to android developers and learners.
-    </p>
-</div>
+<div align="center"><img alt="logo" src="./art/filmpedia_logo.png" width="150" /></div>
+
+# Filmpedia &middot; ![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) [![test-ci](https://github.com/woongdev/Filmpedia/actions/workflows/test.yml/badge.svg)](https://github.com/woongdev/Filmpedia/actions/workflows/test.yml) [![build-ci](https://github.com/woongdev/Filmpedia/actions/workflows/build.yml/badge.svg)](https://github.com/woongdev/Filmpedia/actions/workflows/build.yml) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue)
+
+**Filmpedia** is an unofficial Android movie information application using TMDB API.
+
+This project is using famous Android tech-stacks like Kotlin, Coroutines, Retrofit, Glide and other.
+It's architecture is based on MVVM (Model-View-ViewModel) and Repository Pattern.
+I hope it can be good sample to Android developers and leaners.
 
 ## Features
 
-- Movie list
-- Movie detail
-- Movie series
-- Person
-- Search
+- Popular, now playing and high rated movie list
+- Movie detail information
+- Person detail information
+- Movie searching
 
 ## Tech Stacks
 
-- **Language**: Kotlin
-- **Network**: Coroutines + Retrofit
-- **Architecture**: MVVM + Repository Pattern + Data Binding + View Binding
-- **Version Control**: Git + GitHub
-- **Logo Design**: Figma
+- **[Kotlin](https://github.com/JetBrains/kotlin)**: First programming language for Android development
+- **Coroutine**: An asyncroneous processing method
+- **MVVM + Repository**: Application architecture
+- **Git**: Version control
 
 ## Open Source Libraries
 
@@ -39,7 +32,6 @@
   - [Constraint Layout](https://github.com/androidx/constraintlayout)
   - [Fragment](https://github.com/androidx/androidx/tree/androidx-main/fragment)
   - [Lifecycle](https://github.com/androidx/androidx/tree/androidx-main/lifecycle)
-  - [Swipe Refresh Layout](https://github.com/androidx/androidx/tree/androidx-main/swiperefreshlayout)
   - [ViewPager2](https://github.com/androidx/androidx/tree/androidx-main/viewpager2)
 - [Material Components](https://github.com/material-components/material-components-android) (Apache-2.0 License)
 - [Retrofit](https://github.com/square/retrofit) (Apache-2.0 License)
