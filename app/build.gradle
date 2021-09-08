@@ -60,7 +60,6 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$jetpack_fragment"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$jetpack_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$jetpack_lifecycle"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$jetpack_swiperefreshlayout"
     implementation "androidx.viewpager2:viewpager2:$jetpack_viewpager2"
 
     implementation "com.google.android.material:material:$material_components"
