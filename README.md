@@ -90,7 +90,7 @@ MAD (Modern Android Development) Score is a score card service provided by Googl
 
 <div align="right">
     <small>
-        &lt;Score based on Filmpedia x.x.x version&gt;
+        &lt;Score based on Filmpedia 1.0.0 version&gt;
     </small>
 </div>
 
