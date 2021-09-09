@@ -1,4 +1,6 @@
-<img alt="logo" src="./art/filmpedia_logo.png" align="right" width="150" />
+![preview](./image/preview.png)
+
+<img alt="logo" src="./image/filmpedia_logo.png" align="right" width="150" />
 
 # Filmpedia &middot; ![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue)
 
