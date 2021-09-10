@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Filmpedia</string>
+    
+    <!-- General -->
+    <string name="network_offline">Network is offline</string>
+    <string name="network_offline_description">Please connect to network and retry.</string>
 
     <!-- HomeActivity -->
     <string name="home_tab_0">Popular</string>

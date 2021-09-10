@@ -2,6 +2,10 @@
 <resources>
     <string name="app_name">필름피디아</string>
 
+    <!-- General -->
+    <string name="network_offline">오프라인 상태</string>
+    <string name="network_offline_description">네트워크에 연결한 후 다시 시도해 주세요.</string>
+
     <!-- HomeActivity -->
     <string name="home_tab_0">인기</string>
     <string name="home_tab_1">상영중</string>
