@@ -1,7 +1,7 @@
 package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.data.movie.Movies
-import io.woong.filmpedia.network.SearchService
+import io.woong.filmpedia.network.service.SearchService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

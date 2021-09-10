@@ -1,7 +1,7 @@
 package io.woong.filmpedia.repository
 
 import io.woong.filmpedia.data.movie.Genres
-import io.woong.filmpedia.network.GenreService
+import io.woong.filmpedia.network.service.GenreService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

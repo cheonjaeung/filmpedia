@@ -1,4 +1,4 @@
-package io.woong.filmpedia.network
+package io.woong.filmpedia.network.service
 
 import io.woong.filmpedia.data.movie.Movies
 import retrofit2.Response

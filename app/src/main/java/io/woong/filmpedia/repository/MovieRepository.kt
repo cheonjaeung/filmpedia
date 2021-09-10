@@ -5,13 +5,20 @@ import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.movie.MovieImages
 import io.woong.filmpedia.data.movie.Movies
-import io.woong.filmpedia.network.MovieService
+import io.woong.filmpedia.network.service.MovieService
 import io.woong.filmpedia.network.TmdbClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MovieRepository {
+
+    companion object {
+        const val NETWORK_ERROR_CODE: Int = -1
+    }
 
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
 
@@ -109,15 +116,22 @@ class MovieRepository {
         page: Int,
         lang: String,
         region: String,
-        onResponse: (movies: Movies?) -> Unit
+        onResponse: (movies: Movies?, code: Int) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
+        movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
+            .enqueue(object : Callback<Movies> {
+                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                    if (response.isSuccessful) {
+                        onResponse(response.body(), response.code())
+                    } else {
+                        onResponse(response.errorBody())
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body()!!)
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<Movies>, t: Throwable) {
+
+                }
+            })
     }
 
     fun fetchHighRatedMovies(

@@ -1,10 +1,11 @@
-package io.woong.filmpedia.network
+package io.woong.filmpedia.network.service
 
 import io.woong.filmpedia.data.movie.Credits
 import io.woong.filmpedia.data.ExternalIds
 import io.woong.filmpedia.data.movie.Movie
 import io.woong.filmpedia.data.movie.MovieImages
 import io.woong.filmpedia.data.movie.Movies
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -62,7 +63,7 @@ interface MovieService {
         @Query("language") language: String? = null,
         @Query("page") page: Int? = null,
         @Query("region") region: String? = null
-    ): Response<Movies>
+    ): Call<Movies>
 
     @GET("movie/top_rated")
     suspend fun getTopRated(
