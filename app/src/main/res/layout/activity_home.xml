@@ -33,8 +33,6 @@
                     android:src="@drawable/icon_logo"
                     android:tint="@color/white" />
             </com.google.android.material.appbar.MaterialToolbar>
-
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
