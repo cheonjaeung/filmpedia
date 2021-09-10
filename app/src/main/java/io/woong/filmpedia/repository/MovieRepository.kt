@@ -7,18 +7,16 @@ import io.woong.filmpedia.data.movie.MovieImages
 import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.network.service.MovieService
 import io.woong.filmpedia.network.TmdbClient
+import io.woong.filmpedia.network.data.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class MovieRepository {
-
-    companion object {
-        const val NETWORK_ERROR_CODE: Int = -1
-    }
 
     private val movieService: MovieService = TmdbClient.instance.create(MovieService::class.java)
 
@@ -80,19 +78,29 @@ class MovieRepository {
         }
     }
 
-    fun fetchRecommendations(
+    fun fetchPopularMovies(
         key: String,
-        id: Int,
+        page: Int,
         lang: String,
-        onResponse: (movies: Movies?) -> Unit
+        region: String,
+        onResponse: (result: Result<Movies>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getRecommendations(movieId = id, apiKey = key, language = lang)
+        movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
+            .enqueue(object : Callback<Movies> {
+                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                    if (response.isSuccessful) {
+                        onResponse(Result.Success(response.body()))
+                    } else {
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body())
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<Movies>, t: Throwable) {
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
+                }
+            })
     }
 
     fun fetchNowPlayingMovies(
@@ -100,36 +108,22 @@ class MovieRepository {
         page: Int,
         lang: String,
         region: String,
-        onResponse: (movies: Movies?) -> Unit
+        onResponse: (result: Result<Movies>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getNowPlaying(apiKey = key, page = page, language = lang, region = region)
-
-        if (response.isSuccessful) {
-            onResponse(response.body()!!)
-        } else {
-            onResponse(null)
-        }
-    }
-
-    fun fetchPopularMovies(
-        key: String,
-        page: Int,
-        lang: String,
-        region: String,
-        onResponse: (movies: Movies?, code: Int) -> Unit
-    ) = CoroutineScope(Dispatchers.IO).launch {
-        movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
+        movieService.getNowPlaying(apiKey = key, page = page, language = lang, region = region)
             .enqueue(object : Callback<Movies> {
                 override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
                     if (response.isSuccessful) {
-                        onResponse(response.body(), response.code())
+                        onResponse(Result.Success(response.body()))
                     } else {
-                        onResponse(response.errorBody())
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
                     }
                 }
 
                 override fun onFailure(call: Call<Movies>, t: Throwable) {
-
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
                 }
             })
     }
@@ -139,14 +133,23 @@ class MovieRepository {
         page: Int,
         lang: String,
         region: String,
-        onResponse: (movies: Movies?) -> Unit
+        onResponse: (result: Result<Movies>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getTopRated(apiKey = key, page = page, language = lang, region = region)
+        movieService.getPopular(apiKey = key, page = page, language = lang, region = region)
+            .enqueue(object : Callback<Movies> {
+                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                    if (response.isSuccessful) {
+                        onResponse(Result.Success(response.body()))
+                    } else {
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body()!!)
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<Movies>, t: Throwable) {
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
+                }
+            })
     }
 }

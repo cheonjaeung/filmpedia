@@ -14,7 +14,11 @@ class HomeViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    private val _isOffline: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isOffline: LiveData<Boolean>
+        get() = _isOffline
+
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
@@ -47,30 +51,36 @@ class HomeViewModel : ViewModel() {
             isNowPlayingLoading = true
             isHighRatedLoading = true
 
-            val popularJob = repository.fetchPopularMovies(apiKey, 1, language, region) { movies ->
-                if (movies != null) {
-                    val list = movies.results
+            val popularJob = repository.fetchPopularMovies(apiKey, 1, language, region) { result ->
+                result.onSuccess {
+                    val list = it.results
                     if (list.isNotEmpty()) {
                         _popularMovies.postValue(list.toMutableList())
                     }
+                }.onNetworkError {
+                    _isOffline.postValue(true)
                 }
             }
 
-            val nowPlayingJob = repository.fetchNowPlayingMovies(apiKey, 1, language, region) { movies ->
-                if (movies != null) {
-                    val list = movies.results
+            val nowPlayingJob = repository.fetchNowPlayingMovies(apiKey, 1, language, region) { result ->
+                result.onSuccess {
+                    val list = it.results
                     if (list.isNotEmpty()) {
                         _nowPlayingMovies.postValue(list.toMutableList())
                     }
+                }.onNetworkError {
+                    _isOffline.postValue(true)
                 }
             }
 
-            val highRatedJob = repository.fetchHighRatedMovies(apiKey, 1, language, region) { movies ->
-                if (movies != null) {
-                    val list = movies.results
+            val highRatedJob = repository.fetchHighRatedMovies(apiKey, 1, language, region) { result ->
+                result.onSuccess {
+                    val list = it.results
                     if (list.isNotEmpty()) {
                         _highRatedMovies.postValue(list.toMutableList())
                     }
+                }.onNetworkError {
+                    _isOffline.postValue(true)
                 }
             }
 
@@ -92,12 +102,14 @@ class HomeViewModel : ViewModel() {
             isPopularLoading = true
             val nextPage = popularPage + 1
 
-            repository.fetchPopularMovies(apiKey, nextPage, language, region) { movies ->
-                if (movies != null) {
-                    val newList = movies.results
+            repository.fetchPopularMovies(apiKey, nextPage, language, region) { result ->
+                result.onSuccess {
+                    val newList = it.results
                     val currentList = popularMovies.value
                     currentList?.addAll(newList)
                     _popularMovies.postValue(currentList)
+                }.onNetworkError {
+                    _isOffline.postValue(true)
                 }
             }.join()
 
@@ -115,12 +127,14 @@ class HomeViewModel : ViewModel() {
             isNowPlayingLoading = true
             val nextPage = nowPlayingPage + 1
 
-            repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) { movies ->
-                if (movies != null) {
-                    val newList = movies.results
+            repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) { result ->
+                result.onSuccess {
+                    val newList = it.results
                     val currentList = nowPlayingMovies.value
                     currentList?.addAll(newList)
                     _nowPlayingMovies.postValue(currentList)
+                }.onNetworkError {
+                    _isOffline.postValue(true)
                 }
             }.join()
 
@@ -138,12 +152,14 @@ class HomeViewModel : ViewModel() {
             isHighRatedLoading = true
             val nextPage = highRatedPage + 1
 
-            repository.fetchHighRatedMovies(apiKey, nextPage, language, region) { movies ->
-                if (movies != null) {
-                    val newList = movies.results
+            repository.fetchHighRatedMovies(apiKey, nextPage, language, region) { result ->
+                result.onSuccess {
+                    val newList = it.results
                     val currentList = highRatedMovies.value
                     currentList?.addAll(newList)
                     _highRatedMovies.postValue(currentList)
+                }.onNetworkError {
+                    _isOffline.postValue(true)
                 }
             }.join()
 

@@ -41,24 +41,16 @@ interface MovieService {
         @Query("language") language: String? = null
     ): Response<MovieImages>
 
-    @GET("movie/{movie_id}/recommendations")
-    suspend fun getRecommendations(
-        @Path("movie_id") movieId: Int,
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String? = null,
-        @Query("page") page: Int? = null
-    ): Response<Movies>
-
     @GET("movie/now_playing")
-    suspend fun getNowPlaying(
+    fun getNowPlaying(
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
         @Query("page") page: Int? = null,
         @Query("region") region: String? = null
-    ): Response<Movies>
+    ): Call<Movies>
 
     @GET("movie/popular")
-    suspend fun getPopular(
+    fun getPopular(
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
         @Query("page") page: Int? = null,
@@ -66,10 +58,10 @@ interface MovieService {
     ): Call<Movies>
 
     @GET("movie/top_rated")
-    suspend fun getTopRated(
+    fun getTopRated(
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
         @Query("page") page: Int? = null,
         @Query("region") region: String? = null
-    ): Response<Movies>
+    ): Call<Movies>
 }
