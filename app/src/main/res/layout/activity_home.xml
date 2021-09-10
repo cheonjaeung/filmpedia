@@ -34,32 +34,42 @@
                     android:tint="@color/white" />
             </com.google.android.material.appbar.MaterialToolbar>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabTextColor="@color/gray"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextAppearance="@style/FilmpediaTabLayoutItemTheme"
-                app:tabIndicatorHeight="0dp"
-                app:tabRippleColor="@android:color/transparent" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabTextColor="@color/gray"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextAppearance="@style/FilmpediaTabLayoutItemTheme"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabRippleColor="@android:color/transparent" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background"
-                is_visible="@{vm.isLoading}">
+                is_visible="@{vm.isLoading}"
+                tools:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/loading"
@@ -69,6 +79,18 @@
                     android:src="@drawable/icon_logo"
                     android:tint="@color/white"
                     is_visible="@{vm.isLoading}" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/offline_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:visibility="gone"
+                is_visible="@{vm.isOffline}"
+                tools:visibility="visible">
+
+                <include layout="@layout/layout_network_offline" />
             </FrameLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
