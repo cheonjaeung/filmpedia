@@ -82,12 +82,10 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/offline_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/background"
                 android:visibility="gone"
-                is_visible="@{vm.isOffline}"
+                is_visible="@{vm.isOnline ? false : true}"
                 tools:visibility="visible">
 
                 <include layout="@layout/layout_network_offline" />

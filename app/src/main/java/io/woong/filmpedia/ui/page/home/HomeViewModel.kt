@@ -14,9 +14,9 @@ class HomeViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
 
-    private val _isOffline: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isOffline: LiveData<Boolean>
-        get() = _isOffline
+    private val _isOnline: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isOnline: LiveData<Boolean>
+        get() = _isOnline
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
@@ -58,7 +58,7 @@ class HomeViewModel : ViewModel() {
                         _popularMovies.postValue(list.toMutableList())
                     }
                 }.onNetworkError {
-                    _isOffline.postValue(true)
+                    _isOnline.postValue(false)
                 }
             }
 
@@ -69,7 +69,7 @@ class HomeViewModel : ViewModel() {
                         _nowPlayingMovies.postValue(list.toMutableList())
                     }
                 }.onNetworkError {
-                    _isOffline.postValue(true)
+                    _isOnline.postValue(false)
                 }
             }
 
@@ -80,7 +80,7 @@ class HomeViewModel : ViewModel() {
                         _highRatedMovies.postValue(list.toMutableList())
                     }
                 }.onNetworkError {
-                    _isOffline.postValue(true)
+                    _isOnline.postValue(false)
                 }
             }
 
@@ -109,7 +109,7 @@ class HomeViewModel : ViewModel() {
                     currentList?.addAll(newList)
                     _popularMovies.postValue(currentList)
                 }.onNetworkError {
-                    _isOffline.postValue(true)
+                    _isOnline.postValue(false)
                 }
             }.join()
 
@@ -134,7 +134,7 @@ class HomeViewModel : ViewModel() {
                     currentList?.addAll(newList)
                     _nowPlayingMovies.postValue(currentList)
                 }.onNetworkError {
-                    _isOffline.postValue(true)
+                    _isOnline.postValue(false)
                 }
             }.join()
 
@@ -159,7 +159,7 @@ class HomeViewModel : ViewModel() {
                     currentList?.addAll(newList)
                     _highRatedMovies.postValue(currentList)
                 }.onNetworkError {
-                    _isOffline.postValue(true)
+                    _isOnline.postValue(false)
                 }
             }.join()
 
