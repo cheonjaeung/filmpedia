@@ -46,6 +46,14 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutRe
         return binding.root
     }
 
+    @CallSuper
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _app = null
+        _binding?.unbind()
+        _binding = null
+    }
+
     protected fun log(message: String, priority: Int = Log.DEBUG) {
         val tag = this::class.simpleName
         Log.println(priority, tag, message)
@@ -67,13 +75,5 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutRe
 
     protected fun snackbar(message: CharSequence, duration: Int = Snackbar.LENGTH_LONG) {
         Snackbar.make(requireContext(), binding.root, message, duration).show()
-    }
-
-    @CallSuper
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _app = null
-        _binding?.unbind()
-        _binding = null
     }
 }
