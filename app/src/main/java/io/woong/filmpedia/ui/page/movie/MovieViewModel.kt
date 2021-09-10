@@ -11,7 +11,6 @@ import io.woong.filmpedia.repository.MovieRepository
 import io.woong.filmpedia.util.isNotNullOrBlank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -19,9 +18,18 @@ class MovieViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
 
+    private val _isOnline: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isOnline: LiveData<Boolean>
+        get() = _isOnline
+
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
+    private var isDetailLoading: Boolean = false
+    private var isImageLoading: Boolean = false
+    private var isSocialLoading: Boolean = false
+    private var isCreditLoading: Boolean = false
 
     private val _title: MutableLiveData<String> = MutableLiveData()
     val title: LiveData<String>
@@ -122,37 +130,46 @@ class MovieViewModel : ViewModel() {
 
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
         _isLoading.postValue(true)
+        isDetailLoading = true
+        isImageLoading = true
+        isSocialLoading = true
+        isCreditLoading = true
 
-        val detailJob = repository.fetchMovieDetail(key = apiKey, lang = language, id = movieId) { movie ->
-            if (movie != null) {
-                _title.postValue(movie.title)
-                _originalTitle.postValue(movie.originalTitle)
-                _poster.postValue(movie.posterPath)
-                _releaseDate.postValue(movie.releaseDate)
-                _runtime.postValue(movie.runtime)
-                _rating.postValue(movie.voteAverage)
-                _genres.postValue(movie.genres)
+        repository.fetchMovieDetail(key = apiKey, lang = language, id = movieId) { result ->
+            result.onSuccess {
+                _title.postValue(it.title)
+                _originalTitle.postValue(it.originalTitle)
+                _poster.postValue(it.posterPath)
+                _releaseDate.postValue(it.releaseDate)
+                _runtime.postValue(it.runtime)
+                _rating.postValue(it.voteAverage)
+                _genres.postValue(it.genres)
 
-                _spokenLanguages.postValue(translateSpokenLanguages(language, movie.spokenLanguages))
-                _budget.postValue(movie.budget)
-                _revenue.postValue(movie.revenue)
+                _spokenLanguages.postValue(translateSpokenLanguages(language, it.spokenLanguages))
+                _budget.postValue(it.budget)
+                _revenue.postValue(it.revenue)
 
-                _homepage.postValue(movie.homepage)
-                _isHomepageVisible.postValue(movie.homepage.isNotNullOrBlank())
+                _homepage.postValue(it.homepage)
+                _isHomepageVisible.postValue(it.homepage.isNotNullOrBlank())
 
-                _tagline.postValue(movie.tagline)
-                _isTaglineVisible.postValue(movie.tagline.isNotNullOrBlank())
-                _overview.postValue(movie.overview)
-                _isOverviewVisible.postValue(movie.overview.isNotNullOrBlank())
+                _tagline.postValue(it.tagline)
+                _isTaglineVisible.postValue(it.tagline.isNotNullOrBlank())
+                _overview.postValue(it.overview)
+                _isOverviewVisible.postValue(it.overview.isNotNullOrBlank())
 
-                _series.postValue(movie.belongsToCollection)
-                _isSeriesVisible.postValue(movie.belongsToCollection != null)
+                _series.postValue(it.belongsToCollection)
+                _isSeriesVisible.postValue(it.belongsToCollection != null)
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
+
+            isDetailLoading = false
+            finishLoadingIfPossible()
         }
 
-        val imageJob = repository.fetchImages(key = apiKey, id = movieId) { images ->
-            if (images != null) {
-                val slides = images.backdrops
+        repository.fetchImages(key = apiKey, id = movieId) { result ->
+            result.onSuccess {
+                val slides = it.backdrops
                 if (slides.isNotEmpty()) {
                     val slidePaths = mutableListOf<String>()
                     slides.forEach { slide ->
@@ -160,38 +177,50 @@ class MovieViewModel : ViewModel() {
                     }
                     _slides.postValue(slidePaths)
                 }
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
+
+            isImageLoading = false
+            finishLoadingIfPossible()
         }
 
-        val socialJob = repository.fetchExternalIds(key = apiKey, id = movieId) { ids ->
-            if (ids != null) {
-                _facebook.postValue(ids.facebookId)
-                _instagram.postValue(ids.instagramId)
-                _twitter.postValue(ids.twitterId)
+        repository.fetchExternalIds(key = apiKey, id = movieId) { result ->
+            result.onSuccess {
+                _facebook.postValue(it.facebookId)
+                _instagram.postValue(it.instagramId)
+                _twitter.postValue(it.twitterId)
 
-                _isFacebookVisible.postValue(ids.facebookId.isNotNullOrBlank())
-                _isInstagramVisible.postValue(ids.instagramId.isNotNullOrBlank())
-                _isTwitterVisible.postValue(ids.twitterId.isNotNullOrBlank())
+                _isFacebookVisible.postValue(it.facebookId.isNotNullOrBlank())
+                _isInstagramVisible.postValue(it.instagramId.isNotNullOrBlank())
+                _isTwitterVisible.postValue(it.twitterId.isNotNullOrBlank())
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
+
+            isSocialLoading = false
+            finishLoadingIfPossible()
         }
 
-        val creditJob = repository.fetchCredits(key = apiKey, lang = language, id = movieId) { credits ->
-            if (credits != null) {
+        repository.fetchCredits(key = apiKey, lang = language, id = movieId) { result ->
+            result.onSuccess {
                 var count = 10
                 val people = mutableListOf<PersonSummary>()
 
-                val directors = extractDirectors(credits.crew)
+                val directors = extractDirectors(it.crew)
                 count -= directors.size
                 people.addAll(directors)
 
-                people.addAll(subCastings(credits.cast, count))
+                people.addAll(subCastings(it.cast, count))
 
                 _directorAndCasting.postValue(people)
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
-        }
 
-        joinAll(detailJob, imageJob, socialJob, creditJob)
-        _isLoading.postValue(false)
+            isCreditLoading = false
+            finishLoadingIfPossible()
+        }
     }
 
     private fun translateSpokenLanguages(languageCode: String, languageList: List<Movie.Country>): List<String> {
@@ -254,5 +283,11 @@ class MovieViewModel : ViewModel() {
         }
 
         return casting
+    }
+
+    private fun finishLoadingIfPossible() {
+        if (!isDetailLoading && !isImageLoading && !isSocialLoading && !isCreditLoading) {
+            _isLoading.postValue(false)
+        }
     }
 }

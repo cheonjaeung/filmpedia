@@ -24,58 +24,94 @@ class MovieRepository {
         key: String,
         id: Int,
         lang: String,
-        onResponse: (movie: Movie?) -> Unit
+        onResponse: (result: Result<Movie>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getDetail(apiKey = key, movieId = id, language = lang)
+        movieService.getDetail(apiKey = key, movieId = id, language = lang)
+            .enqueue(object : Callback<Movie> {
+                override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                    if (response.isSuccessful) {
+                        onResponse(Result.Success(response.body()))
+                    } else {
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body())
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<Movie>, t: Throwable) {
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
+                }
+            })
     }
 
     fun fetchCredits(
         key: String,
         id: Int,
         lang: String,
-        onResponse: (credits: Credits?) -> Unit
+        onResponse: (result: Result<Credits>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getCredits(movieId = id, apiKey = key, language = lang)
+        movieService.getCredits(movieId = id, apiKey = key, language = lang)
+            .enqueue(object : Callback<Credits> {
+                override fun onResponse(call: Call<Credits>, response: Response<Credits>) {
+                    if (response.isSuccessful) {
+                        onResponse(Result.Success(response.body()))
+                    } else {
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body())
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<Credits>, t: Throwable) {
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
+                }
+            })
     }
 
     fun fetchExternalIds(
         key: String,
         id: Int,
-        onResponse: (ids: ExternalIds?) -> Unit
+        onResponse: (result: Result<ExternalIds>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getExternalIds(movieId = id, apiKey = key)
+        movieService.getExternalIds(movieId = id, apiKey = key)
+            .enqueue(object : Callback<ExternalIds> {
+                override fun onResponse(call: Call<ExternalIds>, response: Response<ExternalIds>) {
+                    if (response.isSuccessful) {
+                        onResponse(Result.Success(response.body()))
+                    } else {
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body())
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<ExternalIds>, t: Throwable) {
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
+                }
+            })
     }
 
     fun fetchImages(
         key: String,
         id: Int,
-        onResponse: (images: MovieImages?) -> Unit
+        onResponse: (result: Result<MovieImages>) -> Unit
     ) = CoroutineScope(Dispatchers.IO).launch {
-        val response = movieService.getImages(movieId = id, apiKey = key)
+        movieService.getImages(movieId = id, apiKey = key)
+            .enqueue(object : Callback<MovieImages> {
+                override fun onResponse(call: Call<MovieImages>, response: Response<MovieImages>) {
+                    if (response.isSuccessful) {
+                        onResponse(Result.Success(response.body()))
+                    } else {
+                        onResponse(Result.Failure(response.code(), response.errorBody()))
+                    }
+                }
 
-        if (response.isSuccessful) {
-            onResponse(response.body())
-        } else {
-            onResponse(null)
-        }
+                override fun onFailure(call: Call<MovieImages>, t: Throwable) {
+                    if (t is IOException) {
+                        onResponse(Result.NetworkError)
+                    }
+                }
+            })
     }
 
     fun fetchPopularMovies(

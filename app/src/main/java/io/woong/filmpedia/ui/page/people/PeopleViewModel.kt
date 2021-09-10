@@ -24,8 +24,8 @@ class PeopleViewModel : ViewModel() {
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
         _isLoading.postValue(true)
 
-        repository.fetchCredits(key = apiKey, lang = language, id = movieId) { credits ->
-            if (credits != null) {
+        repository.fetchCredits(key = apiKey, lang = language, id = movieId) { result ->
+            result.onSuccess { credits ->
                 val castList = credits.cast
                 val crewList = credits.crew
 
