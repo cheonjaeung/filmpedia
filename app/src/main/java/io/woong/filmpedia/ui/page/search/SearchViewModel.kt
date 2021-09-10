@@ -140,7 +140,7 @@ class SearchViewModel : ViewModel() {
                 }
                 _isGenresReady = true
             }
-        }
+        }.join()
     }
 
     private fun convertGenreIdsToList(ids: List<Int>): List<Genres.Genre> {
