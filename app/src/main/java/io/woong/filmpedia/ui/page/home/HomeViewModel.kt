@@ -7,7 +7,6 @@ import io.woong.filmpedia.data.movie.Movies
 import io.woong.filmpedia.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -18,24 +17,26 @@ class HomeViewModel : ViewModel() {
     val isOnline: LiveData<Boolean>
         get() = _isOnline
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-
     private var popularPage: Int = 1
-    private var isPopularLoading: Boolean = false
+    private val _isPopularLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isPopularLoading: LiveData<Boolean>
+        get() = _isPopularLoading
     private val _popularMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
     val popularMovies: LiveData<MutableList<Movies.Movie>>
         get() = _popularMovies
 
     private var nowPlayingPage: Int = 1
-    private var isNowPlayingLoading: Boolean = false
+    private val _isNowPlayingLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isNowPlayingLoading: LiveData<Boolean>
+        get() = _isNowPlayingLoading
     private val _nowPlayingMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
     val nowPlayingMovies: LiveData<MutableList<Movies.Movie>>
         get() = _nowPlayingMovies
 
     private var highRatedPage: Int = 1
-    private var isHighRatedLoading: Boolean = false
+    private val _isHighRatedLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isHighRatedLoading: LiveData<Boolean>
+        get() = _isHighRatedLoading
     private val _highRatedMovies: MutableLiveData<MutableList<Movies.Movie>> = MutableLiveData()
     val highRatedMovies: LiveData<MutableList<Movies.Movie>>
         get() = _highRatedMovies
@@ -45,13 +46,12 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        if (!isPopularLoading && !isNowPlayingLoading && !isHighRatedLoading) {
-            _isLoading.postValue(true)
-            isPopularLoading = true
-            isNowPlayingLoading = true
-            isHighRatedLoading = true
+        if (isPopularLoading.value != true && isNowPlayingLoading.value != true && isHighRatedLoading.value != true) {
+            _isPopularLoading.postValue(true)
+            _isNowPlayingLoading.postValue(true)
+            _isHighRatedLoading.postValue(true)
 
-            val popularJob = repository.fetchPopularMovies(apiKey, 1, language, region) { result ->
+            repository.fetchPopularMovies(apiKey, 1, language, region) { result ->
                 result.onSuccess {
                     val list = it.results
                     if (list.isNotEmpty()) {
@@ -60,9 +60,11 @@ class HomeViewModel : ViewModel() {
                 }.onNetworkError {
                     _isOnline.postValue(false)
                 }
+
+                _isPopularLoading.postValue(false)
             }
 
-            val nowPlayingJob = repository.fetchNowPlayingMovies(apiKey, 1, language, region) { result ->
+            repository.fetchNowPlayingMovies(apiKey, 1, language, region) { result ->
                 result.onSuccess {
                     val list = it.results
                     if (list.isNotEmpty()) {
@@ -71,9 +73,11 @@ class HomeViewModel : ViewModel() {
                 }.onNetworkError {
                     _isOnline.postValue(false)
                 }
+
+                _isNowPlayingLoading.postValue(false)
             }
 
-            val highRatedJob = repository.fetchHighRatedMovies(apiKey, 1, language, region) { result ->
+            repository.fetchHighRatedMovies(apiKey, 1, language, region) { result ->
                 result.onSuccess {
                     val list = it.results
                     if (list.isNotEmpty()) {
@@ -82,14 +86,9 @@ class HomeViewModel : ViewModel() {
                 }.onNetworkError {
                     _isOnline.postValue(false)
                 }
+
+                _isHighRatedLoading.postValue(false)
             }
-
-            joinAll(popularJob, nowPlayingJob, highRatedJob)
-
-            isPopularLoading = false
-            isNowPlayingLoading = false
-            isHighRatedLoading = false
-            _isLoading.postValue(false)
         }
     }
 
@@ -98,8 +97,9 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        if (!isPopularLoading) {
-            isPopularLoading = true
+        if (isPopularLoading.value != true) {
+            _isPopularLoading.postValue(true)
+
             val nextPage = popularPage + 1
 
             repository.fetchPopularMovies(apiKey, nextPage, language, region) { result ->
@@ -111,10 +111,10 @@ class HomeViewModel : ViewModel() {
                 }.onNetworkError {
                     _isOnline.postValue(false)
                 }
-            }.join()
 
-            popularPage = nextPage
-            isPopularLoading = false
+                popularPage = nextPage
+                _isPopularLoading.postValue(false)
+            }
         }
     }
 
@@ -123,8 +123,9 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        if (!isNowPlayingLoading) {
-            isNowPlayingLoading = true
+        if (isNowPlayingLoading.value != true) {
+            _isNowPlayingLoading.postValue(true)
+
             val nextPage = nowPlayingPage + 1
 
             repository.fetchNowPlayingMovies(apiKey, nextPage, language, region) { result ->
@@ -136,10 +137,10 @@ class HomeViewModel : ViewModel() {
                 }.onNetworkError {
                     _isOnline.postValue(false)
                 }
-            }.join()
 
-            nowPlayingPage = nextPage
-            isNowPlayingLoading = false
+                nowPlayingPage = nextPage
+                _isNowPlayingLoading.postValue(false)
+            }
         }
     }
 
@@ -148,8 +149,9 @@ class HomeViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        if (!isHighRatedLoading) {
-            isHighRatedLoading = true
+        if (isHighRatedLoading.value != true) {
+            _isHighRatedLoading.postValue(true)
+
             val nextPage = highRatedPage + 1
 
             repository.fetchHighRatedMovies(apiKey, nextPage, language, region) { result ->
@@ -161,10 +163,10 @@ class HomeViewModel : ViewModel() {
                 }.onNetworkError {
                     _isOnline.postValue(false)
                 }
-            }.join()
 
-            highRatedPage = nextPage
-            isHighRatedLoading = false
+                highRatedPage = nextPage
+                _isHighRatedLoading.postValue(false)
+            }
         }
     }
 }

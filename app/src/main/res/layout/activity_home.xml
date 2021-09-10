@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background"
-                is_visible="@{vm.isLoading}"
+                is_visible="@{vm.isPopularLoading &amp;&amp; vm.isNowPlayingLoading &amp;&amp; vm.isHighRatedLoading}"
                 tools:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -78,7 +78,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/icon_logo"
                     android:tint="@color/white"
-                    is_visible="@{vm.isLoading}" />
+                    is_visible="@{vm.isPopularLoading &amp;&amp; vm.isNowPlayingLoading &amp;&amp; vm.isHighRatedLoading}" />
             </FrameLayout>
 
             <FrameLayout
@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 is_visible="@{vm.isOnline ? false : true}"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <include layout="@layout/layout_network_offline" />
             </FrameLayout>
