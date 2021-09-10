@@ -12,6 +12,7 @@ I hope it can be good sample to Android developers and leaners.
 
 ## Features
 
+- English and Korean language support
 - Popular, now playing and high rated movie list
 - Movie detail information
 - Person detail information
