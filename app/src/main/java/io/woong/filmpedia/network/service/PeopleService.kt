@@ -1,10 +1,9 @@
 package io.woong.filmpedia.network.service
 
-import io.woong.filmpedia.data.*
 import io.woong.filmpedia.data.people.MovieCredits
 import io.woong.filmpedia.data.people.Person
 import io.woong.filmpedia.data.people.Translations
-import retrofit2.Response
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,37 +11,30 @@ import retrofit2.http.Query
 interface PeopleService {
 
     @GET("person/{person_id}")
-    suspend fun getDetail(
+    fun getDetail(
         @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
         @Query("append_to_response") appendToResponse: String? = null
-    ): Response<Person>
+    ): Call<Person>
 
     @GET("person/{person_id}/movie_credits")
-    suspend fun getMovieCredits(
+    fun getMovieCredits(
         @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
-    ): Response<MovieCredits>
-
-    @GET("person/{person_id}/external_ids")
-    suspend fun getExternalIds(
-        @Path("person_id") personId: Int,
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String? = null,
-    ): Response<ExternalIds>
+    ): Call<MovieCredits>
 
     @GET("person/{person_id}/images")
-    suspend fun getImages(
+    fun getImages(
         @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String
-    ): Response<String>
+    ): Call<String>
 
     @GET("person/{person_id}/translations")
-    suspend fun getTranslations(
+    fun getTranslations(
         @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null,
-    ): Response<Translations>
+    ): Call<Translations>
 }
