@@ -129,6 +129,7 @@ class MovieViewModel : ViewModel() {
         get() = _revenue
 
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
+        _isOnline.postValue(true)
         _isLoading.postValue(true)
         isDetailLoading = true
         isImageLoading = true

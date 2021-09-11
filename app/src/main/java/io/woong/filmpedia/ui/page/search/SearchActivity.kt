@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -20,6 +21,7 @@ import io.woong.filmpedia.util.InfinityScrollListener
 import io.woong.filmpedia.util.ListDecoration
 
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search),
+    View.OnClickListener,
     TextView.OnEditorActionListener,
     SearchResultListAdapter.OnSearchResultClickListener {
 
@@ -60,6 +62,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 )
             }
 
+            offline.loadAgain.setOnClickListener(this@SearchActivity)
+
             AnimationUtil.blink(loading, 1000)
         }
 
@@ -87,6 +91,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             }
         } else {
             false
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.offline.loadAgain.id) {
+            viewModel.updateGenres(apiKey, language)
         }
     }
 

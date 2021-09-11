@@ -26,6 +26,7 @@ class PeopleViewModel : ViewModel() {
         get() = _people
 
     fun load(apiKey: String, language: String, movieId: Int) = CoroutineScope(Dispatchers.Default).launch {
+        _isOnline.postValue(true)
         _isLoading.postValue(true)
 
         repository.fetchCredits(key = apiKey, lang = language, id = movieId) { result ->

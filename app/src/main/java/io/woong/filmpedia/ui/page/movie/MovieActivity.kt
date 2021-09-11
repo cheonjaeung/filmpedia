@@ -75,6 +75,8 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
 
             seriesButton.setOnSeriesButtonClickListener(this@MovieActivity)
 
+            offline.loadAgain.setOnClickListener(this@MovieActivity)
+
             AnimationUtil.blink(loading, 1000)
         }
 
@@ -111,6 +113,7 @@ class MovieActivity : BaseActivity<ActivityMovieBinding>(R.layout.activity_movie
             binding.facebookButton.id -> uri = UriUtil.getSocialUri(viewModel.facebook.value, UriUtil.SocialType.FACEBOOK)
             binding.instagramButton.id -> uri = UriUtil.getSocialUri(viewModel.instagram.value, UriUtil.SocialType.INSTAGRAM)
             binding.twitterButton.id -> uri = UriUtil.getSocialUri(viewModel.twitter.value, UriUtil.SocialType.TWITTER)
+            binding.offline.loadAgain.id -> viewModel.load(apiKey, language, movieId)
         }
 
         if (uri != null) {

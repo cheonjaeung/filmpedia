@@ -38,6 +38,7 @@
                 android:layout_height="match_parent"
                 app:spanCount="2"
                 list_item="@{vm.people}"
+                is_visible="@{vm.isOnline}"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_people_list" />
 
@@ -65,7 +66,8 @@
                 is_visible="@{vm.isOnline ? false : true}"
                 tools:visibility="gone">
 
-                <include layout="@layout/layout_network_offline" />
+                <include android:id="@+id/offline"
+                    layout="@layout/layout_network_offline" />
             </FrameLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

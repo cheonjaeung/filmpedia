@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.page.series
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.ListDecoration
 
 class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_series),
+    View.OnClickListener,
     SeriesMovieListAdapter.OnSeriesMovieClickListener {
 
     companion object {
@@ -56,6 +58,8 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_ser
                 addItemDecoration(ListDecoration.VerticalDecoration(2))
             }
 
+            offline.loadAgain.setOnClickListener(this@SeriesActivity)
+
             AnimationUtil.blink(loading, 1000)
         }
 
@@ -81,6 +85,12 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(R.layout.activity_ser
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.offline.loadAgain.id) {
+            viewModel.load(apiKey, language, collectionId)
         }
     }
 

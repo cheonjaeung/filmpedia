@@ -37,6 +37,7 @@ class SearchViewModel : ViewModel() {
     private val genreMap: HashMap<Int, String> = hashMapOf()
 
     fun updateGenres(apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
+        _isOnline.postValue(true)
         _isLoading.postValue(true)
 
         genreRepository.fetchGenres(key = apiKey, lang = language) { result ->
@@ -60,9 +61,10 @@ class SearchViewModel : ViewModel() {
         region: String,
         query: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        _isLoading.postValue(true)
-
         if (!isResultLoading && isReady.value == true) {
+            _isOnline.postValue(true)
+            _isLoading.postValue(true)
+
             isResultLoading = true
 
             searchRepository.fetchMovies(
@@ -110,6 +112,8 @@ class SearchViewModel : ViewModel() {
         query: String
     ) = CoroutineScope(Dispatchers.Default).launch {
         if (!isResultLoading && isReady.value == true) {
+            _isOnline.postValue(true)
+
             isResultLoading = true
             val nextPage = resultPage + 1
 

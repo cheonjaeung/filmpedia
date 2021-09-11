@@ -5,6 +5,9 @@
     <!-- General -->
     <string name="network_offline">오프라인 상태</string>
     <string name="network_offline_description">네트워크에 연결한 후 다시 시도해 주세요.</string>
+    <string name="something_wrong">이런!</string>
+    <string name="something_wrong_description">페이지를 불러오는 도중 무언가 잘못된 것 같아요.</string>
+    <string name="load_again">다시 불러오기</string>
 
     <!-- HomeActivity -->
     <string name="home_tab_0">인기</string>

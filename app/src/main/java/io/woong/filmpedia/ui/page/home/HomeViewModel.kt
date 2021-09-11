@@ -47,6 +47,8 @@ class HomeViewModel : ViewModel() {
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
         if (isPopularLoading.value != true && isNowPlayingLoading.value != true && isHighRatedLoading.value != true) {
+            _isOnline.postValue(true)
+
             _isPopularLoading.postValue(true)
             _isNowPlayingLoading.postValue(true)
             _isHighRatedLoading.postValue(true)
@@ -98,6 +100,8 @@ class HomeViewModel : ViewModel() {
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
         if (isPopularLoading.value != true) {
+            _isOnline.postValue(true)
+
             _isPopularLoading.postValue(true)
 
             val nextPage = popularPage + 1
@@ -124,6 +128,8 @@ class HomeViewModel : ViewModel() {
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
         if (isNowPlayingLoading.value != true) {
+            _isOnline.postValue(true)
+
             _isNowPlayingLoading.postValue(true)
 
             val nextPage = nowPlayingPage + 1
@@ -150,6 +156,8 @@ class HomeViewModel : ViewModel() {
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
         if (isHighRatedLoading.value != true) {
+            _isOnline.postValue(true)
+
             _isHighRatedLoading.postValue(true)
 
             val nextPage = highRatedPage + 1

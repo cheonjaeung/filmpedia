@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import io.woong.filmpedia.R
@@ -13,7 +14,7 @@ import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.ui.page.search.SearchActivity
 import io.woong.filmpedia.util.AnimationUtil
 
-class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
+class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home), View.OnClickListener {
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -42,6 +43,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 tab.text = tabNames[position]
             }.attach()
 
+            offline.loadAgain.setOnClickListener(this@HomeActivity)
+
             AnimationUtil.blink(loading, 1000)
         }
 
@@ -60,6 +63,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             true
         } else {
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.offline.loadAgain.id) {
+            viewModel.updateAll(apiKey, language, region)
         }
     }
 

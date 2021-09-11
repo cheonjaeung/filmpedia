@@ -6,6 +6,9 @@
 
     <data>
         <variable
+            name="activity"
+            type="io.woong.filmpedia.ui.page.home.HomeActivity" />
+        <variable
             name="vm"
             type="io.woong.filmpedia.ui.page.home.HomeViewModel" />
     </data>
@@ -44,7 +47,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                is_visible="@{vm.isOnline}">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -86,7 +90,8 @@
                 is_visible="@{vm.isOnline ? false : true}"
                 tools:visibility="gone">
 
-                <include layout="@layout/layout_network_offline" />
+                <include android:id="@+id/offline"
+                    layout="@layout/layout_network_offline" />
             </FrameLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

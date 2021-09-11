@@ -42,6 +42,7 @@ class SeriesViewModel : ViewModel() {
         get() = _movies
 
     fun load(apiKey: String, language: String, collectionId: Int) = CoroutineScope(Dispatchers.Default).launch {
+        _isOnline.postValue(true)
         _isLoading.postValue(true)
 
         repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { result ->

@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.page.person
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.woong.filmpedia.R
@@ -13,6 +14,7 @@ import io.woong.filmpedia.ui.page.movie.MovieActivity
 import io.woong.filmpedia.util.AnimationUtil
 
 class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_person),
+    View.OnClickListener,
     FilmographyAdapter.OnMovieClickListener {
 
     companion object {
@@ -55,6 +57,8 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
 
+            offline.loadAgain.setOnClickListener(this@PersonActivity)
+
             AnimationUtil.blink(loading, 1000)
         }
 
@@ -68,6 +72,12 @@ class PersonActivity : BaseActivity<ActivityPersonBinding>(R.layout.activity_per
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.offline.loadAgain.id) {
+            viewModel.load(this, personId, apiKey, language, region)
         }
     }
 

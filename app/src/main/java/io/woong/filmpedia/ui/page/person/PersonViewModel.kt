@@ -42,6 +42,7 @@ class PersonViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
+        _isOnline.postValue(true)
         _isLoading.postValue(true)
 
         loadDetail(personId, apiKey, language)

@@ -3,6 +3,7 @@ package io.woong.filmpedia.ui.page.people
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import io.woong.filmpedia.R
@@ -14,6 +15,7 @@ import io.woong.filmpedia.util.AnimationUtil
 import io.woong.filmpedia.util.ListDecoration
 
 class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_people),
+    View.OnClickListener,
     PeopleListAdapter.OnPeopleListItemClickListener{
 
     companion object {
@@ -50,6 +52,8 @@ class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_peo
                 addItemDecoration(ListDecoration.GridDecoration(2))
             }
 
+            offline.loadAgain.setOnClickListener(this@PeopleActivity)
+
             AnimationUtil.blink(loading, 1000)
         }
 
@@ -74,6 +78,12 @@ class PeopleActivity : BaseActivity<ActivityPeopleBinding>(R.layout.activity_peo
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.offline.loadAgain.id) {
+            viewModel.load(apiKey, language, movieId)
         }
     }
 

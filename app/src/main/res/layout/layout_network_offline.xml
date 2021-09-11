@@ -26,4 +26,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/network_offline_description" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/load_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/load_again"
+        android:textColor="@color/purple"/>
 </LinearLayout>

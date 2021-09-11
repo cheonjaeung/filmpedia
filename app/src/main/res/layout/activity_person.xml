@@ -38,6 +38,7 @@
                 android:layout_height="match_parent"
                 android:paddingBottom="16dp"
                 list_item="@{vm.filmography}"
+                is_visible="@{vm.isOnline}"
                 tools:orientation="vertical"
                 tools:listitem="@layout/item_person_filmography_profile"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -66,7 +67,8 @@
                 is_visible="@{vm.isOnline ? false : true}"
                 tools:visibility="gone">
 
-                <include layout="@layout/layout_network_offline" />
+                <include android:id="@+id/offline"
+                    layout="@layout/layout_network_offline" />
             </FrameLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

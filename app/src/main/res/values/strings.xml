@@ -2,8 +2,11 @@
     <string name="app_name">Filmpedia</string>
     
     <!-- General -->
-    <string name="network_offline">Network is offline</string>
+    <string name="network_offline">Network is Offline</string>
     <string name="network_offline_description">Please connect to network and retry.</string>
+    <string name="something_wrong">Oops!</string>
+    <string name="something_wrong_description">Something whet wrong while loading this page.</string>
+    <string name="load_again">Load Again</string>
 
     <!-- HomeActivity -->
     <string name="home_tab_0">Popular</string>
