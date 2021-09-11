@@ -16,15 +16,20 @@ class PersonViewModel : ViewModel() {
 
     private val repository: PeopleRepository = PeopleRepository()
 
+    private val _isOnline: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isOnline: LiveData<Boolean>
+        get() = _isOnline
+
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+    private var isDetailLoading: Boolean = false
+    private var isBiographyLoading: Boolean = false
+    private var isCreditLoading: Boolean = false
 
-    private var profile: Filmography.Profile? = null
-    private var biography: Filmography.Biography? = null
-    private var actingMovies: MutableList<Filmography> = mutableListOf()
-    private var directingMovies: MutableList<Filmography> = mutableListOf()
-    private var staffMovies: MutableList<Filmography> = mutableListOf()
+    private var profile: Filmography? = null
+    private var biography: Filmography? = null
+    private var movies: MutableList<Filmography> = mutableListOf()
 
     private val _filmography: MutableLiveData<List<Filmography>> = MutableLiveData()
     val filmography: LiveData<List<Filmography>>
@@ -39,41 +44,21 @@ class PersonViewModel : ViewModel() {
     ) = CoroutineScope(Dispatchers.Default).launch {
         _isLoading.postValue(true)
 
-        val detailJob = loadDetail(personId, apiKey, language)
-        val biographyJob = loadBiography(personId, apiKey, language, region)
-        val creditJob = loadCredits(personId, apiKey, language)
-
-        joinAll(detailJob, biographyJob, creditJob)
-
-        val list = mutableListOf<Filmography>()
-        profile?.let {
-            list.add(it)
-        }
-        biography?.let {
-            list.add(it)
-        }
-        if (actingMovies.isNotEmpty()) {
-            list.add(createTitleItem(context.getString(R.string.person_filmography_acting)))
-            list.addAll(actingMovies)
-        }
-        if (directingMovies.isNotEmpty()) {
-            list.add(createTitleItem(context.getString(R.string.person_filmography_directing)))
-            list.addAll(directingMovies)
-        }
-        if (staffMovies.isNotEmpty()) {
-            list.add(createTitleItem(context.getString(R.string.person_filmography_staff)))
-            list.addAll(staffMovies)
-        }
-
-        _filmography.postValue(list)
-
-        _isLoading.postValue(false)
+        loadDetail(personId, apiKey, language)
+        loadBiography(personId, apiKey, language, region)
+        loadCredits(context, personId, apiKey, language)
     }
 
-    private fun loadDetail(personId: Int, apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
-        repository.fetchDetail(key = apiKey, id = personId, lang = language) { person ->
-            if (person != null) {
-                val gender = when (person.gender) {
+    private fun loadDetail(
+        personId: Int,
+        apiKey: String,
+        language: String
+    ) = CoroutineScope(Dispatchers.Default).launch {
+        isDetailLoading = true
+
+        repository.fetchDetail(key = apiKey, id = personId, lang = language) { result ->
+            result.onSuccess {
+                val gender = when (it.gender) {
                     Person.Gender.MALE.value -> Person.Gender.MALE
                     Person.Gender.FEMALE.value -> Person.Gender.FEMALE
                     Person.Gender.NON_BINARY.value -> Person.Gender.NON_BINARY
@@ -81,15 +66,20 @@ class PersonViewModel : ViewModel() {
                 }
 
                 profile = Filmography.Profile(
-                    person.name,
-                    person.profilePath,
-                    person.birthday,
-                    person.deathday,
+                    it.name,
+                    it.profilePath,
+                    it.birthday,
+                    it.deathday,
                     gender,
-                    person.placeOfBirth
+                    it.placeOfBirth
                 )
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
-        }.join()
+
+            isDetailLoading = false
+            mergeData()
+        }
     }
 
     private fun loadBiography(
@@ -98,15 +88,13 @@ class PersonViewModel : ViewModel() {
         language: String,
         region: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        repository.fetchTranslations(
-            key = apiKey,
-            id = personId,
-            lang = language
-        ) { translations ->
-            if (translations != null) {
-                val list = translations.translations
+        isBiographyLoading = true
 
-                if (list.isNotEmpty()) {
+        repository.fetchTranslations(key = apiKey, id = personId, lang = language) { result ->
+            result.onSuccess {
+                val list = it.translations
+
+                val biography = if (list.isNotEmpty()) {
                     var index = 0
                     var englishIndex = 0
                     for (item in list) {
@@ -131,40 +119,87 @@ class PersonViewModel : ViewModel() {
                         list[englishIndex].translated.biography
                     }
 
-                    biography = if (bio.isNotBlank()) {
+                    if (bio.isNotBlank()) {
                         Filmography.Biography(bio)
                     } else {
                         Filmography.Biography(null)
                     }
                 } else {
-                    biography = Filmography.Biography(null)
+                    Filmography.Biography(null)
                 }
-            } else {
-                biography = Filmography.Biography(null)
+
+                this@PersonViewModel.biography = biography
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
-        }.join()
+
+            isBiographyLoading = false
+            mergeData()
+        }
     }
 
-    private fun loadCredits(personId: Int, apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
-        repository.fetchMovieCredits(key = apiKey, id = personId, lang = language) { credits ->
-            if (credits != null) {
+    private fun loadCredits(
+        context: Context,
+        personId: Int,
+        apiKey: String,
+        language: String
+    ) = CoroutineScope(Dispatchers.Default).launch {
+        isCreditLoading = true
+
+        repository.fetchMovieCredits(key = apiKey, id = personId, lang = language) { result ->
+            result.onSuccess { credits ->
                 val castList = credits.casts
                 val crewList = credits.crews
 
                 val pair = crewList.divideDirectorAndStaff()
 
+                val list = mutableListOf<Filmography>()
+
                 val sortedCastList = castList.sortedByDescending { it.releaseDate }
-                actingMovies.addAll(sortedCastList.toFilmographyList())
+                val actingMovies = sortedCastList.toFilmographyList()
+                if (actingMovies.isNotEmpty()) {
+                    list.add(createTitleItem(context.getString(R.string.person_filmography_acting)))
+                    list.addAll(actingMovies)
+                }
 
                 val directingList = pair.first
                 val sortedDirectingList = directingList.sortedByDescending { it.releaseDate }
-                directingMovies.addAll(sortedDirectingList.toFilmographyList())
+                val directingMovies = sortedDirectingList.toFilmographyList()
+                if (directingList.isNotEmpty()) {
+                    list.add(createTitleItem(context.getString(R.string.person_filmography_directing)))
+                    list.addAll(directingMovies)
+                }
 
                 val staffList = pair.second
                 val sortedStaffList = staffList.sortedByDescending { it.releaseDate }
-                staffMovies.addAll(sortedStaffList.toFilmographyList())
+                val staffMovies = sortedStaffList.toFilmographyList()
+                if (staffMovies.isNotEmpty()) {
+                    list.add(createTitleItem(context.getString(R.string.person_filmography_staff)))
+                    list.addAll(staffMovies)
+                }
+
+                movies.addAll(list)
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
-        }.join()
+
+            isCreditLoading = false
+            mergeData()
+        }
+    }
+
+    private fun mergeData() {
+        if (!isDetailLoading && !isBiographyLoading && !isCreditLoading) {
+            val list = mutableListOf<Filmography>()
+            profile?.let { list.add(it) }
+            biography?.let { list.add(it) }
+            movies.forEach {
+                list.add(it)
+            }
+            _filmography.postValue(list)
+
+            _isLoading.postValue(false)
+        }
     }
 
     private fun List<MovieCredits.SubItem>.toFilmographyList(): List<Filmography> {
