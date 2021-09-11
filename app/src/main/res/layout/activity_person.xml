@@ -58,6 +58,16 @@
                     android:tint="@color/white"
                     is_visible="@{vm.isLoading}" />
             </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                is_visible="@{vm.isOnline ? false : true}"
+                tools:visibility="gone">
+
+                <include layout="@layout/layout_network_offline" />
+            </FrameLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
