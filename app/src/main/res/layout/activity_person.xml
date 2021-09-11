@@ -68,7 +68,7 @@
                 tools:visibility="gone">
 
                 <include android:id="@+id/offline"
-                    layout="@layout/layout_network_offline" />
+                    layout="@layout/layout_network_error" />
             </FrameLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
