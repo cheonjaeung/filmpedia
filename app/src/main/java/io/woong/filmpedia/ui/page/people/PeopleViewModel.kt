@@ -13,6 +13,10 @@ class PeopleViewModel : ViewModel() {
 
     private val repository: MovieRepository = MovieRepository()
 
+    private val _isOnline: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isOnline: LiveData<Boolean>
+        get() = _isOnline
+
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -42,9 +46,10 @@ class PeopleViewModel : ViewModel() {
                 }
 
                 _people.postValue(list)
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
-        }.join()
-
-        _isLoading.postValue(false)
+            _isLoading.postValue(false)
+        }
     }
 }

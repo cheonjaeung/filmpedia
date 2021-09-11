@@ -14,6 +14,10 @@ class SeriesViewModel : ViewModel() {
 
     private val repository: CollectionRepository = CollectionRepository()
 
+    private val _isOnline: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isOnline: LiveData<Boolean>
+        get() = _isOnline
+
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -40,8 +44,8 @@ class SeriesViewModel : ViewModel() {
     fun load(apiKey: String, language: String, collectionId: Int) = CoroutineScope(Dispatchers.Default).launch {
         _isLoading.postValue(true)
 
-        repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { collection ->
-            if (collection != null) {
+        repository.fetchDetail(key = apiKey, id = collectionId, lang = language) { result ->
+            result.onSuccess { collection ->
                 _backdrop.postValue(collection.backdropPath)
                 _title.postValue(collection.name)
                 _overview.postValue(collection.overview)
@@ -51,10 +55,12 @@ class SeriesViewModel : ViewModel() {
                     getPriorityByReleaseDate(it.releaseDate)
                 }
                 _movies.postValue(sorted)
+            }.onNetworkError {
+                _isOnline.postValue(false)
             }
-        }.join()
 
-        _isLoading.postValue(false)
+            _isLoading.postValue(false)
+        }
     }
 
     private fun getPriorityByReleaseDate(releaseDate: String?): Int {

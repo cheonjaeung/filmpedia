@@ -16,9 +16,17 @@ class SearchViewModel : ViewModel() {
     private val searchRepository: SearchRepository = SearchRepository()
     private val genreRepository: GenreRepository = GenreRepository()
 
+    private val _isOnline: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isOnline: LiveData<Boolean>
+        get() = _isOnline
+
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
+    private val _isReady: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isReady: LiveData<Boolean>
+        get() = _isReady
 
     private var resultPage: Int = 1
     private var isResultLoading: Boolean = false
@@ -27,9 +35,24 @@ class SearchViewModel : ViewModel() {
         get() = _results
 
     private val genreMap: HashMap<Int, String> = hashMapOf()
-    private var _isGenresReady: Boolean = false
-    private val isGenresReady: Boolean
-        get() = _isGenresReady
+
+    fun updateGenres(apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
+        _isLoading.postValue(true)
+
+        genreRepository.fetchGenres(key = apiKey, lang = language) { result ->
+            result.onSuccess {
+                val list = it.genres
+                list.forEach { genre ->
+                    genreMap[genre.id] = genre.name
+                }
+                _isReady.postValue(true)
+            }.onNetworkError {
+                _isOnline.postValue(false)
+            }
+
+            _isLoading.postValue(false)
+        }
+    }
 
     fun search(
         apiKey: String,
@@ -39,11 +62,7 @@ class SearchViewModel : ViewModel() {
     ) = CoroutineScope(Dispatchers.Default).launch {
         _isLoading.postValue(true)
 
-        if (!isGenresReady) {
-            updateGenres(apiKey, language).join()
-        }
-
-        if (!isResultLoading && isGenresReady) {
+        if (!isResultLoading && isReady.value == true) {
             isResultLoading = true
 
             searchRepository.fetchMovies(
@@ -52,9 +71,9 @@ class SearchViewModel : ViewModel() {
                 region = region,
                 query = query,
                 page = 1
-            ) { searchResult ->
-                if (searchResult != null) {
-                    val list = searchResult.results
+            ) { result ->
+                result.onSuccess {
+                    val list = it.results
                     if (list.isNotEmpty()) {
                         val results = mutableListOf<SearchResult>()
                         list.forEach { movie ->
@@ -68,14 +87,17 @@ class SearchViewModel : ViewModel() {
                                 )
                             )
                         }
+
                         _results.postValue(results)
                         resultPage = 1
                     }
+                }.onNetworkError {
+                    _isOnline.postValue(false)
                 }
-            }.join()
 
-            isResultLoading = false
-            _isLoading.postValue(false)
+                isResultLoading = false
+                _isLoading.postValue(false)
+            }
         } else {
             _isLoading.postValue(false)
         }
@@ -87,13 +109,7 @@ class SearchViewModel : ViewModel() {
         region: String,
         query: String
     ) = CoroutineScope(Dispatchers.Default).launch {
-        _isLoading.postValue(true)
-
-        if (!isGenresReady) {
-            updateGenres(apiKey, language).join()
-        }
-
-        if (!isResultLoading && isGenresReady) {
+        if (!isResultLoading && isReady.value == true) {
             isResultLoading = true
             val nextPage = resultPage + 1
 
@@ -103,9 +119,9 @@ class SearchViewModel : ViewModel() {
                 region = region,
                 query = query,
                 page = nextPage
-            ) { searchResult ->
-                if (searchResult != null) {
-                    val list = searchResult.results
+            ) { result ->
+                result.onSuccess {
+                    val list = it.results
                     if (list.isNotEmpty()) {
                         val currentList = results.value ?: mutableListOf()
                         list.forEach { movie ->
@@ -122,25 +138,15 @@ class SearchViewModel : ViewModel() {
                         _results.postValue(currentList)
                         resultPage = nextPage
                     }
+                }.onNetworkError {
+                    _isOnline.postValue(false)
                 }
-            }
 
-            isResultLoading = false
-            _isLoading.postValue(false)
+                isResultLoading = false
+            }
         } else {
-            _isLoading.postValue(false)
+            isResultLoading = false
         }
-    }
-
-    private fun updateGenres(apiKey: String, language: String) = CoroutineScope(Dispatchers.Default).launch {
-        genreRepository.fetchGenres(key = apiKey, lang = language) { genres ->
-            if (genres.isNotEmpty()) {
-                genres.forEach { genre ->
-                    genreMap[genre.id] = genre.name
-                }
-                _isGenresReady = true
-            }
-        }.join()
     }
 
     private fun convertGenreIdsToList(ids: List<Int>): List<Genres.Genre> {

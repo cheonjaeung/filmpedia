@@ -62,6 +62,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
             AnimationUtil.blink(loading, 1000)
         }
+
+        viewModel.updateGenres(apiKey, language)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

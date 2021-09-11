@@ -1,7 +1,7 @@
 package io.woong.filmpedia.network.service
 
 import io.woong.filmpedia.data.movie.Genres
-import retrofit2.Response
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,8 +11,8 @@ import retrofit2.http.Query
 interface GenreService {
 
     @GET("genre/movie/list")
-    suspend fun getGenres(
+    fun getGenres(
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null
-    ): Response<Genres>
+    ): Call<Genres>
 }
