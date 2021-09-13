@@ -40,6 +40,7 @@ I hope it can be good sample to Android developers and leaners.
 - [Retrofit](https://github.com/square/retrofit) (Apache-2.0 License)
 - [Okhttp](https://github.com/square/okhttp) (Apache-2.0 License)
 - [Glide](https://github.com/bumptech/glide) ([Custom License](https://github.com/bumptech/glide/blob/master/LICENSE))
+- [ShapedImageView](https://github.com/woongdev/ShapedImageView) (Apache-2.0 License)
 
 ## Architecture
 
