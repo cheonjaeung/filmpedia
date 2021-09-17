@@ -1,11 +1,13 @@
 package io.woong.filmpedia.ui.page.search
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,6 +87,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val app = application as FilmpediaApp
                 viewModel.search(app.tmdbApiKey, app.language, app.region, v.text.toString())
+                hideKeyboard()
                 true
             } else {
                 false
@@ -107,5 +110,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             intent.putExtra(MovieActivity.MOVIE_TITLE_EXTRA_ID, result.title)
             startActivity(intent)
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.searchBar.windowToken, 0)
     }
 }
