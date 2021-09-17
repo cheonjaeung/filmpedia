@@ -2,9 +2,11 @@ package io.woong.filmpedia.ui.page.search
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -111,6 +113,28 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             startActivity(intent)
         }
     }
+
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        if (event != null) {
+            val eventX = event.x.toInt()
+            val eventY = event.y.toInt()
+            val focusedView = currentFocus
+
+            if (focusedView != null) {
+                val focusedRect = Rect()
+                focusedView.getGlobalVisibleRect(focusedRect)
+
+                if (isNotInRect(focusedRect, eventX, eventY)) {
+                    hideKeyboard()
+                    focusedView.clearFocus()
+                }
+            }
+        }
+
+        return super.dispatchTouchEvent(event)
+    }
+
+    private fun isNotInRect(rect: Rect, x: Int, y: Int): Boolean = rect.contains(x, y).not()
 
     private fun hideKeyboard() {
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
