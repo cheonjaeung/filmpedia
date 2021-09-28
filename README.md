@@ -2,7 +2,9 @@
 
 <img alt="logo" src="./image/filmpedia_logo.png" align="right" width="150" />
 
-# Filmpedia &middot; ![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue)
+# Filmpedia 
+
+![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue) [![maintainer](https://img.shields.io/badge/%3C%2F%3E%20by-Jaewoong%20Cheon-A97BFF.svg)](https://github.com/woongdev)
 
 **Filmpedia** is an unofficial Android movie information application using TMDB API.
 
@@ -40,6 +42,7 @@ I hope it can be good sample to Android developers and leaners.
 - [Retrofit](https://github.com/square/retrofit) (Apache-2.0 License)
 - [Okhttp](https://github.com/square/okhttp) (Apache-2.0 License)
 - [Glide](https://github.com/bumptech/glide) ([Custom License](https://github.com/bumptech/glide/blob/master/LICENSE))
+- [ShapedImageView](https://github.com/woongdev/ShapedImageView) (MIT License)
 
 ## Architecture
 
