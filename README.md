@@ -2,7 +2,9 @@
 
 <img alt="logo" src="./image/filmpedia_logo.png" align="right" width="150" />
 
-# Filmpedia &middot; ![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue)
+# Filmpedia 
+
+![platform-android](https://img.shields.io/badge/Platform-Android-green?logo=android&logoColor=green) ![api-16-upper](https://img.shields.io/badge/API-16%2B-green?logo=android&logoColor=green) ![mit-license](https://img.shields.io/badge/License-MIT-blue?logo=apache&logoColor=blue) [![maintainer](https://img.shields.io/badge/%3C%2F%3E%20by-Jaewoong%20Cheon-A97BFF.svg)](https://github.com/woongdev)
 
 **Filmpedia** is an unofficial Android movie information application using TMDB API.
 
