@@ -7,7 +7,7 @@
     android:layout_height="220dp"
     android:orientation="vertical">
 
-    <io.woong.shapedimageview.widget.CircularImageView
+    <io.woong.shapedimageview.widget.OvalImageView
         android:id="@+id/profile"
         android:layout_width="110dp"
         android:layout_height="110dp"

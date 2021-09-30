@@ -12,6 +12,7 @@ import io.woong.filmpedia.data.people.Person
 import io.woong.filmpedia.databinding.*
 import io.woong.filmpedia.util.DateUtil
 import io.woong.filmpedia.util.UriUtil
+import io.woong.shapedimageview.formula.SuperEllipseFormula
 import java.lang.StringBuilder
 
 class FilmographyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -102,6 +103,8 @@ class FilmographyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     holder as ProfileViewHolder
 
                     holder.binding.apply {
+                        profile.formula = SuperEllipseFormula(3f)
+
                         Glide.with(root)
                             .load(UriUtil.getImageUrl(item.profilePath))
                             .placeholder(R.drawable.placeholder_profile)

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
 
-    <io.woong.shapedimageview.widget.CircularImageView
+    <io.woong.shapedimageview.widget.OvalImageView
         android:id="@+id/profile"
         android:layout_width="120dp"
         android:layout_height="120dp"
