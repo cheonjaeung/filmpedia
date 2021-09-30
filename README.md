@@ -1,6 +1,6 @@
 ![preview](./image/preview.png)
 
-<img alt="logo" src="./image/filmpedia_logo.png" align="right" width="150" />
+<img alt="logo" src="./image/filmpedia_logo_squircle.png" align="right" width="150" />
 
 # Filmpedia 
 
