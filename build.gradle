@@ -25,7 +25,7 @@ buildscript {
 
         glide = '4.12.0'
 
-        shapedimageview = '1.0.0'
+        shapedimageview = '1.3.0'
 
         test_junit = '4.13.2'
         jetpack_test_junit = '1.1.3'
