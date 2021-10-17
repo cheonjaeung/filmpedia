@@ -253,14 +253,14 @@ class PersonViewModel : ViewModel() {
         }
 
         val department = if (this is MovieCredits.Cast) {
-            if (character.isNotBlank()) {
+            if (character.isNotNullOrBlank()) {
                 character
             } else {
                 "-"
             }
         } else {
             this as MovieCredits.Crew
-            if (job.isNotBlank()) {
+            if (job.isNotNullOrBlank()) {
                 job
             } else {
                 "-"
