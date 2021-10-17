@@ -3,8 +3,8 @@ buildscript {
         min_sdk = 16
         compile_sdk = 30
 
-        app_version = '1.1.0'
-        app_version_code = 2
+        app_version = '1.1.1'
+        app_version_code = 3
 
         kotlin_version = '1.5.31'
 
